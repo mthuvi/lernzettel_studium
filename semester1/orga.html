@@ -1,0 +1,2785 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="showroom">
+  <title>Organisation · Interaktives Lernkompendium &amp; Klausurtrainer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js" defer></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page & Surfaces (Apple Light Mode / Showroom) */
+      --background: #f5f5f7;
+      --surface-elevated: #ffffff;
+      --surface-container-low: #f5f5f7;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+
+      /* Ink */
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+
+      /* Borders & Rules */
+      --outline: #d2d2d7;
+      --outline-variant: #e5e5ea;
+
+      /* Accents */
+      --primary: #006bd6;
+      --primary-hover: #0058b0;
+      --on-primary: #ffffff;
+      --primary-container: #e8f1fd;
+      --on-primary-container: #0058b0;
+      --secondary: #bf4800;
+      --secondary-container: #fff2eb;
+      --on-secondary-container: #9a3900;
+      --tertiary: #1d1d1f;
+
+      /* Semantic */
+      --positive: #248a3d;
+      --positive-container: #eaf6ed;
+      --warning: #b25e00;
+      --warning-container: #fff5e6;
+      --error: #d70015;
+      --error-container: #fdebec;
+      --focus: #006bd6;
+
+      /* Data series */
+      --data-1: #006bd6;
+      --data-2: #bf4800;
+      --data-3: #248a3d;
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      /* Glass & Effects */
+      --glass-bg: rgba(245, 245, 247, 0.80);
+      --tile-shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.08);
+      --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.03);
+
+      /* Fonts */
+      --font-headline: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-label: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      /* Type Scale (Narrative) */
+      --display-size: clamp(2.15rem, 1.35rem + 2.8vw, 3.35rem);
+      --headline-size: clamp(1.55rem, 1.2rem + 1.35vw, 2.15rem);
+      --subhead-size: clamp(1.125rem, 1.02rem + 0.45vw, 1.35rem);
+      --body-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+      --label-size: 0.8125rem;
+
+      /* Shape */
+      --radius-card: 14px;
+      --rounded-lg: 1.25rem;
+      --rounded: 9999px;
+
+      /* Spacing Scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Tracking & Motion */
+      --headline-tracking: -0.03em;
+      --figure-tracking: -0.025em;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+
+      --background: #121212;
+      --surface-elevated: #1c1c1e;
+      --surface-container-low: #1e1e20;
+      --surface-container: #2c2c2e;
+      --surface-container-high: #3a3a3c;
+
+      --on-surface: #f5f5f7;
+      --on-surface-variant: #a1a1a6;
+
+      --outline: #38383a;
+      --outline-variant: #2c2c2e;
+
+      --primary: #2997ff;
+      --primary-hover: #52abff;
+      --on-primary: #000000;
+      --primary-container: rgba(41, 151, 255, 0.16);
+      --on-primary-container: #7ec2ff;
+      --secondary: #ff8a3d;
+      --secondary-container: rgba(255, 138, 61, 0.16);
+      --on-secondary-container: #ffb07a;
+      --tertiary: #f5f5f7;
+
+      --positive: #30d158;
+      --positive-container: rgba(48, 209, 88, 0.15);
+      --warning: #ffd60a;
+      --warning-container: rgba(255, 214, 10, 0.14);
+      --error: #ff453a;
+      --error-container: rgba(255, 69, 58, 0.16);
+      --focus: #2997ff;
+
+      --data-1: #2997ff;
+      --data-2: #ff8a3d;
+      --data-3: #30d158;
+      --data-4: #bf5af2;
+      --data-context: #636366;
+
+      --glass-bg: rgba(18, 18, 18, 0.80);
+      --tile-shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.45);
+      --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--dur-short) var(--ease-in-out), color var(--dur-short) var(--ease-in-out);
+    }
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Frosted Glass Topbar */
+    .glass-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--glass-bg);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--outline-variant);
+      padding: var(--space-sm) var(--space-lg);
+    }
+    .topbar-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      min-height: 44px;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      color: var(--on-surface);
+      white-space: nowrap;
+    }
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--rounded);
+      background: var(--primary);
+      flex-shrink: 0;
+    }
+    .brand-subtitle {
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-shrink: 0;
+    }
+    .progress-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-xs) var(--space-md);
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+      min-height: 36px;
+    }
+    .progress-bar-mini {
+      width: 56px;
+      height: 6px;
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      overflow: hidden;
+    }
+    .progress-bar-mini-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      border-radius: var(--rounded);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      border-color: var(--outline);
+    }
+    .btn-secondary:hover { background: var(--surface-container); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--primary);
+      padding: var(--space-sm) var(--space-md);
+    }
+    .btn-ghost:hover { background: var(--primary-container); }
+    .btn-icon {
+      min-width: 44px;
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      color: var(--on-surface);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      cursor: pointer;
+      font-size: var(--label-size);
+      font-weight: 500;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-icon:hover { background: var(--surface-container); }
+    .mobile-menu-btn { display: none; }
+
+    /* Two-Column App Shell */
+    .app-shell {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      align-items: start;
+    }
+    .app-shell * { min-width: 0; }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      position: sticky;
+      top: 76px;
+      max-height: calc(100vh - 96px);
+      overflow-y: auto;
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-md);
+      box-shadow: var(--shadow-subtle);
+    }
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-xs) var(--space-sm) var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      margin-bottom: var(--space-sm);
+    }
+    .sidebar-title {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+    .sidebar-close-btn { display: none; }
+
+    .nav-group {
+      margin-bottom: var(--space-xs);
+    }
+    .nav-group-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      background: transparent;
+      border: 0;
+      border-radius: 10px;
+      padding: var(--space-sm) var(--space-sm);
+      min-height: 44px;
+      text-align: left;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .nav-group-trigger:hover { background: var(--surface-container-low); }
+    .nav-group-chevron {
+      color: var(--on-surface-variant);
+      transition: transform var(--dur-short) var(--ease-out);
+      flex-shrink: 0;
+    }
+    .nav-group[data-open="true"] .nav-group-chevron {
+      transform: rotate(90deg);
+    }
+    .nav-sublist {
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      padding: 2px 0 var(--space-sm) var(--space-sm);
+    }
+    .nav-group[data-open="true"] .nav-sublist {
+      display: flex;
+    }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: 8px var(--space-sm);
+      min-height: 38px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .nav-link:hover {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+    .nav-link.active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+    }
+    .nav-done-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--rounded);
+      border: 1.5px solid var(--outline);
+      flex-shrink: 0;
+      transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+    .nav-link[data-completed="true"] .nav-done-dot {
+      background: var(--positive);
+      border-color: var(--positive);
+    }
+
+    .sidebar-footer {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    /* Main Content Column */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+      padding-bottom: var(--space-2xl);
+    }
+
+    /* Hero Stack (Showroom style) */
+    .hero {
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-2xl) var(--space-xl);
+      text-align: center;
+      box-shadow: var(--shadow-subtle);
+    }
+    .eyebrow {
+      display: inline-block;
+      color: var(--secondary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      margin-bottom: var(--space-sm);
+    }
+    .hero h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.07;
+      margin: 0 auto;
+      max-width: 22ch;
+      color: var(--on-surface);
+    }
+    .hero .lede {
+      color: var(--on-surface-variant);
+      font-size: var(--subhead-size);
+      line-height: 1.5;
+      max-width: 58ch;
+      margin: var(--space-md) auto 0;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+      text-align: center;
+    }
+    .kpi-tile {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-lg) var(--space-md);
+    }
+    .kpi-label {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+    .kpi-value {
+      font-family: var(--font-headline);
+      font-size: clamp(1.75rem, 1.3rem + 1vw, 2.25rem);
+      font-weight: 700;
+      letter-spacing: var(--figure-tracking);
+      line-height: 1.15;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0;
+      font-variant-numeric: tabular-nums;
+    }
+    .kpi-caption {
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Module Sections & Topic Cards */
+    .module-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+      scroll-margin-top: 84px;
+    }
+    .module-header {
+      padding: var(--space-md) 0 var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .module-header h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.12;
+      margin: var(--space-xs) 0 0;
+      color: var(--on-surface);
+    }
+    .module-header p {
+      color: var(--on-surface-variant);
+      margin: var(--space-sm) 0 0;
+      max-width: 68ch;
+    }
+
+    .topic-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow-subtle);
+      scroll-margin-top: 84px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .topic-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+    .topic-top h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    /* Exam Probability Badge */
+    .exam-badge-box {
+      background: var(--secondary-container);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .exam-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      gap: var(--space-xs);
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      padding: 4px 12px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--on-secondary-container);
+      font-variant-numeric: tabular-nums;
+    }
+    .exam-badge-reason {
+      font-size: 0.875rem;
+      color: var(--on-surface);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: var(--radius-card);
+      padding: var(--space-md) var(--space-lg);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+    }
+    .callout.definition {
+      background: var(--primary-container);
+      border-color: var(--outline-variant);
+    }
+    .callout.merksatz {
+      background: var(--warning-container);
+      border-color: var(--outline-variant);
+    }
+    .callout-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary-container);
+      margin-bottom: var(--space-xs);
+    }
+    .callout.merksatz .callout-label { color: var(--warning); }
+    .callout p {
+      margin: 0;
+      max-width: 68ch;
+      color: var(--on-surface);
+    }
+
+    /* Structured Lists & Cards */
+    .prose-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-width: 72ch;
+    }
+    .prose-list li {
+      color: var(--on-surface);
+      line-height: 1.6;
+    }
+    .prose-list strong {
+      color: var(--on-surface);
+      font-weight: 600;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .sub-card {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .sub-card h4 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--on-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--rounded);
+      padding: 3px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+    .chip.orange {
+      background: var(--secondary-container);
+      color: var(--on-secondary-container);
+    }
+    .chip.green {
+      background: var(--positive-container);
+      color: var(--positive);
+    }
+    .chip.red {
+      background: var(--error-container);
+      color: var(--error);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      background: var(--surface-elevated);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9375rem;
+    }
+    th, td {
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    th {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      background: var(--surface-container-low);
+    }
+    tr:last-child td { border-bottom: 0; }
+
+    /* Interactive Practical Examples (Accordion) */
+    .example-toggle-wrap {
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: var(--surface-container-low);
+    }
+    .example-toggle-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      min-height: 44px;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-align: left;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .example-toggle-btn:hover { background: var(--primary-container); }
+    .example-body {
+      display: none;
+      padding: 0 var(--space-lg) var(--space-lg);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      border-top: 1px solid var(--outline-variant);
+      padding-top: var(--space-md);
+    }
+    .example-toggle-wrap[data-open="true"] .example-body {
+      display: block;
+    }
+
+    /* Interactive Widgets */
+    .interactive-panel {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .segmented-row {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      background: var(--surface-container);
+      padding: 4px;
+      border-radius: var(--rounded);
+      align-self: flex-start;
+    }
+    .seg-btn {
+      min-height: 38px;
+      padding: 6px 14px;
+      border-radius: var(--rounded);
+      border: 0;
+      background: transparent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .seg-btn[aria-pressed="true"] {
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      font-weight: 600;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    /* SVG Organigram */
+    .svg-box {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-md);
+      overflow-x: auto;
+    }
+    .org-svg {
+      width: 100%;
+      min-width: 560px;
+      height: auto;
+      display: block;
+    }
+    .org-node { cursor: pointer; transition: opacity var(--dur-micro) var(--ease-out); }
+    .org-node:hover rect { stroke: var(--primary); stroke-width: 2.2; }
+    .org-node.selected rect { stroke: var(--primary); stroke-width: 2.5; fill: var(--primary-container); }
+
+    /* Topic Footer (Mastery Checkbox) */
+    .topic-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+    }
+    .mastery-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .mastery-btn[aria-pressed="true"] {
+      background: var(--positive-container);
+      border-color: var(--positive);
+      color: var(--positive);
+      font-weight: 600;
+    }
+
+    /* Quiz & Exam Section */
+    .exam-score-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-lg);
+    }
+    .quiz-item {
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      padding: var(--space-lg);
+      background: var(--surface-container-low);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .quiz-options {
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .quiz-opt-btn {
+      width: 100%;
+      min-height: 44px;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 10px;
+      border: 1px solid var(--outline);
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .quiz-opt-btn:hover { background: var(--surface-container); }
+    .quiz-opt-btn.correct {
+      background: var(--positive-container);
+      border-color: var(--positive);
+      color: var(--on-surface);
+      font-weight: 600;
+    }
+    .quiz-opt-btn.wrong {
+      background: var(--error-container);
+      border-color: var(--error);
+      color: var(--on-surface);
+    }
+    .quiz-feedback {
+      display: none;
+      font-size: 0.9rem;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 10px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--outline-variant);
+      line-height: 1.5;
+    }
+    .quiz-feedback.visible { display: block; }
+
+    .exam-field-label {
+      display: block;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+    }
+    .exam-textarea {
+      width: 100%;
+      min-height: 110px;
+      padding: var(--space-md);
+      border-radius: 12px;
+      border: 1px solid var(--outline);
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      resize: vertical;
+    }
+    .exam-textarea:focus {
+      outline: 2px solid var(--focus);
+      border-color: var(--primary);
+    }
+
+    .solution-box {
+      display: none;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-card);
+      background: var(--surface-elevated);
+      padding: var(--space-lg);
+      gap: var(--space-md);
+      flex-direction: column;
+    }
+    .solution-box[data-open="true"] {
+      display: flex;
+    }
+    .rubric-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      border-radius: 10px;
+      background: var(--surface-container-low);
+      cursor: pointer;
+    }
+    .rubric-item input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .source-footer {
+      border-top: 1px solid var(--outline-variant);
+      padding-top: var(--space-lg);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    /* Responsive Layout */
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        padding: var(--space-md);
+      }
+      .mobile-menu-btn { display: inline-flex; }
+      .sidebar-close-btn { display: inline-flex; }
+      .sidebar {
+        display: none;
+        position: fixed;
+        inset: 0 auto 0 0;
+        top: 0;
+        width: min(320px, 88vw);
+        max-height: 100vh;
+        z-index: 100;
+        border-radius: 0 var(--radius-card) var(--radius-card) 0;
+      }
+      .sidebar.mobile-open { display: block; }
+      .brand-subtitle { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid { grid-template-columns: 1fr; }
+      aside { display: none; }
+      .hero { padding: var(--space-xl) var(--space-md); }
+      .topic-card { padding: var(--space-lg) var(--space-md); }
+      .progress-pill .progress-bar-mini { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Frosted-Glass Top Navigation Bar -->
+  <nav class="glass-topbar" aria-label="Kurssteuerung">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <button type="button" class="btn-icon mobile-menu-btn" onclick="toggleMobileSidebar()" aria-label="Gliederung öffnen">
+          <i data-lucide="panel-left" width="18" height="18" aria-hidden="true"></i>
+          <span>Gliederung</span>
+        </button>
+        <div class="brand-mark">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span>Organisation</span>
+        </div>
+        <span class="brand-subtitle">Wirtschaftsinformatik · Vollständiges Lernkompendium</span>
+      </div>
+      <div class="topbar-right">
+        <div class="progress-pill" aria-live="polite">
+          <span id="mastery-counter">0 / 12 Themen</span>
+          <div class="progress-bar-mini" aria-hidden="true">
+            <div class="progress-bar-mini-fill" id="mastery-bar-fill"></div>
+          </div>
+        </div>
+        <button type="button" class="btn-icon" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Farbschema wechseln">
+          <i data-lucide="moon" id="theme-icon" width="18" height="18" aria-hidden="true"></i>
+          <span id="theme-label">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Two-Column App Shell -->
+  <div class="app-shell">
+
+    <!-- Left Interactive Accordion Sidebar -->
+    <aside class="sidebar" id="sidebar-nav" aria-label="Kapitelgliederung">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Inhaltsverzeichnis</span>
+        <button type="button" class="btn-icon sidebar-close-btn" onclick="toggleMobileSidebar()" aria-label="Gliederung schließen">
+          <i data-lucide="x" width="16" height="16" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="nav-group" data-open="true" id="nav-g-1">
+        <button type="button" class="nav-group-trigger" onclick="toggleNavGroup('nav-g-1')" aria-expanded="true">
+          <span>1. Grundlagen &amp; Weisung</span>
+          <i data-lucide="chevron-right" class="nav-group-chevron" width="16" height="16" aria-hidden="true"></i>
+        </button>
+        <div class="nav-sublist">
+          <a href="#t-1-1" class="nav-link" data-topic-link="t-1-1" onclick="closeMobileSidebarOnNav()"><span>1.1 Aufbau &amp; Ablauf</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-1-2" class="nav-link" data-topic-link="t-1-2" onclick="closeMobileSidebarOnNav()"><span>1.2 Stelle, Instanz &amp; Linien</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-1-3" class="nav-link" data-topic-link="t-1-3" onclick="closeMobileSidebarOnNav()"><span>1.3 Fachlich vs. Disziplinarisch</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-1-4" class="nav-link" data-topic-link="t-1-4" onclick="closeMobileSidebarOnNav()"><span>1.4 Praxiskonflikte &amp; Rollen</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+        </div>
+      </div>
+
+      <div class="nav-group" data-open="true" id="nav-g-2">
+        <button type="button" class="nav-group-trigger" onclick="toggleNavGroup('nav-g-2')" aria-expanded="true">
+          <span>2. Stabsstellen &amp; SLO</span>
+          <i data-lucide="chevron-right" class="nav-group-chevron" width="16" height="16" aria-hidden="true"></i>
+        </button>
+        <div class="nav-sublist">
+          <a href="#t-2-1" class="nav-link" data-topic-link="t-2-1" onclick="closeMobileSidebarOnNav()"><span>2.1 Definition &amp; Wesen Stab</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-2-2" class="nav-link" data-topic-link="t-2-2" onclick="closeMobileSidebarOnNav()"><span>2.2 Aufbau der SLO</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-2-3" class="nav-link" data-topic-link="t-2-3" onclick="closeMobileSidebarOnNav()"><span>2.3 Die 4 SLO-Probleme</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+        </div>
+      </div>
+
+      <div class="nav-group" data-open="true" id="nav-g-3">
+        <button type="button" class="nav-group-trigger" onclick="toggleNavGroup('nav-g-3')" aria-expanded="true">
+          <span>3. Spezialisierung &amp; Struktur</span>
+          <i data-lucide="chevron-right" class="nav-group-chevron" width="16" height="16" aria-hidden="true"></i>
+        </button>
+        <div class="nav-sublist">
+          <a href="#t-3-1" class="nav-link" data-topic-link="t-3-1" onclick="closeMobileSidebarOnNav()"><span>3.1 Prinzip Aufgabenteilung</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-3-2" class="nav-link" data-topic-link="t-3-2" onclick="closeMobileSidebarOnNav()"><span>3.2 Funktionale Struktur</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-3-3" class="nav-link" data-topic-link="t-3-3" onclick="closeMobileSidebarOnNav()"><span>3.3 IT/Orga &amp; Langfristigkeit</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+        </div>
+      </div>
+
+      <div class="nav-group" data-open="true" id="nav-g-4">
+        <button type="button" class="nav-group-trigger" onclick="toggleNavGroup('nav-g-4')" aria-expanded="true">
+          <span>4. Produktdiversifizierung</span>
+          <i data-lucide="chevron-right" class="nav-group-chevron" width="16" height="16" aria-hidden="true"></i>
+        </button>
+        <div class="nav-sublist">
+          <a href="#t-4-1" class="nav-link" data-topic-link="t-4-1" onclick="closeMobileSidebarOnNav()"><span>4.1 Begriff &amp; Abgrenzung</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+          <a href="#t-4-2" class="nav-link" data-topic-link="t-4-2" onclick="closeMobileSidebarOnNav()"><span>4.2 Horizontal, Vertikal, Lateral</span><span class="nav-done-dot" aria-hidden="true"></span></a>
+        </div>
+      </div>
+
+      <div class="nav-group" data-open="true" id="nav-g-5">
+        <button type="button" class="nav-group-trigger" onclick="toggleNavGroup('nav-g-5')" aria-expanded="true">
+          <span>5. Interaktive Probeklausur</span>
+          <i data-lucide="chevron-right" class="nav-group-chevron" width="16" height="16" aria-hidden="true"></i>
+        </button>
+        <div class="nav-sublist">
+          <a href="#quiz-mc" class="nav-link" onclick="closeMobileSidebarOnNav()"><span>5.1 Wissenscheck (MC)</span></a>
+          <a href="#quiz-slo" class="nav-link" onclick="closeMobileSidebarOnNav()"><span>5.2 Original-Klausur SLO (15 Pkt.)</span></a>
+          <a href="#quiz-cases" class="nav-link" onclick="closeMobileSidebarOnNav()"><span>5.3 Fallaufgaben &amp; Transfer</span></a>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button type="button" class="btn btn-secondary" id="reset-progress-btn" onclick="handleResetClick(this)">
+          Fortschritt zurücksetzen
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Learning Content -->
+    <main class="main-content">
+
+      <!-- Static Hero Header -->
+      <header class="hero">
+        <span class="eyebrow">Wirtschaftsinformatik · Modul Organisation</span>
+        <h1>Organisation systematisch meistern — von den Basics bis zur Klausur</h1>
+        <p class="lede">
+          Alle Konzepte aus dem Skript vollständig und prüfungsnah aufbereitet: Aufbau- und Ablauforganisation, fachliche vs. disziplinarische Weisungskompetenz, Stabliniensorganisation (SLO), funktionale Spezialisierung, Produktdiversifizierung und interaktive Original-Klausuraufgaben.
+        </p>
+        <div class="hero-actions">
+          <a href="#mod-1" class="btn btn-primary">Mit Modul 1 starten</a>
+          <a href="#mod-5" class="btn btn-ghost">Direkt zur Probeklausur ›</a>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-tile">
+            <div class="kpi-label">Prüfungs-Module</div>
+            <div class="kpi-value">4 + 1</div>
+            <div class="kpi-caption">Theorie &amp; Klausurtraining</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Original-SLO-Aufgabe</div>
+            <div class="kpi-value">15 Pkt.</div>
+            <div class="kpi-caption">Inklusive Korrekturschema</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Weisungsdimensionen</div>
+            <div class="kpi-value">WIE / WER</div>
+            <div class="kpi-caption">Fachlich vs. Disziplinarisch</div>
+          </div>
+          <div class="kpi-tile">
+            <div class="kpi-label">Diversifizierung</div>
+            <div class="kpi-value">3 Arten</div>
+            <div class="kpi-caption">Horizontal, Vertikal, Lateral</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- =====================================================================
+           MODUL 1: GRUNDBEGRIFFE & WEISUNGSKOMPETENZEN
+      ====================================================================== -->
+      <section class="module-block" id="mod-1">
+        <div class="module-header">
+          <span class="eyebrow">Modul 1</span>
+          <h2>Grundbegriffe der Organisation &amp; Weisungskompetenzen</h2>
+          <p>Von den untersten Grundlagen der Aufbau- und Ablauforganisation über Stellenbildung und Leitungssysteme bis hin zur präzisen Abgrenzung zwischen fachlicher und disziplinarischer Weisung.</p>
+        </div>
+
+        <!-- 1.1 -->
+        <article class="topic-card" id="t-1-1">
+          <div class="topic-top">
+            <h3>1.1 Die untersten Basics: Organisation, Aufbauorganisation &amp; Ablauforganisation</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 75%</span>
+            <p class="exam-badge-reason">Begründung: Grundbegriffe wie die Trennung von Aufbau- und Ablauforganisation oder die Abgrenzung zur Improvisation sind beliebte 2–4-Punkte-Einstiegsfragen in Klausuren.</p>
+          </div>
+
+          <div class="callout definition">
+            <span class="callout-label"><i data-lucide="book-open" width="15" height="15" aria-hidden="true"></i> Definition: Organisation</span>
+            <p><strong>Organisation</strong> bezeichnet die Gesamtheit aller <strong>dauerhaften</strong> generellen Regelungen, durch die ein Unternehmen komplexe Gesamtaufgaben auf Stellen verteilt (<strong>Aufgabenteilung / Differenzierung</strong>) und deren Zusammenarbeit zielgerichtet steuert (<strong>Koordination / Integration</strong>).</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Abgrenzung der Regelungsarten (Basics):</strong>
+              <strong>Organisation</strong> = dauerhafte, generelle Regeln für wiederkehrende Sachverhalte;
+              <strong>Improvisation</strong> = vorübergehende, vorläufige Regelungen (z. B. bei akuten Störungen);
+              <strong>Disposition</strong> = fallweise Einzelentscheidungen ohne generelle Regel.</li>
+            <li><strong>Aufgabenanalyse &amp; Aufgabensynthese:</strong> Zuerst wird die Gesamtaufgabe des Unternehmens analytisch in kleinste Teilaufgaben zerlegt (<strong>Aufgabenanalyse</strong>). Anschließend werden diese Teilaufgaben wieder sinnvoll zu Stellen und Abteilungen gebündelt (<strong>Aufgabensynthese</strong>).</li>
+          </ul>
+
+          <div class="compare-grid">
+            <div class="sub-card">
+              <h4>Aufbauorganisation <span class="chip">Statik · Struktur</span></h4>
+              <p>Beantwortet die Frage: <strong>„Wer macht was mit wem und wer ist wem unterstellt?“</strong></p>
+              <ul class="prose-list">
+                <li>Schafft den <strong>strukturellen Rahmen</strong> des Unternehmens (Organigramm).</li>
+                <li>Definiert <strong>Stellen, Abteilungen, Instanzen</strong> und Weisungswege.</li>
+                <li>Gilt meist langfristig und bildet die formale Hierarchie ab.</li>
+              </ul>
+            </div>
+            <div class="sub-card">
+              <h4>Ablauforganisation <span class="chip orange">Dynamik · Prozesse</span></h4>
+              <p>Beantwortet die Frage: <strong>„Wann, wo, wie und in welcher Reihenfolge wird gearbeitet?“</strong></p>
+              <ul class="prose-list">
+                <li>Regelt die <strong>zeitlichen, räumlichen und sachlogischen Arbeitsabläufe</strong> innerhalb der Aufbaustruktur.</li>
+                <li>Ziele: Kurze Durchlaufzeiten, hohe Termintreue, geringe Leerlauf- und Rüstzeiten.</li>
+                <li>Moderne Bezeichnung: <strong>Prozessmanagement / Workflow-Design</strong>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example-toggle-wrap" id="ex-1-1">
+            <button type="button" class="example-toggle-btn" onclick="toggleExample('ex-1-1')" aria-expanded="false">
+              <span>Praxisbeispiel anzeigen: Online-Versandhandel für E-Bikes</span>
+              <i data-lucide="chevron-down" width="18" height="18" aria-hidden="true"></i>
+            </button>
+            <div class="example-body">
+              <strong>Aufbauorganisation:</strong> Die Geschäftsführung richtet die Abteilungen Einkauf, Montage, Logistik, IT und Kundenservice ein und legt fest, dass der Versandleiter dem Logistikvorstand untersteht.<br>
+              <strong>Ablauforganisation:</strong> Sobald eine Online-Bestellung eingeht, prüft die IT automatisch den Bestand, sendet den Pick-Auftrag an das Lager, anschließend erfolgt die Endmontage-Prüfung (max. 2 Stunden) und die Übergabe an die Spedition bis 16:00 Uhr.
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-1-1" aria-pressed="false" onclick="toggleMastery('t-1-1')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 1.2 -->
+        <article class="topic-card" id="t-1-2">
+          <div class="topic-top">
+            <h3>1.2 Grundbausteine: Stelle, Instanz, Abteilung, Kongruenzprinzip &amp; Leitungssysteme</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 80%</span>
+            <p class="exam-badge-reason">Begründung: Die sichere Unterscheidung von Ausführungsstelle, Instanz und Stabsstelle sowie das Kongruenzprinzip bilden das Fundament für alle späteren Fragen zur Stabliniensorganisation (SLO).</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Stelle:</strong> Die <strong>kleinste organisatorische Einheit</strong> eines Unternehmens. Sie ist ein abstrakter, <strong>personenunabhängiger</strong> Aufgabenkomplex (nicht identisch mit einem konkreten Mitarbeiter oder Arbeitsplatz!).</li>
+            <li><strong>Ausführungsstelle:</strong> Eine Stelle ohne Leitungs- und Weisungsbefugnis gegenüber anderen Stellen (rein operative Erledigung von Sachaufgaben).</li>
+            <li><strong>Instanz (Leitungsstelle):</strong> Eine Stelle mit <strong>Entscheidungs- und Weisungskompetenz</strong> gegenüber nachgeordneten Stellen sowie der dazugehörigen Führungsverantwortung.</li>
+            <li><strong>Abteilung:</strong> Organisatorische Zusammenfassung mehrerer Stellen (und ggf. Unterabteilungen) unter einer gemeinsamen leitenden Instanz.</li>
+            <li><strong>Leitungsspanne (Kontrollspanne):</strong> Die Anzahl der Mitarbeiter bzw. Stellen, die einer Instanz <strong>direkt unterstellt</strong> sind (flache vs. steile Hierarchie).</li>
+            <li><strong>Leitungstiefe:</strong> Die Anzahl der Hierarchieebenen zwischen Unternehmensspitze und unterster Ausführungsebene.</li>
+          </ul>
+
+          <div class="callout merksatz">
+            <span class="callout-label"><i data-lucide="lightbulb" width="15" height="15" aria-hidden="true"></i> Merksatz: Das organisatorische Kongruenzprinzip</span>
+            <p>Jede Stelle benötigt ein Gleichgewicht aus <strong>Aufgabe</strong> (Was ist zu tun?), <strong>Kompetenz</strong> (Welche Rechte/Mittel habe ich?) und <strong>Verantwortung</strong> (Wofür hafte ich?). Fallen Kompetenz und Verantwortung auseinander, entstehen Reibungsverluste und Führungslücken.</p>
+          </div>
+
+          <div class="compare-grid">
+            <div class="sub-card">
+              <h4>Einliniensystem (nach Fayol)</h4>
+              <p><strong>Prinzip der Einheit der Auftragserteilung:</strong> Jede untergeordnete Stelle erhält Weisungen von <strong>genau einem</strong> direkten Vorgesetzten.</p>
+              <ul class="prose-list">
+                <li><strong>Vorteile:</strong> Eindeutige Zuständigkeit, keine widersprüchlichen Anweisungen, klare Verantwortung.</li>
+                <li><strong>Nachteile:</strong> Lange Dienstwege, Überlastung der oberen Instanzen, geringe Spezialisierung der Vorgesetzten.</li>
+              </ul>
+            </div>
+            <div class="sub-card">
+              <h4>Mehrliniensystem (nach Taylor)</h4>
+              <p><strong>Prinzip des kürzesten Weges:</strong> Eine untergeordnete Stelle erhält Weisungen von <strong>mehreren</strong> funktional spezialisierten Vorgesetzten.</p>
+              <ul class="prose-list">
+                <li><strong>Vorteile:</strong> Hohe Fachkompetenz der Weisungsgeber, direkte Kommunikation ohne Umwege.</li>
+                <li><strong>Nachteile:</strong> Kompetenzkonflikte, widersprüchliche Aufträge, Unklarheit bei Fehlern („Wer war schuld?“).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="example-toggle-wrap" id="ex-1-2">
+            <button type="button" class="example-toggle-btn" onclick="toggleExample('ex-1-2')" aria-expanded="false">
+              <span>Praxisbeispiel anzeigen: Kongruenzbruch vs. Linienklarheit</span>
+              <i data-lucide="chevron-down" width="18" height="18" aria-hidden="true"></i>
+            </button>
+            <div class="example-body">
+              <strong>Kongruenzbruch:</strong> Ein Filialleiter im Einzelhandel wird voll für den Umsatz und die Kundenzufriedenheit verantwortlich gemacht (Verantwortung), darf aber weder Preise rabattieren noch zusätzliche Aushilfen für die Stoßzeiten einstellen (fehlende Kompetenz).<br>
+              <strong>Mehrliniendruck:</strong> Erhält ein IT-Administrator im Mehrliniensystem gleichzeitig vom IT-Leiter den Auftrag „Server-Patch sofort einspielen“ und vom Vertriebsleiter „System für Kunden-Demo keinesfalls neu starten“, entsteht ein unmittelbarer Weisungskonflikt.
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-1-2" aria-pressed="false" onclick="toggleMastery('t-1-2')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 1.3 -->
+        <article class="topic-card" id="t-1-3">
+          <div class="topic-top">
+            <h3>1.3 Fachliche vs. Disziplinarische Weisungskompetenz („WIE?“ vs. „WER?“)</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 95%</span>
+            <p class="exam-badge-reason">Begründung: Die exakte Unterscheidung zwischen „WIE?“ (Inhalte) und „WER?“ (Personal) gehört zu den wichtigsten Kerninhalten des Skripts und wird regelmäßig in Kurzfragen und Fallstudien abgefragt.</p>
+          </div>
+
+          <div class="callout merksatz">
+            <span class="callout-label"><i data-lucide="key-round" width="15" height="15" aria-hidden="true"></i> Skript-Merkformel fürs Examen</span>
+            <p><strong>Fachliche Weisungskompetenz = „WIE?“</strong> (Wie ist eine Aufgabe zu erledigen? → <strong>INHALTE</strong>) &nbsp;|&nbsp; <strong>Disziplinarische Weisungskompetenz = „WER?“</strong> (Wer erledigt eine Aufgabe? Wer wird eingestellt bzw. entlassen? → <strong>PERSONAL</strong>).</p>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Merkmal</th>
+                  <th>Fachliche Weisungskompetenz</th>
+                  <th>Disziplinarische Weisungskompetenz</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Schlüsselfrage</strong></td>
+                  <td><strong>WIE?</strong> — Wie ist eine Aufgabe zu erledigen?</td>
+                  <td><strong>WER?</strong> — Wer erledigt eine Aufgabe?</td>
+                </tr>
+                <tr>
+                  <td><strong>Bezugspunkt</strong></td>
+                  <td><strong>INHALTE</strong> (Sachebene, Methoden, Ergebnisse)</td>
+                  <td><strong>PERSONAL</strong> (Arbeitsebene, Arbeitsverhältnis)</td>
+                </tr>
+                <tr>
+                  <td><strong>Konkrete Entscheidungen</strong></td>
+                  <td>Fachliche Vorgaben, Arbeitsmethoden, Qualitätsstandards, technische Standards, Priorisierung von Arbeitspaketen, Terminplanung im Projekt</td>
+                  <td><strong>Einstellung, Entlassung (Kündigung), Versetzung</strong>, Abmahnung, Urlaubsgenehmigung, Gehaltsfestlegung, Leistungsbeurteilung, Arbeitszeitregelung</td>
+                </tr>
+                <tr>
+                  <td><strong>Typische Inhaber</strong></td>
+                  <td>Projektleiter, Product Owner, Fachbereichs-Leads, Prozessmanager</td>
+                  <td>Linienvorgesetzte, Abteilungsleiter, Bereichsleiter, Geschäftsführung</td>
+                </tr>
+                <tr>
+                  <td><strong>Grenze der Macht</strong></td>
+                  <td>Keine arbeitsrechtlichen Sanktionen, keine Personalentscheidungen</td>
+                  <td>In spezialisierten Projekten oft fehlendes Detailwissen über moderne Fachmethoden</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Interaktiver Kompetenz-Zuordnungscheck -->
+          <div class="interactive-panel">
+            <strong>Interaktiver Schnelltest: Welche Weisungskompetenz greift hier?</strong>
+            <div class="segmented-row" role="group" aria-label="Fallbeispiele auswählen">
+              <button type="button" class="seg-btn" aria-pressed="true" onclick="showWeisungCase(0, this)">Fall 1: Kündigung</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showWeisungCase(1, this)">Fall 2: Software-Architektur</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showWeisungCase(2, this)">Fall 3: Urlaubsantrag</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showWeisungCase(3, this)">Fall 4: Prüfnorm ISO</button>
+            </div>
+            <div id="weisung-case-output" class="callout">
+              <span class="callout-label">Fall 1: Ein Mitarbeiter wird wegen grober Pflichtverletzung entlassen.</span>
+              <p><strong>Antwort: Disziplinarische Weisungskompetenz („WER?“ → Personal).</strong> Einstellungen, Entlassungen und Versetzungen berühren unmittelbar das Personal- und Arbeitsverhältnis und liegen ausschließlich beim disziplinarischen Vorgesetzten.</p>
+            </div>
+          </div>
+
+          <div class="example-toggle-wrap" id="ex-1-3">
+            <button type="button" class="example-toggle-btn" onclick="toggleExample('ex-1-3')" aria-expanded="false">
+              <span>Praxisbeispiel anzeigen: Geteilte Leitung in einem IT-Projekt</span>
+              <i data-lucide="chevron-down" width="18" height="18" aria-hidden="true"></i>
+            </button>
+            <div class="example-body">
+              Ein Entwickler arbeitet fest in der Abteilung „Core Systems“ (Abteilungsleiter = <strong>disziplinarischer Vorgesetzter</strong>), ist aber zu 80% für das Projekt „Cloud-Migration“ abgestellt (Projektleiterin = <strong>fachliche Vorgesetzte</strong>).<br>
+              Die Projektleiterin entscheidet <em>fachlich</em>, welche Programmiersprache und welche Testabdeckung eingehalten werden („WIE“). Der Abteilungsleiter entscheidet <em>disziplinarisch</em>, ob der Entwickler im Juli drei Wochen Urlaub nehmen darf und welches Jahresgehalt er nach dem Zielgespräch erhält („WER“ / Personal).
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-1-3" aria-pressed="false" onclick="toggleMastery('t-1-3')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 1.4 -->
+        <article class="topic-card" id="t-1-4">
+          <div class="topic-top">
+            <h3>1.4 Rollenkonflikte in der Praxis: „Junger Absolvent vs. erfahrener Chef“</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 85%</span>
+            <p class="exam-badge-reason">Begründung: Das Praxisbeispiel aus dem Skript („Neuer Absolvent mit altem Chef“, Synergie vs. Erfahrung) prüft, ob man geteilte Weisungskompetenzen auf menschliche Spannungen in Matrix- und Projektstrukturen übertragen kann.</p>
+          </div>
+
+          <p>Sobald fachliche und disziplinarische Weisungskompetenz auf <strong>zwei verschiedene Personen</strong> aufgeteilt werden (typisch in Projekt- und Matrixorganisationen), entsteht ein strukturelles Spannungsfeld — im Skript illustriert durch das Szenario <strong>„Neuer/junger Absolvent mit altem Chef“</strong> bzw. <strong>„Chef-Problem“</strong>:</p>
+
+          <ul class="prose-list">
+            <li><strong>Asymmetrie der Machtgrundlagen:</strong> Ein junger Hochschulabsolvent (z. B. frisch von der DHBW) übernimmt als fachlicher Projektleiter die inhaltliche Steuerung („WIE“), weil er modernes Methoden-, IT- oder KI-Wissen mitbringt. Der erfahrene Linienvorgesetzte („alter Chef“) hält jedoch die <strong>disziplinarische Macht</strong> („WER wird befördert, beurteilt oder versetzt?“).</li>
+            <li><strong>Konflikt „Synergie vs. Erfahrung“:</strong> Im Idealfall entsteht eine <strong>Synergie</strong> zwischen der <em>Innovations- und Methodenkompetenz</em> des Absolventen und der <em>Erfahrung, Branchenkenntnis und politischen Durchsetzungskraft</em> des alten Chefs. Ohne klare Regeln kippt diese Konstellation jedoch in Autoritätskonflikte („Ich mache das seit 20 Jahren anders!“).</li>
+            <li><strong>Loyalitätskonflikt der Mitarbeiter (Zwei-Herren-Problem):</strong> Mitarbeiter orientieren sich im Zweifel an demjenigen, der über ihr Gehalt und ihre Karriere entscheidet (disziplinarischer Chef), und vernachlässigen die fachlichen Vorgaben des jungen Projektleiters.</li>
+            <li><strong>Umgekehrtes „Chef-Problem“:</strong> Arbeitet ein junger Absolvent unter einem fachlich überforderten, aber disziplinarisch starken Chef, können moderne Lösungen blockiert werden, weil formale Hierarchie fachliche Argumente überstimmt.</li>
+          </ul>
+
+          <div class="interactive-panel">
+            <strong>Interaktiver Konflikt-Simulator: Wie löst man das Spannungsfeld organisatorisch?</strong>
+            <div class="segmented-row" role="group" aria-label="Konfliktszenario wählen">
+              <button type="button" class="seg-btn" aria-pressed="true" onclick="showConflictCase(0, this)">1. Ressourcen-Tauziehen</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showConflictCase(1, this)">2. Methoden-Blockade</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showConflictCase(2, this)">3. Unfaire Beurteilung</button>
+            </div>
+            <div id="conflict-case-output" class="callout">
+              <span class="callout-label">Szenario 1: Ressourcen-Tauziehen zwischen Linie und Projekt</span>
+              <p><strong>Problem:</strong> Der erfahrene Abteilungsleiter zieht den wichtigsten Entwickler für das Tagesgeschäft ab; der junge Projektleiter kann ihn fachlich nicht halten.<br><strong>Organisatorische Lösung:</strong> Verbindliche Kapazitätskontingente vor Projektstart durch das Management festlegen, RACI-Verantwortlichkeiten schriftlich fixieren und einen klaren <strong>Eskalationspfad</strong> (Lenkungsausschuss) definieren.</p>
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-1-4" aria-pressed="false" onclick="toggleMastery('t-1-4')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- =====================================================================
+           MODUL 2: STABSSTELLEN & STABLINIENORGANISATION (SLO)
+      ====================================================================== -->
+      <section class="module-block" id="mod-2">
+        <div class="module-header">
+          <span class="eyebrow">Modul 2</span>
+          <h2>Stabsstellen &amp; Stabliniensorganisation (SLO)</h2>
+          <p>Das zentrale Klausurkapitel des Skripts: Was genau ist ein Stab, wie wird er in das Einliniensystem integriert und warum führen die 4 grundsätzlichen SLO-Probleme in Prüfungen zu 12 Punkten?</p>
+        </div>
+
+        <!-- 2.1 -->
+        <article class="topic-card" id="t-2-1">
+          <div class="topic-top">
+            <h3>2.1 Definition &amp; Wesen einer Stabsstelle</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 98%</span>
+            <p class="exam-badge-reason">Begründung: Exakt diese Frage war Teil a) der ehemaligen Klausuraufgabe im Skript („Was ist ein Stab? – 3 Punkte“). Alle drei Definitionsbausteine müssen sitzen.</p>
+          </div>
+
+          <div class="callout definition">
+            <span class="callout-label"><i data-lucide="bookmark-check" width="15" height="15" aria-hidden="true"></i> Prüfungsdefinition: Stabsstelle (Stab)</span>
+            <p>Ein <strong>Stab (Stabsstelle)</strong> ist eine einer <strong>Instanz (Leitungsstelle) zugeordnete</strong> spezialisierte <strong>Unterstützungs-, Beratungs- und Entscheidungsvorbereitungsstelle</strong>, die zur Entlastung der Instanz eingerichtet wird und <strong>keine eigene Entscheidungs- und Weisungsbefugnis</strong> gegenüber den nachgeordneten Linienstellen besitzt.</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Kernfunktion — Entlastung der Instanz:</strong> Wenn Leitungsstellen (z. B. Vorstand oder Werkleitung) quantitativ (zeitlich) oder qualitativ (fachlich bei Spezialwissen) überlastet sind, übernimmt der Stab die zeitintensive Vorarbeit.</li>
+            <li><strong>Typische Aufgaben eines Stabs:</strong> Informationsbeschaffung und -verdichtung, Markt- und Risikoanalysen, Ausarbeitung von Alternativen und Entscheidungsvorlagen, Beratung, sowie Kontrolle/Revision im Auftrag der Instanz.</li>
+            <li><strong>Kompetenzausstattung:</strong> Der Stab besitzt ein <strong>Informations- und Beratungsrecht</strong>, aber <strong>weder fachliche noch disziplinarische Weisungsbefugnis</strong> gegenüber der Linie. Die formale Entscheidung und Anordnung verbleiben immer bei der zugeordneten Instanz.</li>
+            <li><strong>Typische Praxisbeispiele für Stäbe:</strong> Rechtsabteilung, Unternehmensstrategie / -entwicklung, Controlling (als Stab), Datenschutzbeauftragter, Pressestelle / PR, Stabsstelle Organisation oder Qualitätsmanagement.</li>
+          </ul>
+
+          <div class="example-toggle-wrap" id="ex-2-1">
+            <button type="button" class="example-toggle-btn" onclick="toggleExample('ex-2-1')" aria-expanded="false">
+              <span>Praxisbeispiel anzeigen: Stabsstelle Datenschutz &amp; Recht beim Vorstand</span>
+              <i data-lucide="chevron-down" width="18" height="18" aria-hidden="true"></i>
+            </button>
+            <div class="example-body">
+              Der Vorstand möchte eine neue Kunden-App launchen. Die <strong>Stabsstelle Datenschutz/Recht</strong> prüft die DSGVO-Konformität, erstellt eine Risikoanalyse und empfiehlt dem Vorstand drei Anpassungen.<br>
+              <strong>Wichtig:</strong> Der Stab darf dem IT-Leiter (Linie) nicht direkt befehlen, den App-Launch zu stoppen. Er berät den Vorstand, und erst der Vorstand erteilt der IT die verbindliche Weisung!
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-2-1" aria-pressed="false" onclick="toggleMastery('t-2-1')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 2.2 -->
+        <article class="topic-card" id="t-2-2">
+          <div class="topic-top">
+            <h3>2.2 Die Stabliniensorganisation (SLO): Aufbau &amp; Funktionsweise</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 90%</span>
+            <p class="exam-badge-reason">Begründung: Man muss erklären können, wie die SLO das Einliniensystem um Stäbe erweitert und welches Ziel damit verfolgt wird (Fachkompetenz ohne Doppelunterstellung).</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Grundprinzip:</strong> Die <strong>Stabliniensorganisation (SLO)</strong> kombiniert das klassische <strong>Einliniensystem</strong> (klare, eindeutige Weisungskette von oben nach unten) mit <strong>Stabsstellen</strong> an den wichtigen Leitungsinstanzen.</li>
+            <li><strong>Strategisches Ziel:</strong> Man möchte die <strong>Entscheidungsqualität des Mehrliniensystems</strong> (tiefes Spezialistenwissen) erreichen, ohne dessen Hauptnachteil (Kompetenzkonflikte durch Mehrfachunterstellung) zu übernehmen.</li>
+            <li><strong>Funktionsweise im Organigramm:</strong> Durchgezogene Linien stehen für echte <strong>Weisungs- und Berichtsbeziehungen</strong> (Linie). Gestrichelte oder seitlich angedockte Verbindungen stehen für reine <strong>Beratungs- und Informationsbeziehungen</strong> (Stab ↔ Instanz).</li>
+          </ul>
+
+          <!-- Interaktives SVG-Organigramm -->
+          <div class="interactive-panel">
+            <strong>Interaktives SLO-Organigramm (Klicken Sie auf ein Element zur Analyse)</strong>
+            <div class="svg-box">
+              <svg class="org-svg" viewBox="0 0 760 320" role="img" aria-label="Interaktives Organigramm einer Stabliniensorganisation">
+                <!-- Verbindungslinien Linie (durchgezogen) -->
+                <line x1="380" y1="74" x2="380" y2="120" stroke="var(--on-surface)" stroke-width="2" />
+                <line x1="140" y1="120" x2="620" y2="120" stroke="var(--on-surface)" stroke-width="2" />
+                <line x1="140" y1="120" x2="140" y2="165" stroke="var(--on-surface)" stroke-width="2" />
+                <line x1="380" y1="120" x2="380" y2="165" stroke="var(--on-surface)" stroke-width="2" />
+                <line x1="620" y1="120" x2="620" y2="165" stroke="var(--on-surface)" stroke-width="2" />
+                <!-- Unterebene Linien -->
+                <line x1="140" y1="215" x2="140" y2="255" stroke="var(--on-surface)" stroke-width="1.6" />
+                <line x1="380" y1="215" x2="380" y2="255" stroke="var(--on-surface)" stroke-width="1.6" />
+                <line x1="620" y1="215" x2="620" y2="255" stroke="var(--on-surface)" stroke-width="1.6" />
+
+                <!-- Gestrichelte Stabsverbindungen (Beratung) -->
+                <line x1="190" y1="45" x2="275" y2="45" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="6 4" />
+                <line x1="485" y1="45" x2="570" y2="45" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="6 4" />
+
+                <!-- Stab Links -->
+                <g class="org-node" id="node-stab-1" onclick="selectOrgNode('stab1')">
+                  <rect x="30" y="20" width="160" height="52" rx="10" fill="var(--secondary-container)" stroke="var(--secondary)" stroke-width="1.6" />
+                  <text x="110" y="42" text-anchor="middle" fill="var(--on-surface)" font-size="13" font-weight="700" font-family="Inter, sans-serif">Stab: Recht / Orga</text>
+                  <text x="110" y="60" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11" font-family="Inter, sans-serif">Keine Weisungsbefugnis</text>
+                </g>
+
+                <!-- Geschäftsführung / Instanz -->
+                <g class="org-node selected" id="node-gf" onclick="selectOrgNode('gf')">
+                  <rect x="275" y="16" width="210" height="58" rx="12" fill="var(--surface-container-low)" stroke="var(--primary)" stroke-width="2.2" />
+                  <text x="380" y="40" text-anchor="middle" fill="var(--on-surface)" font-size="14" font-weight="700" font-family="Inter, sans-serif">Geschäftsführung</text>
+                  <text x="380" y="59" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11.5" font-family="Inter, sans-serif">Oberste Linieninstanz</text>
+                </g>
+
+                <!-- Stab Rechts -->
+                <g class="org-node" id="node-stab-2" onclick="selectOrgNode('stab2')">
+                  <rect x="570" y="20" width="160" height="52" rx="10" fill="var(--secondary-container)" stroke="var(--secondary)" stroke-width="1.6" />
+                  <text x="650" y="42" text-anchor="middle" fill="var(--on-surface)" font-size="13" font-weight="700" font-family="Inter, sans-serif">Stab: Strategie / IT</text>
+                  <text x="650" y="60" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11" font-family="Inter, sans-serif">Beratung &amp; Analyse</text>
+                </g>
+
+                <!-- Linieninstanzen Ebene 2 -->
+                <g class="org-node" id="node-linie-1" onclick="selectOrgNode('linie')">
+                  <rect x="55" y="165" width="170" height="50" rx="10" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="1.6" />
+                  <text x="140" y="187" text-anchor="middle" fill="var(--on-surface)" font-size="13" font-weight="600" font-family="Inter, sans-serif">Bereich Einkauf</text>
+                  <text x="140" y="204" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11" font-family="Inter, sans-serif">Linieninstanz</text>
+                </g>
+                <g class="org-node" id="node-linie-2" onclick="selectOrgNode('linie')">
+                  <rect x="295" y="165" width="170" height="50" rx="10" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="1.6" />
+                  <text x="380" y="187" text-anchor="middle" fill="var(--on-surface)" font-size="13" font-weight="600" font-family="Inter, sans-serif">Bereich Produktion</text>
+                  <text x="380" y="204" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11" font-family="Inter, sans-serif">Linieninstanz</text>
+                </g>
+                <g class="org-node" id="node-linie-3" onclick="selectOrgNode('linie')">
+                  <rect x="535" y="165" width="170" height="50" rx="10" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="1.6" />
+                  <text x="620" y="187" text-anchor="middle" fill="var(--on-surface)" font-size="13" font-weight="600" font-family="Inter, sans-serif">Bereich Vertrieb</text>
+                  <text x="620" y="204" text-anchor="middle" fill="var(--on-surface-variant)" font-size="11" font-family="Inter, sans-serif">Linieninstanz</text>
+                </g>
+
+                <!-- Ausführungsstellen Ebene 3 -->
+                <g class="org-node" id="node-ausf-1" onclick="selectOrgNode('ausf')">
+                  <rect x="70" y="255" width="140" height="44" rx="10" fill="var(--surface-container)" stroke="var(--outline-variant)" stroke-width="1.2" />
+                  <text x="140" y="281" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="500" font-family="Inter, sans-serif">Ausführung Einkauf</text>
+                </g>
+                <g class="org-node" id="node-ausf-2" onclick="selectOrgNode('ausf')">
+                  <rect x="310" y="255" width="140" height="44" rx="10" fill="var(--surface-container)" stroke="var(--outline-variant)" stroke-width="1.2" />
+                  <text x="380" y="281" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="500" font-family="Inter, sans-serif">Ausführung Fertigung</text>
+                </g>
+                <g class="org-node" id="node-ausf-3" onclick="selectOrgNode('ausf')">
+                  <rect x="550" y="255" width="140" height="44" rx="10" fill="var(--surface-container)" stroke="var(--outline-variant)" stroke-width="1.2" />
+                  <text x="620" y="281" text-anchor="middle" fill="var(--on-surface)" font-size="12" font-weight="500" font-family="Inter, sans-serif">Ausführung Verkauf</text>
+                </g>
+              </svg>
+            </div>
+            <div id="org-node-detail" class="callout definition">
+              <span class="callout-label">Ausgewählt: Geschäftsführung (Oberste Linieninstanz)</span>
+              <p><strong>Rolle in der SLO:</strong> Trägt die volle Entscheidungs- und Ergebnisverantwortung. Sie empfängt Entscheidungsvorlagen von den Stäben (gestrichelte Linie), trifft die formale Entscheidung und gibt eindeutige Weisungen über die durchgezogene Linie an die Bereiche weiter.</p>
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-2-2" aria-pressed="false" onclick="toggleMastery('t-2-2')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 2.3 -->
+        <article class="topic-card" id="t-2-3">
+          <div class="topic-top">
+            <h3>2.3 Die 4 zentralen Probleme der Stabliniensorganisation (inkl. Prüfungsbegründungen)</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 100%</span>
+            <p class="exam-badge-reason">Begründung: Dies ist exakt die 12-Punkte-Aufgabe b) aus der ehemaligen Klausur („Welches sind die grundsätzlichen Probleme einer SLO? Bitte begründen Sie Ihre Angaben.“). Reines Aufzählen reicht nicht — die Begründungskette bringt die vollen Punkte!</p>
+          </div>
+
+          <div class="compare-grid">
+            <div class="sub-card">
+              <h4>1. Informationsvorsprung &amp; informelle Macht <span class="chip orange">„Graue Eminenz“</span></h4>
+              <p><strong>Kernproblem:</strong> Der Stab sammelt, filtert und interpretiert Informationen für die überlastete Instanz.</p>
+              <p><strong>Begründung (für die Klausur):</strong> Durch diese Filterfunktion entsteht ein massiver <strong>Informationsvorsprung</strong> gegenüber dem Linienvorgesetzten und den Fachabteilungen. Der Stab kann Alternativen gezielt vorselektieren, Risiken unterschiedlich stark gewichten und so faktisch die Entscheidung vorwegnehmen („Manipulation der Entscheidungsgrundlage“). Damit gewinnt der Stab erhebliche <strong>informelle Macht</strong> im Hintergrund (<em>„Graue Eminenz“</em>), obwohl ihm formal gar keine Weisungskompetenz zusteht.</p>
+            </div>
+
+            <div class="sub-card">
+              <h4>2. Macht ohne Verantwortung <span class="chip red">Kongruenzbruch</span></h4>
+              <p><strong>Kernproblem:</strong> Einfluss auf das Ergebnis und formale Haftung fallen auseinander.</p>
+              <p><strong>Begründung (für die Klausur):</strong> Dies verletzt das organisatorische <strong>Kongruenzprinzip</strong>. Während der Stab die Konzepte erarbeitet und faktisch steuert, unterschreibt formal die Linieninstanz und trägt damit allein das volle Risiko sowie die <strong>Ergebnis- und Personalverantwortung</strong>. Läuft ein Projekt schief, muss die Linie den Misserfolg verantworten, während sich der Stab auf seine unverbindliche Beratungsrolle zurückziehen kann („Ich habe nur Vorschläge gemacht“). Dies begünstigt riskante oder realitätsferne Konzepte.</p>
+            </div>
+
+            <div class="sub-card">
+              <h4>3. Akzeptanz- &amp; Konfliktpotenzial <span class="chip">Stab vs. Linie</span></h4>
+              <p><strong>Kernproblem:</strong> Reibungsverluste, Misstrauen und Blockaden zwischen Stabs- und Linienmitarbeitern.</p>
+              <p><strong>Begründung (für die Klausur):</strong> Es prallen zwei Kulturen aufeinander: Stäbe sind oft akademisch geprägte, jüngere Spezialisten mit hohem Theorie- und Analysefokus, während Linienmanager erfahrene Generalisten unter täglichem Ergebnisdruck sind. Die Linie empfindet den Stab häufig als praxisfern („Elfenbeinturm“) oder als unerwünschten Kontrolleur der Geschäftsführung und blockiert Konzepte (<em>Not-Invented-Here-Syndrom</em>). Umgekehrt sind Stäbe demotiviert, wenn ihre Analysen ignoriert oder verwässert werden.</p>
+            </div>
+
+            <div class="sub-card">
+              <h4>4. Personalkosten &amp; Wasserkopf <span class="chip red">Bürokratisierung</span></h4>
+              <p><strong>Kernproblem:</strong> Hohe Gemeinkosten und Aufblähung der Verwaltung ohne direkten operativen Output.</p>
+              <p><strong>Begründung (für die Klausur):</strong> Stabsstellen erfordern <strong>hochqualifizierte und entsprechend teure Spezialisten</strong>, die selbst keine direkte Wertschöpfung (Produktion oder Verkauf) erbringen — sie erhöhen somit die Fixkosten. Zudem steigt der Abstimmungs-, Berichts- und Koordinationsaufwand zwischen Stab, Instanz und Linie erheblich: Es kommt zu Doppelarbeit, langen Rückkopplungsschleifen und der Gefahr der Selbstbeschäftigung von Stäben (<strong>organisatorischer Wasserkopf</strong>), was das Unternehmen träge und unflexibel macht.</p>
+            </div>
+          </div>
+
+          <div class="example-toggle-wrap" id="ex-2-3">
+            <button type="button" class="example-toggle-btn" onclick="toggleExample('ex-2-3')" aria-expanded="false">
+              <span>Praxisbeispiel anzeigen: Alle 4 SLO-Probleme in einem Industrieunternehmen</span>
+              <i data-lucide="chevron-down" width="18" height="18" aria-hidden="true"></i>
+            </button>
+            <div class="example-body">
+              Ein Konzern richtet eine neue 10-köpfige <strong>Stabsstelle „Digitale Transformation“</strong> unter dem CEO ein:<br>
+              1. <strong>Informationsvorsprung:</strong> Der Stab präsentiert dem CEO nur Studien, die Cloud-Anbieter A begünstigen; Bedenken der Produktion werden in den Anhang verbannt.<br>
+              2. <strong>Macht ohne Verantwortung:</strong> Als die Einführung im Werk stockt und Millionen kostet, muss der Produktionsleiter sich rechtfertigen — der Stab verweist darauf, nur beraten zu haben.<br>
+              3. <strong>Akzeptanzkonflikt:</strong> Die Werksmeister lehnen die PowerPoint-Konzepte der jungen Stabsberater als praxisfremd ab und unterlaufen das Projekt.<br>
+              4. <strong>Wasserkopf &amp; Kosten:</strong> Jährlich entstehen 1,4 Mio. € Personalkosten für den Stab plus wöchentliche Abstimmungsrunden, ohne dass eine einzige Maschine schneller läuft.
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-2-3" aria-pressed="false" onclick="toggleMastery('t-2-3')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- =====================================================================
+           MODUL 3: SPEZIALISIERUNG & FUNKTIONALE ORGANISATIONSSTRUKTUR
+      ====================================================================== -->
+      <section class="module-block" id="mod-3">
+        <div class="module-header">
+          <span class="eyebrow">Modul 3</span>
+          <h2>Spezialisierung &amp; Funktionale Organisationsstruktur</h2>
+          <p>Warum Organisationen Aufgaben teilen, wie die klassische funktionale Gliederung nach Verrichtungen funktioniert und warum Querschnittsentscheidungen zu IT/Orga sowie langfristige Marktstrategien auf Leitungsebene getroffen werden.</p>
+        </div>
+
+        <!-- 3.1 -->
+        <article class="topic-card" id="t-3-1">
+          <div class="topic-top">
+            <h3>3.1 Prinzip der Spezialisierung durch Aufgabenteilung</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 85%</span>
+            <p class="exam-badge-reason">Begründung: Die Definition „Spezialisierung = Aufgabenteilung“ sowie das Abwägen von Effizienzgewinnen gegen Koordinations- und Motivationskosten sind Standardstoff für Beurteilungsfragen.</p>
+          </div>
+
+          <div class="callout definition">
+            <span class="callout-label"><i data-lucide="layers" width="15" height="15" aria-hidden="true"></i> Grundgleichung aus dem Skript</span>
+            <p><strong>Spezialisierung = Aufgabenteilung.</strong> Komplexe Gesamtaufgaben werden in abgegrenzte Teilaufgaben zerlegt und spezialisierten Stellen dauerhaft zugeordnet.</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Mengenteilung (quantitative Teilung):</strong> Eine gleichartige Aufgabe wird rein mengenmäßig auf mehrere Stellen verteilt (z. B. drei Sachbearbeiter bearbeiten alle den kompletten Vorgang für unterschiedliche Kundengruppen A–H, I–P, Q–Z). Keine echte Spezialisierung.</li>
+            <li><strong>Artenteilung (qualitative Teilung):</strong> Die Gesamtaufgabe wird in verschiedenartige Teilverrichtungen zerlegt (z. B. Einkauf → Fertigung → Qualitätskontrolle → Versand). Hier entsteht <strong>echte Spezialisierung</strong>.</li>
+          </ul>
+
+          <div class="compare-grid">
+            <div class="sub-card">
+              <h4>Vorteile der Spezialisierung <span class="chip green">Effizienzgewinne</span></h4>
+              <ul class="prose-list">
+                <li><strong>Übungs- &amp; Lernkurveneffekte:</strong> Häufige Wiederholung steigert Geschwindigkeit und senkt Fehlerquoten.</li>
+                <li><strong>Kürzere Einarbeitungszeiten:</strong> Neue Mitarbeiter beherrschen enger gefasste Teilaufgaben schneller.</li>
+                <li><strong>Höhere Fachqualität:</strong> Tiefe Spezialkenntnisse in komplexen Feldern (z. B. Steuerrecht, IT-Security).</li>
+                <li><strong>Bessere Ressourcennutzung:</strong> Teure Spezialwerkzeuge/-software werden zentral und voll ausgelastet (Economies of Scale).</li>
+              </ul>
+            </div>
+            <div class="sub-card">
+              <h4>Nachteile der Spezialisierung <span class="chip red">Reibungsverluste</span></h4>
+              <ul class="prose-list">
+                <li><strong>Hoher Koordinations- &amp; Schnittstellenbedarf:</strong> Je mehr geteilt wird, desto mehr Übergaben und Abstimmungen sind nötig.</li>
+                <li><strong>Monotonie &amp; Motivationsverlust:</strong> Einseitige Tätigkeiten führen zu Demotivation und Entfremdung vom Gesamtprodukt.</li>
+                <li><strong>Ressortegoismus („Silodenken“):</strong> Bereiche optimieren nur eigene Kennzahlen statt des Kundennutzens.</li>
+                <li><strong>Geringere Flexibilität:</strong> Bei Krankheit oder Nachfragewechsel sind Hochspezialisten schwer austauschbar.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-3-1" aria-pressed="false" onclick="toggleMastery('t-3-1')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 3.2 -->
+        <article class="topic-card" id="t-3-2">
+          <div class="topic-top">
+            <h3>3.2 Funktionale Organisationsstruktur (Verrichtungsprinzip)</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 90%</span>
+            <p class="exam-badge-reason">Begründung: Die funktionale Struktur ist die klassische Ausgangsform der Aufbauorganisation (Skript S. 16). Prüfer verlangen das Gliederungskriterium (Verrichtung), typische Bereiche sowie Einsatzgrenzen.</p>
+          </div>
+
+          <div class="callout definition">
+            <span class="callout-label"><i data-lucide="network" width="15" height="15" aria-hidden="true"></i> Definition: Funktionale Organisationsstruktur</span>
+            <p>Auf der <strong>zweiten Hierarchieebene</strong> (direkt unter der Unternehmensleitung) wird das Unternehmen nach <strong>gleichartigen betrieblichen Verrichtungen / Funktionen</strong> gegliedert (z. B. Beschaffung, Produktion, Absatz, Verwaltung/Finanzen, IT/Orga).</p>
+          </div>
+
+          <!-- Interaktiver Funktions-Explorer -->
+          <div class="interactive-panel">
+            <strong>Struktur-Explorer: Funktionale Gliederung auf Ebene 2</strong>
+            <div class="segmented-row" role="group" aria-label="Funktionsbereich auswählen">
+              <button type="button" class="seg-btn" aria-pressed="true" onclick="showFuncArea('beschaffung', this)">Beschaffung</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showFuncArea('produktion', this)">Produktion</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showFuncArea('vertrieb', this)">Absatz / Vertrieb</button>
+              <button type="button" class="seg-btn" aria-pressed="false" onclick="showFuncArea('itorga', this)">IT &amp; Organisation</button>
+            </div>
+            <div id="func-area-output" class="callout">
+              <span class="callout-label">Funktion: Beschaffung &amp; Einkauf</span>
+              <p><strong>Aufgaben:</strong> Bündelung aller Einkaufsmengen, Lieferantenauswahl, Preisverhandlungen und Materialbereitstellung für das gesamte Unternehmen. <strong>Vorteil der Bündelung:</strong> Maximale Einkaufsmacht (Mengenrabatte) statt zersplitterter Einzelbestellungen.</p>
+            </div>
+          </div>
+
+          <div class="compare-grid">
+            <div class="sub-card">
+              <h4>Eignung &amp; Stärken</h4>
+              <ul class="prose-list">
+                <li>Ideal für <strong>Einproduktunternehmen</strong> oder Unternehmen mit homogenem Sortiment in stabilen Märkten.</li>
+                <li>Hohe fachliche Spezialisierung und klare Skaleneffekte (keine doppelte Vorhaltung gleicher Funktionen).</li>
+                <li>Einfache, einheitliche Standards und direkte Kontrolle innerhalb der jeweiligen Funktion.</li>
+              </ul>
+            </div>
+            <div class="sub-card">
+              <h4>Schwächen &amp; Wachstumsgrenzen</h4>
+              <ul class="prose-list">
+                <li><strong>Überlastung der Spitze:</strong> Konflikte zwischen Funktionen (z. B. Vertrieb vs. Produktion) müssen ganz oben entschieden werden.</li>
+                <li><strong>Fehlende Produkt- bzw. Marktverantwortung:</strong> Niemand ist allein für den Erfolg eines einzelnen Produkts oder einer Region verantwortlich.</li>
+                <li><strong>Trägheit bei Diversifizierung:</strong> Bei vielen unterschiedlichen Produkten versagt das reine Verrichtungsprinzip → Übergang zur <strong>divisionalen (Sparten-)Struktur</strong> nötig.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-3-2" aria-pressed="false" onclick="toggleMastery('t-3-2')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 3.3 -->
+        <article class="topic-card" id="t-3-3">
+          <div class="topic-top">
+            <h3>3.3 Entscheidungsstrukturen: Ansiedlung von IT/Orga &amp; langfristige Entscheidungen</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 80%</span>
+            <p class="exam-badge-reason">Begründung: Das Skript betont explizit die „Entscheidung über IT oder Orga“ (S. 22) sowie „langfristig (neue Märkte/Produkte)“ (S. 11/12). Hier wird geprüft, warum bestimmte Entscheidungen zentral an der Spitze liegen.</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Entscheidung über IT und Organisation (Querschnittsfunktionen):</strong>
+              IT und Organisation greifen in <em>alle</em> Fachabteilungen (Einkauf, Produktion, Vertrieb, Finanzen) ein. Würde jede Abteilung ihre eigene Software oder eigene Ablaufregeln beschließen, entstünden inkompatible Insellösungen, Medienbrüche und extreme Schnittstellenkosten. Deshalb werden Grundsatzentscheidungen über <strong>IT-Architektur und Organisationsform</strong> zentral auf <strong>Vorstands- bzw. Geschäftsführungsebene</strong> (oder über ein direkt angebundenes Vorstandsressort/CIO/Stabsstelle Orga) getroffen.</li>
+            <li><strong>Zentralisation vs. Dezentralisation von Entscheidungen:</strong>
+              Routineentscheidungen (z. B. Nachbestellung eines Büroartikels) werden zur Entlastung der Spitze <strong>dezentralisiert</strong>. Strategische Grundsatzentscheidungen bleiben <strong>zentralisiert</strong>.</li>
+            <li><strong>Langfristige Entscheidungen — neue Märkte &amp; neue Produkte:</strong>
+              Entscheidungen über den <strong>Eintritt in neue Märkte</strong> und die <strong>Einführung neuer Produkte</strong> sind <strong>langfristig, schwer revidierbar, kapitalintensiv und risikoreich</strong>. Sie gehören zwingend zur originären Führungsaufgabe der obersten Unternehmensleitung und leiten direkt zur Frage über, wie stark sich neue Produkte vom bisherigen Sortiment unterscheiden (→ Modul 4: Produktdiversifizierung).</li>
+          </ul>
+
+          <div class="example-toggle-wrap" id="ex-3-3">
+            <button type="button" class="example-toggle-btn" onclick="toggleExample('ex-3-3')" aria-expanded="false">
+              <span>Praxisbeispiel anzeigen: Warum ein Werkleiter nicht allein das ERP-System wählt</span>
+              <i data-lucide="chevron-down" width="18" height="18" aria-hidden="true"></i>
+            </button>
+            <div class="example-body">
+              Würde Werk A die Produktionssoftware von Anbieter X, Werk B die von Anbieter Y und der Vertrieb ein ganz anderes CRM-Tool kaufen, könnten Auftragsdaten nicht mehr automatisch durchlaufen. Die Entscheidung über das unternehmensweite ERP-System und die dazugehörigen Prozessstandards fällt daher zentral auf <strong>Leitungsebene</strong>, unter Einbindung von IT/Orga als Querschnittsfunktion.
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-3-3" aria-pressed="false" onclick="toggleMastery('t-3-3')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- =====================================================================
+           MODUL 4: PRODUKTDIVERSIFIZIERUNG & STRATEGIEN
+      ====================================================================== -->
+      <section class="module-block" id="mod-4">
+        <div class="module-header">
+          <span class="eyebrow">Modul 4</span>
+          <h2>Produktdiversifizierung &amp; Wachstumsstrategien</h2>
+          <p>Wie sich Unternehmen langfristig auf neue Produkte und Märkte ausrichten — inklusive exakter Abgrenzung von horizontaler, vertikaler und lateraler Diversifizierung.</p>
+        </div>
+
+        <!-- 4.1 -->
+        <article class="topic-card" id="t-4-1">
+          <div class="topic-top">
+            <h3>4.1 Begriffsbestimmung: Diversifizierung &amp; Produktunterschiedlichkeit</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 85%</span>
+            <p class="exam-badge-reason">Begründung: Die im Skript formulierte Definition („Unterschiedlichkeit von Produkten, die ein Unternehmen anbietet“) sowie der Zusammenhang mit der Ansoff-Matrix sind klassisches Prüfungsgrundwissen.</p>
+          </div>
+
+          <div class="callout definition">
+            <span class="callout-label"><i data-lucide="package-plus" width="15" height="15" aria-hidden="true"></i> Definition aus dem Skript</span>
+            <p><strong>Diversifizierung von Produkten:</strong> Die <strong>Unterschiedlichkeit (Heterogenität) von Produkten</strong>, die ein Unternehmen anbietet — strategisch verstanden als die Ausweitung des Leistungsprogramms auf <strong>neue Produkte für neue Märkte</strong>.</p>
+          </div>
+
+          <ul class="prose-list">
+            <li><strong>Einordnung in die Ansoff-Matrix (Basiswissen):</strong>
+              Während <em>Marktdurchdringung</em> (altes Produkt/alter Markt), <em>Marktentwicklung</em> (altes Produkt/neuer Markt) und <em>Produktentwicklung</em> (neues Produkt/alter Markt) noch auf bekannten Feldern aufbauen, kombiniert die <strong>Diversifizierung</strong> beides neu (<strong>neues Produkt + neuer Markt</strong>) — und birgt damit das höchste Risiko, aber auch das größte langfristige Potenzial.</li>
+            <li><strong>Strategische Motive für Diversifizierung:</strong>
+              <strong>Risikostreuung</strong> (Unabhängigkeit von einem schrumpfenden Stammmarkt), <strong>Wachstumszwang</strong> bei gesättigten Heimatmärkten, <strong>Nutzung von Synergien</strong> (Marke, Technologie, Vertriebskanäle) sowie <strong>Absicherung von Liefer- oder Absatzwegen</strong>.</li>
+            <li><strong>Organisatorische Folge:</strong> Mit zunehmender Produktdiversifizierung wird das Sortiment zu heterogen für eine rein funktionale Struktur — Unternehmen wechseln dann häufig in eine <strong>divisionale Organisation (Spartenorganisation nach Produkten)</strong>.</li>
+          </ul>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-4-1" aria-pressed="false" onclick="toggleMastery('t-4-1')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- 4.2 -->
+        <article class="topic-card" id="t-4-2">
+          <div class="topic-top">
+            <h3>4.2 Horizontale, Vertikale &amp; Laterale Diversifizierung (+ Interaktiver Trainer)</h3>
+          </div>
+
+          <div class="exam-badge-box">
+            <span class="exam-badge-pill">🎯 Klausurwahrscheinlichkeit: 95%</span>
+            <p class="exam-badge-reason">Begründung: Die drei Diversifizierungsarten (inkl. Vorwärts-/Rückwärtsintegration bei der vertikalen Form) müssen sicher definiert und an konkreten Unternehmensbeispielen richtig zugeordnet werden.</p>
+          </div>
+
+          <div class="compare-grid">
+            <div class="sub-card">
+              <h4>1. Horizontale Diversifizierung <span class="chip">Gleiche Stufe</span></h4>
+              <p>Erweiterung des Programms um Produkte, die mit dem bisherigen Angebot in einem <strong>sachlichen, technologischen oder marktlichen Zusammenhang</strong> auf <strong>derselben Wirtschaftsstufe</strong> stehen.</p>
+              <ul class="prose-list">
+                <li><strong>Synergie:</strong> Gleiche Technologie, gleiche Kunden oder gleicher Vertriebskanal.</li>
+                <li><strong>Beispiele:</strong> Pkw-Hersteller baut nun auch Kleintransporter/E-Bikes; Molkerei ergänzt Milch um Joghurt und Speiseeis; Buchhaltungssoftware-Anbieter bietet Lohnabrechnung an.</li>
+              </ul>
+            </div>
+
+            <div class="sub-card">
+              <h4>2. Vertikale Diversifizierung <span class="chip orange">Wertschöpfungskette</span></h4>
+              <p>Ausweitung auf <strong>vor- oder nachgelagerte Stufen der Wertschöpfungskette</strong> (Erhöhung der Wertschöpfungstiefe).</p>
+              <ul class="prose-list">
+                <li><strong>Rückwärtsintegration (vorgelagert):</strong> Einstieg in Zulieferstufen/Rohstoffe (z. B. Autohersteller baut eigenes Batteriewerk; Kaffeeröster kauft Plantagen). Ziel: Versorgungssicherheit &amp; Unabhängigkeit.</li>
+                <li><strong>Vorwärtsintegration (nachgelagert):</strong> Einstieg in Weiterverarbeitung/Handel/Endvertrieb (z. B. Röster eröffnet eigene Coffee-Shops; Modemärke eröffnet eigene Flagship-Stores). Ziel: Kundennähe &amp; Handelsspanne.</li>
+              </ul>
+            </div>
+
+            <div class="sub-card">
+              <h4>3. Laterale (diagonale) Diversifizierung <span class="chip red">Kein Zusammenhang</span></h4>
+              <p>Vorstoß in völlig neue Produkt- und Marktbereiche, bei denen <strong>kein Zusammenhang zwischen den Produkten</strong> (weder technisch noch marktlich) besteht.</p>
+              <ul class="prose-list">
+                <li><strong>Motiv &amp; Risiko:</strong> Maximale <strong>Risikostreuung</strong> (Mischkonzern / Konglomerat), aber höchstes Scheiterrisiko mangels Erfahrung.</li>
+                <li><strong>Beispiele:</strong> Reifenhersteller betreibt Hotels oder Reiseveranstalter; Lebensmittelkonzern (z. B. Dr. Oetker) steigt in Reederei/Schifffahrt oder Finanzdienstleistungen ein.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Interaktiver Diversifizierungs-Klassifikator -->
+          <div class="interactive-panel">
+            <strong>Interaktiver Praxis-Trainer: Welche Diversifizierungsstrategie liegt vor?</strong>
+            <p id="div-prompt-text" style="margin: 0; font-weight: 600;"></p>
+            <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm);" id="div-btn-group">
+              <button type="button" class="btn btn-secondary" onclick="checkDivAnswer('horizontal')">Horizontal</button>
+              <button type="button" class="btn btn-secondary" onclick="checkDivAnswer('vertikal-rueck')">Vertikal (Rückwärts)</button>
+              <button type="button" class="btn btn-secondary" onclick="checkDivAnswer('vertikal-vor')">Vertikal (Vorwärts)</button>
+              <button type="button" class="btn btn-secondary" onclick="checkDivAnswer('lateral')">Lateral (Diagonal)</button>
+            </div>
+            <div id="div-feedback" class="quiz-feedback"></div>
+            <div>
+              <button type="button" class="btn btn-ghost" onclick="nextDivCase()">Nächstes Praxisbeispiel laden ›</button>
+            </div>
+          </div>
+
+          <div class="topic-footer">
+            <button type="button" class="mastery-btn" data-topic-btn="t-4-2" aria-pressed="false" onclick="toggleMastery('t-4-2')">
+              <i data-lucide="check-circle-2" width="18" height="18" aria-hidden="true"></i>
+              <span>Als verstanden markieren</span>
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- =====================================================================
+           MODUL 5: INTERAKTIVE PROBEKLAUSUR & WISSENSTEST
+      ====================================================================== -->
+      <section class="module-block" id="mod-5">
+        <div class="module-header">
+          <span class="eyebrow">Modul 5 · Prüfungssimulation</span>
+          <h2>Interaktive Probeklausur &amp; Wissenstest</h2>
+          <p>Testen Sie Ihr Wissen im realistischen Klausurformat — von schnellen Multiple-Choice-Fragen über die originale 15-Punkte-Klausuraufgabe zur Stabliniensorganisation bis zu Fallstudien mit vollständigem Korrekturschema.</p>
+        </div>
+
+        <div class="topic-card">
+          <div class="exam-score-bar" aria-live="polite">
+            <div>
+              <div class="kpi-label">Multiple Choice</div>
+              <div class="kpi-value" id="mc-score-display">0 / 6</div>
+              <div class="kpi-caption">Sofort ausgewertet</div>
+            </div>
+            <div>
+              <div class="kpi-label">Selbstbewertung Klausuraufgaben</div>
+              <div class="kpi-value" id="rubric-score-display">0 / 29 Pkt.</div>
+              <div class="kpi-caption">Anhand Korrekturschema</div>
+            </div>
+            <div>
+              <div class="kpi-label">Gesamtstatus</div>
+              <div class="kpi-value" id="exam-percent-display">0 %</div>
+              <div class="kpi-caption">Ziel für „Sehr gut“: ≥ 85 %</div>
+            </div>
+          </div>
+
+          <!-- Teil A: Multiple Choice -->
+          <div id="quiz-mc" style="scroll-margin-top: 84px; display: flex; flex-direction: column; gap: var(--space-md);">
+            <h3 style="margin: 0; font-family: var(--font-headline);">Teil A: Wissens- &amp; Verständnischeck (Multiple Choice)</h3>
+            <div id="mc-container" style="display: flex; flex-direction: column; gap: var(--space-md);"></div>
+          </div>
+
+          <!-- Teil B: Original-Klausuraufgabe aus dem Skript -->
+          <div id="quiz-slo" style="scroll-margin-top: 84px; display: flex; flex-direction: column; gap: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--outline-variant);">
+            <div>
+              <span class="chip orange">Original-Klausuraufgabe aus Skript_Orga_WI_NEU.pdf · 15 Punkte</span>
+              <h3 style="margin: var(--space-sm) 0 0; font-family: var(--font-headline);">Teil B: Stabsstellen &amp; Stabliniensorganisation (SLO)</h3>
+            </div>
+
+            <!-- Aufgabe a) -->
+            <div class="quiz-item">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-sm); flex-wrap: wrap;">
+                <strong>Aufgabe a) Was ist ein Stab?</strong>
+                <span class="chip">3 Punkte</span>
+              </div>
+              <div>
+                <label for="ans-slo-a" class="exam-field-label">Ihre Klausurantwort (Stichpunkte oder ausformuliert):</label>
+                <textarea id="ans-slo-a" class="exam-textarea" oninput="saveFreeText('slo-a', this.value)" placeholder="Formulieren Sie hier Ihre Definition eines Stabs (Zuordnung, Aufgaben, Befugnisse)…"></textarea>
+              </div>
+              <div>
+                <button type="button" class="btn btn-primary" onclick="toggleSolution('sol-slo-a', this)" aria-expanded="false">
+                  Musterlösung &amp; Korrekturschema anzeigen
+                </button>
+              </div>
+              <div class="solution-box" id="sol-slo-a" data-open="false">
+                <p style="margin: 0;"><strong>Musterlösung (3 Punkte):</strong> Ein Stab ist eine einer Leitungsstelle (Instanz) zugeordnete spezialisierte Unterstützungs-, Beratungs- und Entscheidungsvorbereitungsstelle zur Entlastung der Instanz, die über keine eigene Entscheidungs- und Weisungsbefugnis gegenüber den Linienstellen verfügt.</p>
+                <div style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                  <strong style="font-size: var(--label-size); color: var(--on-surface-variant);">Korrekturschema (Haken Sie Ihre selbst erreichten Punkte ab):</strong>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-a-1" data-points="1" onchange="toggleRubric(this)">
+                    <span><strong>+1 Pkt.:</strong> Zuordnung zu einer Instanz / Leitungsstelle genannt.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-a-2" data-points="1" onchange="toggleRubric(this)">
+                    <span><strong>+1 Pkt.:</strong> Funktion genannt: Spezialisierte Beratung, Informationsaufbereitung, Entscheidungsvorbereitung zur Entlastung der Instanz.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-a-3" data-points="1" onchange="toggleRubric(this)">
+                    <span><strong>+1 Pkt.:</strong> Befugnisabgrenzung genannt: Keine eigene Entscheidungs- und Weisungskompetenz gegenüber der Linie.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aufgabe b) -->
+            <div class="quiz-item">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-sm); flex-wrap: wrap;">
+                <strong>Aufgabe b) Welches sind die grundsätzlichen Probleme einer SLO? Bitte begründen Sie Ihre Angaben.</strong>
+                <span class="chip">12 Punkte</span>
+              </div>
+              <div>
+                <label for="ans-slo-b" class="exam-field-label">Ihre Klausurantwort (Nennen und begründen Sie alle 4 Kernprobleme):</label>
+                <textarea id="ans-slo-b" class="exam-textarea" style="min-height: 160px;" oninput="saveFreeText('slo-b', this.value)" placeholder="1. Problem + Begründung …&#10;2. Problem + Begründung …&#10;3. Problem + Begründung …&#10;4. Problem + Begründung …"></textarea>
+              </div>
+              <div>
+                <button type="button" class="btn btn-primary" onclick="toggleSolution('sol-slo-b', this)" aria-expanded="false">
+                  Musterlösung &amp; Korrekturschema anzeigen
+                </button>
+              </div>
+              <div class="solution-box" id="sol-slo-b" data-open="false">
+                <p style="margin: 0;"><strong>Musterlösung (12 Punkte — 4 Probleme à 3 Punkte: 1 Pkt. Nennung + 2 Pkt. Begründung):</strong></p>
+                <div style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-b-1" data-points="3" onchange="toggleRubric(this)">
+                    <span><strong>+3 Pkt. — Problem 1: Informationsvorsprung &amp; informelle Macht („Graue Eminenz“).</strong><br><em>Begründung:</em> Da Stäbe Informationen für die überlastete Instanz sammeln, filtern und aufbereiten, entsteht ein Informationsmonopol. Durch selektive Darstellung von Alternativen oder Risiken können Stäbe Entscheidungen faktisch vorwegnehmen und informelle Macht ausüben, obwohl sie formal weisungslos sind.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-b-2" data-points="3" onchange="toggleRubric(this)">
+                    <span><strong>+3 Pkt. — Problem 2: Macht ohne Verantwortung (Verletzung des Kongruenzprinzips).</strong><br><em>Begründung:</em> Einfluss und Haftung fallen auseinander. Der Stab schlägt Maßnahmen vor und steuert inhaltlich, trägt aber keine formale Ergebnisverantwortung. Bei Fehlentscheidungen haftet ausschließlich die Linieninstanz, während sich der Stab auf seine bloße Beratungsrolle zurückziehen kann.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-b-3" data-points="3" onchange="toggleRubric(this)">
+                    <span><strong>+3 Pkt. — Problem 3: Akzeptanz- und Konfliktpotenzial zwischen Stab und Linie.</strong><br><em>Begründung:</em> Jüngere, theoretisch-analytische Spezialisten (Stab) treffen auf erfahrene, operativ unter Druck stehende Generalisten (Linie). Die Linie empfindet Stäbe oft als praxisfern oder als Kontrolleure und blockiert Konzepte; Stäbe sind frustriert über fehlende Umsetzung.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-b-4" data-points="3" onchange="toggleRubric(this)">
+                    <span><strong>+3 Pkt. — Problem 4: Hohe Personalkosten &amp; organisatorischer Wasserkopf.</strong><br><em>Begründung:</em> Stabsstellen erfordern teure Spezialisten ohne direkte operative Wertschöpfung. Zusätzlich entstehen durch intensive Abstimmungsschleifen, Berichtswesen und Doppelarbeit hohe Koordinationskosten und Bürokratisierung (sinkende Flexibilität).</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Teil C: Fallaufgaben & Transfer -->
+          <div id="quiz-cases" style="scroll-margin-top: 84px; display: flex; flex-direction: column; gap: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--outline-variant);">
+            <h3 style="margin: 0; font-family: var(--font-headline);">Teil C: Transfer- &amp; Fallaufgaben (Weisungskompetenz &amp; Diversifizierung)</h3>
+
+            <!-- Fallaufgabe 1 -->
+            <div class="quiz-item">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-sm); flex-wrap: wrap;">
+                <strong>Fallaufgabe 1: Kompetenzkonflikt „Junger Absolvent als Projektleiter vs. alter Abteilungsleiter“</strong>
+                <span class="chip">8 Punkte</span>
+              </div>
+              <p style="margin: 0; font-size: 0.9375rem; color: var(--on-surface-variant);">
+                Eine frisch eingestellte DHBW-Absolventin leitet ein digitales Transformationsprojekt. Ein erfahrener Entwickler wird ihr vom langjährigen Abteilungsleiter zugeteilt, verweigert aber die von ihr vorgegebene agile Methode, weil sein Chef „klassische Berichte sehen will“. Analysieren Sie den Konflikt anhand der Weisungskompetenzen („WIE“ vs. „WER“) und nennen Sie zwei organisatorische Lösungsmaßnahmen.
+              </p>
+              <div>
+                <label for="ans-case-1" class="exam-field-label">Ihre Fallanalyse:</label>
+                <textarea id="ans-case-1" class="exam-textarea" oninput="saveFreeText('case-1', this.value)" placeholder="Unterscheiden Sie fachliche und disziplinarische Kompetenz, erklären Sie die Ursache und nennen Sie 2 Gegenmaßnahmen…"></textarea>
+              </div>
+              <div>
+                <button type="button" class="btn btn-primary" onclick="toggleSolution('sol-case-1', this)" aria-expanded="false">
+                  Musterlösung &amp; Korrekturschema anzeigen
+                </button>
+              </div>
+              <div class="solution-box" id="sol-case-1" data-open="false">
+                <p style="margin: 0;"><strong>Musterlösung (8 Punkte):</strong></p>
+                <div style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-c1-1" data-points="2" onchange="toggleRubric(this)">
+                    <span><strong>+2 Pkt. — Kompetenzabgrenzung:</strong> Die Projektleiterin besitzt die <em>fachliche Weisungskompetenz („WIE?“ → Inhalte/Methoden)</em>; der Abteilungsleiter besitzt die <em>disziplinarische Weisungskompetenz („WER?“ → Personal, Beurteilung, Entlassung)</em>.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-c1-2" data-points="3" onchange="toggleRubric(this)">
+                    <span><strong>+3 Pkt. — Konfliktanalyse:</strong> Der Entwickler steckt in einer Doppelunterstellung (Zwei-Herren-Problem). Da der erfahrene Chef über Gehalt, Karriere und Bewertung entscheidet (Erfahrungs-/Machtasymmetrie), ordnet sich der Mitarbeiter faktisch den disziplinarischen Wünschen unter und untergräbt die fachliche Projekthoheit der Absolventin.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-c1-3" data-points="3" onchange="toggleRubric(this)">
+                    <span><strong>+3 Pkt. — Zwei Gegenmaßnahmen:</strong> (1) Klare schriftliche Kompetenzabgrenzung / RACI-Matrix und Festlegung verbindlicher Projektkapazitäten durch die Leitung; (2) Gemeinsame Zielvereinbarung bzw. Einbeziehung des Projektleiter-Feedbacks in die Mitarbeiterbeurteilung sowie Einrichtung eines Eskalationspfades (Lenkungsausschuss), um Synergien aus Methodenwissen und Erfahrung zu sichern.</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fallaufgabe 2 -->
+            <div class="quiz-item">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-sm); flex-wrap: wrap;">
+                <strong>Fallaufgabe 2: Zusammenhang zwischen funktionaler Struktur &amp; Produktdiversifizierung</strong>
+                <span class="chip">6 Punkte</span>
+              </div>
+              <p style="margin: 0; font-size: 0.9375rem; color: var(--on-surface-variant);">
+                Ein bisher rein funktional gegliederter Fahrradhersteller entscheidet langfristig, zusätzlich eigene E-Motor-Zulieferwerke zu übernehmen sowie eine völlig neue Sparte für Versicherungs-Apps zu gründen. Ordnen Sie die beiden Strategien der Diversifizierung zu und begründen Sie, warum die bestehende funktionale Struktur hierbei an Grenzen stößt.
+              </p>
+              <div>
+                <label for="ans-case-2" class="exam-field-label">Ihre Antwort:</label>
+                <textarea id="ans-case-2" class="exam-textarea" oninput="saveFreeText('case-2', this.value)" placeholder="1. Zuordnung der zwei Diversifizierungsarten …&#10;2. Begründung der Grenzen der funktionalen Struktur …"></textarea>
+              </div>
+              <div>
+                <button type="button" class="btn btn-primary" onclick="toggleSolution('sol-case-2', this)" aria-expanded="false">
+                  Musterlösung &amp; Korrekturschema anzeigen
+                </button>
+              </div>
+              <div class="solution-box" id="sol-case-2" data-open="false">
+                <p style="margin: 0;"><strong>Musterlösung (6 Punkte):</strong></p>
+                <div style="display: flex; flex-direction: column; gap: var(--space-xs);">
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-c2-1" data-points="2" onchange="toggleRubric(this)">
+                    <span><strong>+2 Pkt. — Zuordnung Diversifizierung:</strong> Übernahme der E-Motor-Zulieferwerke = <strong>vertikale Diversifizierung (Rückwärtsintegration)</strong> in der Wertschöpfungskette; Gründung der Versicherungs-App-Sparte = <strong>laterale (diagonale) Diversifizierung</strong> ohne sachlichen/technischen Zusammenhang zum Fahrradgeschäft.</span>
+                  </label>
+                  <label class="rubric-item">
+                    <input type="checkbox" data-rubric-id="r-c2-2" data-points="4" onchange="toggleRubric(this)">
+                    <span><strong>+4 Pkt. — Grenzen der funktionalen Struktur:</strong> Eine rein nach Verrichtungen gegliederte Organisation setzt ein relativ homogenes Sortiment voraus. Durch extrem heterogene Produkte/Märkte (Fahrradfertigung vs. Versicherungs-Software) entsteht ein massiver Koordinationsstau an der Unternehmensspitze, weil Einkauf, Entwicklung und Vertrieb völlig verschiedene Anforderungen bedienen müssen und klare Produkt-/Spartenverantwortliche fehlen (Übergang zur divisionalen Struktur notwendig).</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="source-footer">
+            <span>Inhaltliche Grundlage: Vorlesungsskript Organisation (Skript_Orga_WI_NEU.pdf) — Aufbau-/Ablauforganisation, Weisungskompetenzen, Stabliniensorganisation (SLO), Spezialisierung/funktionale Struktur &amp; Produktdiversifizierung.</span>
+            <span>Interaktive Prüfungssimulation · Fortschritt wird automatisch gespeichert</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    /* =========================================================================
+       STATE & DATA (all string literals use backticks for safety)
+    ========================================================================= */
+    const TOPIC_IDS = [
+      `t-1-1`, `t-1-2`, `t-1-3`, `t-1-4`,
+      `t-2-1`, `t-2-2`, `t-2-3`,
+      `t-3-1`, `t-3-2`, `t-3-3`,
+      `t-4-1`, `t-4-2`
+    ];
+
+    const WEISUNG_CASES = [
+      {
+        title: `Fall 1: Ein Mitarbeiter wird wegen grober Pflichtverletzung entlassen.`,
+        text: `<strong>Antwort: Disziplinarische Weisungskompetenz („WER?“ → Personal).</strong> Einstellungen, Entlassungen und Versetzungen berühren unmittelbar das Personal- und Arbeitsverhältnis und liegen ausschließlich beim disziplinarischen Vorgesetzten.`
+      },
+      {
+        title: `Fall 2: Festlegung, ob ein Webservice als REST-API oder GraphQL gebaut wird.`,
+        text: `<strong>Antwort: Fachliche Weisungskompetenz („WIE?“ → Inhalte).</strong> Hier geht es um die technische und methodische Ausführung einer Aufgabe, nicht um personelle oder arbeitsrechtliche Maßnahmen.`
+      },
+      {
+        title: `Fall 3: Genehmigung von 14 Tagen Erholungsurlaub im August.`,
+        text: `<strong>Antwort: Disziplinarische Weisungskompetenz („WER?“ → Personal).</strong> Urlaubs-, Arbeitszeit- und Abwesenheitsregelungen betreffen das Beschäftigungsverhältnis und gehören zum Personalbereich.`
+      },
+      {
+        title: `Fall 4: Vorgabe, welche Prüfnormen bei der Qualitätssicherung anzuwenden sind.`,
+        text: `<strong>Antwort: Fachliche Weisungskompetenz („WIE?“ → Inhalte).</strong> Standards, Vorgehensmodelle und fachliche Qualitätskriterien bestimmen das „Wie“ der Aufgabenerfüllung.`
+      }
+    ];
+
+    const CONFLICT_CASES = [
+      {
+        title: `Szenario 1: Ressourcen-Tauziehen zwischen Linie und Projekt`,
+        text: `<strong>Problem:</strong> Der erfahrene Abteilungsleiter zieht den wichtigsten Entwickler für das Tagesgeschäft ab; der junge Projektleiter kann ihn fachlich nicht halten.<br><strong>Organisatorische Lösung:</strong> Verbindliche Kapazitätskontingente vor Projektstart durch das Management festlegen, RACI-Verantwortlichkeiten schriftlich fixieren und einen klaren <strong>Eskalationspfad</strong> (Lenkungsausschuss) definieren.`
+      },
+      {
+        title: `Szenario 2: Methoden-Blockade („Das machen wir seit 20 Jahren so!“)`,
+        text: `<strong>Problem:</strong> Der junge Absolvent schlägt eine moderne Datenpipeline vor; der alte Chef lehnt sie aus Prinzip oder Risikoaversion ab.<br><strong>Organisatorische Lösung:</strong> Nutzung des Prinzips <strong>„Synergie statt Konkurrenz“</strong>: Pilotprojekt mit messbaren Erfolgskriterien vereinbaren, Erfahrungswissen des Chefs für Risikoabsicherung einbinden und Mandate durch die Geschäftsführung stärken.`
+      },
+      {
+        title: `Szenario 3: Einseitige Leistungsbeurteilung durch die Linie`,
+        text: `<strong>Problem:</strong> Ein Mitarbeiter leistet im Projekt hervorragende Arbeit, wird aber vom disziplinarischen Chef schlecht beurteilt, weil er in der Abteilung selten sichtbar war.<br><strong>Organisatorische Lösung:</strong> Strukturiertes <strong>360°- bzw. Projekt-Feedback</strong> verpflichtend in das jährliche disziplinarische Beurteilungsgespräch integrieren.`
+      }
+    ];
+
+    const ORG_DETAILS = {
+      stab1: {
+        label: `Ausgewählt: Stab Recht / Organisation (Stabsstelle)`,
+        text: `<strong>Rolle in der SLO:</strong> Spezialisierte Beratungs- und Unterstützungsstelle ohne eigene Weisungsbefugnis gegenüber den Linienbereichen. Bereitet Entscheidungsvorlagen und rechtliche/organisatorische Analysen für die Geschäftsführung vor (<em>Achtung: Gefahr des Informationsvorsprungs!</em>).`
+      },
+      stab2: {
+        label: `Ausgewählt: Stab Strategie / IT-Planung (Stabsstelle)`,
+        text: `<strong>Rolle in der SLO:</strong> Entlastet die oberste Leitung bei langfristigen Analysen (z. B. neue Märkte/Produkte, IT-Bebauungsplan). Gestrichelte Linie bedeutet reinen Informations- und Beratungsfluss — <strong>kein Durchgriffsrecht</strong> auf Einkauf, Produktion oder Vertrieb.`
+      },
+      gf: {
+        label: `Ausgewählt: Geschäftsführung (Oberste Linieninstanz)`,
+        text: `<strong>Rolle in der SLO:</strong> Trägt die volle Entscheidungs- und Ergebnisverantwortung. Sie empfängt Entscheidungsvorlagen von den Stäben (gestrichelte Linie), trifft die formale Entscheidung und gibt eindeutige Weisungen über die durchgezogene Linie an die Bereiche weiter.`
+      },
+      linie: {
+        label: `Ausgewählt: Bereichsleitung (Linieninstanz Ebene 2)`,
+        text: `<strong>Rolle in der SLO:</strong> Funktionale Gliederung nach Verrichtungen (Einkauf, Produktion, Vertrieb). Jede Linieninstanz erhält Weisungen <strong>nur</strong> von der Geschäftsführung (Einlinienprinzip) und gibt sie an die Ausführungsstellen weiter.`
+      },
+      ausf: {
+        label: `Ausgewählt: Ausführungsstelle (Ebene 3)`,
+        text: `<strong>Rolle in der SLO:</strong> Operative Erledigung der Fachaufgaben ohne eigene Leitungs- oder Weisungsbefugnis gegenüber anderen Stellen. Klarer einzelner Vorgesetzter verhindert Kompetenzwirrwarr.`
+      }
+    };
+
+    const FUNC_AREAS = {
+      beschaffung: {
+        label: `Funktion: Beschaffung & Einkauf`,
+        text: `<strong>Aufgaben:</strong> Bündelung aller Einkaufsmengen, Lieferantenauswahl, Preisverhandlungen und Materialbereitstellung für das gesamte Unternehmen. <strong>Vorteil der Bündelung:</strong> Maximale Einkaufsmacht (Mengenrabatte) statt zersplitterter Einzelbestellungen.`
+      },
+      produktion: {
+        label: `Funktion: Produktion & Leistungserstellung`,
+        text: `<strong>Aufgaben:</strong> Fertigungssteuerung, Kapazitätsauslastung, Qualitätskontrolle und Standardisierung von Abläufen. <strong>Typischer Konflikt:</strong> Will große, effiziente Losgrößen, während der Vertrieb individuelle Kundenwünsche fordert.`
+      },
+      vertrieb: {
+        label: `Funktion: Absatz, Marketing & Vertrieb`,
+        text: `<strong>Aufgaben:</strong> Marktbearbeitung, Kundenakquise, Preisgestaltung und Distribution. <strong>Koordinationsbedarf:</strong> Muss eng über die Unternehmensspitze mit Einkauf und Produktion abgestimmt werden, um Lieferversprechen einzuhalten.`
+      },
+      itorga: {
+        label: `Funktion: IT & Organisation (Querschnittsbereich)`,
+        text: `<strong>Aufgaben:</strong> Gestaltung der Aufbau- und Ablauforganisation sowie unternehmensweite IT-Systeme. <strong>Besonderheit (Skript S. 22):</strong> Grundsatzentscheidungen über IT/Orga werden zentral auf Leitungsebene getroffen, um Insellösungen zu vermeiden.`
+      }
+    };
+
+    const DIV_CASES = [
+      {
+        prompt: `Fall 1/6: Eine Großbrauerei eröffnet eine eigene Kette von Systemgastronomie-Restaurants, um ihr Bier direkt an Endkunden auszuschenken.`,
+        correct: `vertikal-vor`,
+        explanation: `<strong>Vertikale Diversifizierung (Vorwärtsintegration):</strong> Das Unternehmen übernimmt die nachgelagerte Distributions- und Ausschankstufe in Richtung Endkunde.`
+      },
+      {
+        prompt: `Fall 2/6: Ein Hersteller von Laufschuhen nimmt zusätzlich Funktions-Laufbekleidung und Trinkgürtel ins Sortiment auf.`,
+        correct: `horizontal`,
+        explanation: `<strong>Horizontale Diversifizierung:</strong> Die neuen Produkte richten sich an dieselbe Zielgruppe auf derselben Wirtschaftsstufe und stehen in engem sachlichen Zusammenhang zum Kerngeschäft.`
+      },
+      {
+        prompt: `Fall 3/6: Ein klassischer Schokoladenproduzent kauft eigene Kakaopflanzungen und eine Verpackungsdruckerei in Südamerika.`,
+        correct: `vertikal-rueck`,
+        explanation: `<strong>Vertikale Diversifizierung (Rückwärtsintegration):</strong> Das Unternehmen gliedert vorgelagerte Rohstoff- und Zulieferstufen in die eigene Wertschöpfungskette ein.`
+      },
+      {
+        prompt: `Fall 4/6: Ein etablierter Maschinenbauer steigt durch Zukauf in den Betrieb von Kreuzfahrtschiffen und Online-Kreditvermittlung ein.`,
+        correct: `lateral`,
+        explanation: `<strong>Laterale (diagonale) Diversifizierung:</strong> Es besteht keinerlei technologischer, produktionstechnischer oder marktlicher Zusammenhang zwischen Maschinenbau, Kreuzfahrten und Finanzen.`
+      },
+      {
+        prompt: `Fall 5/6: Ein Hersteller von professioneller Buchhaltungssoftware entwickelt zusätzlich ein Modul für Personalabrechnung und Reisekosten.`,
+        correct: `horizontal`,
+        explanation: `<strong>Horizontale Diversifizierung:</strong> Technologisch und marktlich verwandte Softwareprodukte für dieselben Unternehmenskunden auf gleicher Wertschöpfungsstufe.`
+      },
+      {
+        prompt: `Fall 6/6: Ein Möbelproduzent kauft eigene Forstbetriebe und ein Sägewerk, um die Holzversorgung dauerhaft abzusichern.`,
+        correct: `vertikal-rueck`,
+        explanation: `<strong>Vertikale Diversifizierung (Rückwärtsintegration):</strong> Sicherung vorgelagerter Rohstoffe und Vorprodukte entlang der Wertschöpfungskette.`
+      }
+    ];
+
+    const MC_QUESTIONS = [
+      {
+        id: `mc-1`,
+        question: `1. Welche Aussage beschreibt die Aufbauorganisation im Gegensatz zur Ablauforganisation korrekt?`,
+        options: [
+          `Die Aufbauorganisation regelt ausschließlich die zeitliche Reihenfolge von Arbeitsschritten.`,
+          `Die Aufbauorganisation bildet das statische Stellengefüge („Wer macht was mit wem?“), während die Ablauforganisation die zeitlich-räumlichen Arbeitsprozesse regelt.`,
+          `Die Aufbauorganisation ist eine vorübergehende Improvisationsmaßnahme bei akuten Störungen.`,
+          `Aufbau- und Ablauforganisation sind identische Begriffe für das Organigramm.`
+        ],
+        correctIdx: 1,
+        explanation: `Richtig! Die Aufbauorganisation schafft den strukturellen Rahmen (Stellen, Abteilungen, Instanzen), die Ablauforganisation optimiert die Prozesse innerhalb dieses Rahmens.`
+      },
+      {
+        id: `mc-2`,
+        question: `2. Ein Projektleiter darf entscheiden, welche Testmethode verwendet wird, aber nicht über Urlaub oder Kündigung bestimmen. Welche Kompetenz besitzt er?`,
+        options: [
+          `Ausschließlich disziplinarische Weisungskompetenz („WER?“).`,
+          `Ausschließlich fachliche Weisungskompetenz („WIE?“).`,
+          `Vollständige Linienkompetenz nach dem Einliniensystem.`,
+          `Reine Stabsstelle ohne Projektbezug.`
+        ],
+        correctIdx: 1,
+        explanation: `Richtig! Fachliche Weisungskompetenz bezieht sich auf das „WIE?“ (Inhalte, Methoden), während Personalentscheidungen („WER?“) zur disziplinarischen Kompetenz gehören.`
+      },
+      {
+        id: `mc-3`,
+        question: `3. Was kennzeichnet eine Stabsstelle in der Stabliniensorganisation (SLO) zwingend?`,
+        options: [
+          `Sie hat disziplinarische Weisungsbefugnis gegenüber der gesamten Produktion.`,
+          `Sie ist eine spezialisierte Unterstützungs- und Beratungsinstanz ohne eigene Weisungsbefugnis gegenüber Linienstellen.`,
+          `Sie ersetzt im Mehrliniensystem alle Abteilungsleiter.`,
+          `Sie darf eigenständig Mitarbeiter einstellen und entlassen.`
+        ],
+        correctIdx: 1,
+        explanation: `Richtig! Ein Stab entlastet eine Instanz durch Vorbereitung und Beratung, besitzt aber ausdrücklich keine eigene Entscheidungs- und Weisungsbefugnis gegenüber der Linie.`
+      },
+      {
+        id: `mc-4`,
+        question: `4. Warum entsteht in der SLO das Problem „Macht ohne Verantwortung“?`,
+        options: [
+          `Weil Stabsstellen immer weniger Gehalt bekommen als Ausführungsstellen.`,
+          `Weil Stäbe durch ihren Informationsvorsprung Entscheidungen faktisch prägen, aber formal die Linieninstanz für die Folgen haftet.`,
+          `Weil Stabsstellen zu viele Kundenkontakte haben.`,
+          `Weil in der SLO ausschließlich nach dem Verrichtungsprinzip gearbeitet wird.`
+        ],
+        correctIdx: 1,
+        explanation: `Richtig! Durch die Verletzung des Kongruenzprinzips fallen informeller Einfluss (Stab) und formale Haftung/Verantwortung (Linie) auseinander.`
+      },
+      {
+        id: `mc-5`,
+        question: `5. Nach welchem Kriterium wird auf der 2. Hierarchieebene einer funktionalen Organisationsstruktur gegliedert?`,
+        options: [
+          `Nach Kunden oder Absatzregionen.`,
+          `Nach gleichartigen betrieblichen Verrichtungen (z. B. Einkauf, Produktion, Vertrieb, IT/Orga).`,
+          `Ausschließlich nach Produktmarken (Spartenprinzip).`,
+          `Nach dem Zufallsprinzip.`
+        ],
+        correctIdx: 1,
+        explanation: `Richtig! Die funktionale Organisation bündelt Aufgaben auf der 2. Ebene nach Verrichtungen/Funktionen.`
+      },
+      {
+        id: `mc-6`,
+        question: `6. Wann liegt eine laterale (diagonale) Produktdiversifizierung vor?`,
+        options: [
+          `Wenn ein Bäcker neben Brötchen nun auch Kuchen anbietet.`,
+          `Wenn ein Autobauer ein eigenes Reifenwerk übernimmt.`,
+          `Wenn zwischen den neuen und bisherigen Produkten keinerlei sachlicher, technologischer oder marktlicher Zusammenhang besteht.`,
+          `Wenn ein Unternehmen dasselbe Produkt in einem neuen Bundesland verkauft.`
+        ],
+        correctIdx: 2,
+        explanation: `Richtig! Lateral bedeutet „kein Zusammenhang zwischen den Produkten“ — es werden völlig branchenfremde Geschäftsfelder erschlossen.`
+      }
+    ];
+
+    /* =========================================================================
+       RUNTIME APPLICATION STATE
+    ========================================================================= */
+    let appState = {
+      theme: `light`,
+      completedTopics: [],
+      mcAnswers: {},
+      freeText: {},
+      rubricChecked: {},
+      openSolutions: {},
+      divCaseIndex: 0
+    };
+
+    /* =========================================================================
+       PERSISTENCE HELPERS (notebookAppApi)
+    ========================================================================= */
+    async function persistState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          await window.notebookAppApi.setAppState(appState);
+        }
+      } catch (err) {
+        console.warn(`State konnte nicht gespeichert werden:`, err);
+      }
+    }
+
+    function applyTheme(theme) {
+      const safeTheme = theme === `dark` ? `dark` : `light`;
+      appState.theme = safeTheme;
+      document.documentElement.setAttribute(`data-theme`, safeTheme);
+      const label = document.getElementById(`theme-label`);
+      const icon = document.getElementById(`theme-icon`);
+      if (label) {
+        label.textContent = safeTheme === `dark` ? `Light Mode` : `Dark Mode`;
+      }
+      if (icon) {
+        icon.setAttribute(`data-lucide`, safeTheme === `dark` ? `sun` : `moon`);
+        if (window.lucide && typeof window.lucide.createIcons === `function`) {
+          window.lucide.createIcons();
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const next = appState.theme === `dark` ? `light` : `dark`;
+      applyTheme(next);
+      persistState();
+    }
+
+    /* =========================================================================
+       SIDEBAR & NAVIGATION
+    ========================================================================= */
+    function toggleNavGroup(groupId) {
+      const grp = document.getElementById(groupId);
+      if (!grp) return;
+      const isOpen = grp.getAttribute(`data-open`) === `true`;
+      const next = !isOpen;
+      grp.setAttribute(`data-open`, next ? `true` : `false`);
+      const btn = grp.querySelector(`.nav-group-trigger`);
+      if (btn) btn.setAttribute(`aria-expanded`, next ? `true` : `false`);
+    }
+
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById(`sidebar-nav`);
+      if (!sidebar) return;
+      sidebar.classList.toggle(`mobile-open`);
+    }
+
+    function closeMobileSidebarOnNav() {
+      const sidebar = document.getElementById(`sidebar-nav`);
+      if (sidebar && sidebar.classList.contains(`mobile-open`)) {
+        sidebar.classList.remove(`mobile-open`);
+      }
+    }
+
+    /* =========================================================================
+       MASTERY PROGRESS
+    ========================================================================= */
+    function renderMasteryUI() {
+      const doneSet = new Set(appState.completedTopics || []);
+      TOPIC_IDS.forEach(function(id) {
+        const isDone = doneSet.has(id);
+        const btn = document.querySelector(`[data-topic-btn="${id}"]`);
+        if (btn) {
+          btn.setAttribute(`aria-pressed`, isDone ? `true` : `false`);
+          const span = btn.querySelector(`span`);
+          if (span) span.textContent = isDone ? `Verstanden ✓` : `Als verstanden markieren`;
+        }
+        const navLink = document.querySelector(`[data-topic-link="${id}"]`);
+        if (navLink) {
+          navLink.setAttribute(`data-completed`, isDone ? `true` : `false`);
+        }
+      });
+
+      const count = doneSet.size;
+      const total = TOPIC_IDS.length;
+      const pct = Math.round((count / total) * 100);
+      const counterEl = document.getElementById(`mastery-counter`);
+      const fillEl = document.getElementById(`mastery-bar-fill`);
+      if (counterEl) counterEl.textContent = `${count} / ${total} Themen`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+    }
+
+    function toggleMastery(topicId) {
+      const list = Array.isArray(appState.completedTopics) ? appState.completedTopics.slice() : [];
+      const idx = list.indexOf(topicId);
+      if (idx >= 0) {
+        list.splice(idx, 1);
+      } else {
+        list.push(topicId);
+      }
+      appState.completedTopics = list;
+      renderMasteryUI();
+      persistState();
+    }
+
+    /* =========================================================================
+       INTERACTIVE EXAMPLES & SIMULATORS
+    ========================================================================= */
+    function toggleExample(wrapperId) {
+      const wrap = document.getElementById(wrapperId);
+      if (!wrap) return;
+      const isOpen = wrap.getAttribute(`data-open`) === `true`;
+      const next = !isOpen;
+      wrap.setAttribute(`data-open`, next ? `true` : `false`);
+      const btn = wrap.querySelector(`.example-toggle-btn`);
+      if (btn) btn.setAttribute(`aria-expanded`, next ? `true` : `false`);
+    }
+
+    function setActiveSegment(btnEl) {
+      if (!btnEl || !btnEl.parentElement) return;
+      const siblings = btnEl.parentElement.querySelectorAll(`.seg-btn`);
+      siblings.forEach(function(b) {
+        b.setAttribute(`aria-pressed`, b === btnEl ? `true` : `false`);
+      });
+    }
+
+    function showWeisungCase(idx, btnEl) {
+      setActiveSegment(btnEl);
+      const item = WEISUNG_CASES[idx];
+      const out = document.getElementById(`weisung-case-output`);
+      if (!item || !out) return;
+      out.innerHTML = `<span class="callout-label">${item.title}</span><p>${item.text}</p>`;
+    }
+
+    function showConflictCase(idx, btnEl) {
+      setActiveSegment(btnEl);
+      const item = CONFLICT_CASES[idx];
+      const out = document.getElementById(`conflict-case-output`);
+      if (!item || !out) return;
+      out.innerHTML = `<span class="callout-label">${item.title}</span><p>${item.text}</p>`;
+    }
+
+    function selectOrgNode(nodeKey) {
+      const detail = ORG_DETAILS[nodeKey];
+      const box = document.getElementById(`org-node-detail`);
+      if (detail && box) {
+        box.innerHTML = `<span class="callout-label">${detail.label}</span><p>${detail.text}</p>`;
+      }
+      const allNodes = document.querySelectorAll(`.org-node`);
+      allNodes.forEach(function(n) { n.classList.remove(`selected`); });
+      if (nodeKey === `stab1`) {
+        const el = document.getElementById(`node-stab-1`);
+        if (el) el.classList.add(`selected`);
+      } else if (nodeKey === `stab2`) {
+        const el = document.getElementById(`node-stab-2`);
+        if (el) el.classList.add(`selected`);
+      } else if (nodeKey === `gf`) {
+        const el = document.getElementById(`node-gf`);
+        if (el) el.classList.add(`selected`);
+      } else if (nodeKey === `linie`) {
+        [`node-linie-1`, `node-linie-2`, `node-linie-3`].forEach(function(id) {
+          const el = document.getElementById(id);
+          if (el) el.classList.add(`selected`);
+        });
+      } else if (nodeKey === `ausf`) {
+        [`node-ausf-1`, `node-ausf-2`, `node-ausf-3`].forEach(function(id) {
+          const el = document.getElementById(id);
+          if (el) el.classList.add(`selected`);
+        });
+      }
+    }
+
+    function showFuncArea(key, btnEl) {
+      setActiveSegment(btnEl);
+      const area = FUNC_AREAS[key];
+      const out = document.getElementById(`func-area-output`);
+      if (!area || !out) return;
+      out.innerHTML = `<span class="callout-label">${area.label}</span><p>${area.text}</p>`;
+    }
+
+    /* =========================================================================
+       DIVERSIFICATION TRAINER
+    ========================================================================= */
+    function renderDivCase() {
+      const idx = appState.divCaseIndex % DIV_CASES.length;
+      const item = DIV_CASES[idx];
+      const promptEl = document.getElementById(`div-prompt-text`);
+      const fbEl = document.getElementById(`div-feedback`);
+      if (promptEl && item) promptEl.textContent = item.prompt;
+      if (fbEl) {
+        fbEl.classList.remove(`visible`);
+        fbEl.innerHTML = ``;
+      }
+    }
+
+    function checkDivAnswer(choice) {
+      const idx = appState.divCaseIndex % DIV_CASES.length;
+      const item = DIV_CASES[idx];
+      const fbEl = document.getElementById(`div-feedback`);
+      if (!item || !fbEl) return;
+      const isCorrect = choice === item.correct;
+      fbEl.innerHTML = isCorrect
+        ? `<strong style="color: var(--positive);">Richtig!</strong> ${item.explanation}`
+        : `<strong style="color: var(--error);">Nicht ganz.</strong> ${item.explanation}`;
+      fbEl.classList.add(`visible`);
+    }
+
+    function nextDivCase() {
+      appState.divCaseIndex = (appState.divCaseIndex + 1) % DIV_CASES.length;
+      renderDivCase();
+      persistState();
+    }
+
+    /* =========================================================================
+       EXAM & QUIZ ENGINE
+    ========================================================================= */
+    function renderMCQuestions() {
+      const container = document.getElementById(`mc-container`);
+      if (!container) return;
+      container.innerHTML = ``;
+
+      MC_QUESTIONS.forEach(function(q) {
+        const chosen = appState.mcAnswers[q.id];
+        const card = document.createElement(`div`);
+        card.className = `quiz-item`;
+
+        const title = document.createElement(`strong`);
+        title.textContent = q.question;
+        card.appendChild(title);
+
+        const optsWrap = document.createElement(`div`);
+        optsWrap.className = `quiz-options`;
+
+        q.options.forEach(function(optText, optIdx) {
+          const btn = document.createElement(`button`);
+          btn.type = `button`;
+          btn.className = `quiz-opt-btn`;
+          if (typeof chosen === `number`) {
+            if (optIdx === q.correctIdx) {
+              btn.classList.add(`correct`);
+            } else if (optIdx === chosen && chosen !== q.correctIdx) {
+              btn.classList.add(`wrong`);
+            }
+          }
+          btn.textContent = `${String.fromCharCode(65 + optIdx)}) ${optText}`;
+          btn.onclick = function() { selectMCAnswer(q.id, optIdx); };
+          optsWrap.appendChild(btn);
+        });
+
+        card.appendChild(optsWrap);
+
+        const fb = document.createElement(`div`);
+        fb.className = `quiz-feedback` + (typeof chosen === `number` ? ` visible` : ``);
+        if (typeof chosen === `number`) {
+          const isOk = chosen === q.correctIdx;
+          fb.innerHTML = isOk
+            ? `<strong style="color: var(--positive);">Korrekt!</strong> ${q.explanation}`
+            : `<strong style="color: var(--error);">Leider falsch.</strong> ${q.explanation}`;
+        }
+        card.appendChild(fb);
+        container.appendChild(card);
+      });
+    }
+
+    function selectMCAnswer(qId, optIdx) {
+      appState.mcAnswers[qId] = optIdx;
+      renderMCQuestions();
+      updateExamScores();
+      persistState();
+    }
+
+    function saveFreeText(key, value) {
+      appState.freeText[key] = value;
+      persistState();
+    }
+
+    function toggleSolution(solId, btnEl) {
+      const box = document.getElementById(solId);
+      if (!box) return;
+      const isOpen = box.getAttribute(`data-open`) === `true`;
+      const next = !isOpen;
+      box.setAttribute(`data-open`, next ? `true` : `false`);
+      appState.openSolutions[solId] = next;
+      if (btnEl) {
+        btnEl.setAttribute(`aria-expanded`, next ? `true` : `false`);
+        btnEl.textContent = next ? `Musterlösung & Korrekturschema ausblenden` : `Musterlösung & Korrekturschema anzeigen`;
+      }
+      persistState();
+    }
+
+    function toggleRubric(checkbox) {
+      if (!checkbox) return;
+      const id = checkbox.getAttribute(`data-rubric-id`);
+      if (!id) return;
+      appState.rubricChecked[id] = !!checkbox.checked;
+      updateExamScores();
+      persistState();
+    }
+
+    function updateExamScores() {
+      let mcCorrect = 0;
+      MC_QUESTIONS.forEach(function(q) {
+        if (appState.mcAnswers[q.id] === q.correctIdx) mcCorrect++;
+      });
+
+      let rubricPts = 0;
+      const maxRubricPts = 29; // 3 + 12 + 8 + 6
+      const checkboxes = document.querySelectorAll(`[data-rubric-id]`);
+      checkboxes.forEach(function(cb) {
+        const id = cb.getAttribute(`data-rubric-id`);
+        const isChecked = !!appState.rubricChecked[id];
+        cb.checked = isChecked;
+        if (isChecked) {
+          rubricPts += Number(cb.getAttribute(`data-points`) || 0);
+        }
+      });
+
+      const totalEarned = mcCorrect + rubricPts;
+      const totalMax = MC_QUESTIONS.length + maxRubricPts;
+      const pct = Math.round((totalEarned / totalMax) * 100);
+
+      const mcEl = document.getElementById(`mc-score-display`);
+      const rubEl = document.getElementById(`rubric-score-display`);
+      const pctEl = document.getElementById(`exam-percent-display`);
+      if (mcEl) mcEl.textContent = `${mcCorrect} / ${MC_QUESTIONS.length}`;
+      if (rubEl) rubEl.textContent = `${rubricPts} / ${maxRubricPts} Pkt.`;
+      if (pctEl) pctEl.textContent = `${pct} %`;
+    }
+
+    function restoreFreeTextsAndSolutions() {
+      const map = [
+        [`slo-a`, `ans-slo-a`],
+        [`slo-b`, `ans-slo-b`],
+        [`case-1`, `ans-case-1`],
+        [`case-2`, `ans-case-2`]
+      ];
+      map.forEach(function(pair) {
+        const el = document.getElementById(pair[1]);
+        if (el && typeof appState.freeText[pair[0]] === `string`) {
+          el.value = appState.freeText[pair[0]];
+        }
+      });
+
+      [`sol-slo-a`, `sol-slo-b`, `sol-case-1`, `sol-case-2`].forEach(function(solId) {
+        const box = document.getElementById(solId);
+        if (!box) return;
+        const isOpen = !!appState.openSolutions[solId];
+        box.setAttribute(`data-open`, isOpen ? `true` : `false`);
+      });
+    }
+
+    /* =========================================================================
+       TWO-STEP INLINE RESET (NO confirm())
+    ========================================================================= */
+    function handleResetClick(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Wirklich alles zurücksetzen?`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `Fortschritt zurücksetzen`;
+
+      const currentTheme = appState.theme;
+      appState = {
+        theme: currentTheme,
+        completedTopics: [],
+        mcAnswers: {},
+        freeText: {},
+        rubricChecked: {},
+        openSolutions: {},
+        divCaseIndex: 0
+      };
+      renderMasteryUI();
+      renderMCQuestions();
+      restoreFreeTextsAndSolutions();
+      updateExamScores();
+      renderDivCase();
+      persistState();
+    }
+
+    /* =========================================================================
+       SCROLLSPY FOR SIDEBAR ACTIVE LINK
+    ========================================================================= */
+    function setupScrollSpy() {
+      if (typeof IntersectionObserver === `undefined`) return;
+      const targets = document.querySelectorAll(`.topic-card[id], #quiz-mc, #quiz-slo, #quiz-cases`);
+      const links = document.querySelectorAll(`.nav-link`);
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute(`id`);
+            links.forEach(function(l) {
+              const href = l.getAttribute(`href`);
+              if (href === `#${id}`) {
+                l.classList.add(`active`);
+              } else {
+                l.classList.remove(`active`);
+              }
+            });
+          }
+        });
+      }, { rootMargin: `-20% 0px -65% 0px`, threshold: 0.05 });
+
+      targets.forEach(function(t) { observer.observe(t); });
+    }
+
+    /* =========================================================================
+       INITIALIZATION
+    ========================================================================= */
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            appState = {
+              theme: saved.theme === `dark` ? `dark` : `light`,
+              completedTopics: Array.isArray(saved.completedTopics) ? saved.completedTopics : [],
+              mcAnswers: saved.mcAnswers && typeof saved.mcAnswers === `object` ? saved.mcAnswers : {},
+              freeText: saved.freeText && typeof saved.freeText === `object` ? saved.freeText : {},
+              rubricChecked: saved.rubricChecked && typeof saved.rubricChecked === `object` ? saved.rubricChecked : {},
+              openSolutions: saved.openSolutions && typeof saved.openSolutions === `object` ? saved.openSolutions : {},
+              divCaseIndex: typeof saved.divCaseIndex === `number` ? saved.divCaseIndex : 0
+            };
+          }
+        }
+      } catch (err) {
+        console.warn(`Laden des gespeicherten Zustands fehlgeschlagen:`, err);
+      }
+
+      applyTheme(appState.theme);
+      renderMasteryUI();
+      renderMCQuestions();
+      restoreFreeTextsAndSolutions();
+      updateExamScores();
+      renderDivCase();
+      setupScrollSpy();
+
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    if (document.readyState === `loading`) {
+      document.addEventListener(`DOMContentLoaded`, initApp);
+    } else {
+      initApp();
+    }
+  </script>
+</body>
+</html>
