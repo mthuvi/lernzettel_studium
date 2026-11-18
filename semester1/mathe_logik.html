@@ -1,0 +1,2985 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="showroom">
+  <title>Logik &amp; Mathematische Grundlagen — Interaktiver Lernzettel</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/katex.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.18.2/dist/contrib/auto-render.min.js" defer></script>
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js" defer></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Showroom + Apple HIG Light Mode) */
+      --background: #f5f5f7;
+      --surface-card: #ffffff;
+      --surface-container-low: #fbfbfd;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+      --surface-glass: rgba(245, 245, 247, 0.78);
+
+      /* Ink */
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+
+      /* Rules & Borders */
+      --outline: rgba(0, 0, 0, 0.12);
+      --outline-variant: rgba(0, 0, 0, 0.08);
+
+      /* Accents */
+      --primary: #0071e3;
+      --primary-hover: #005bb5;
+      --on-primary: #ffffff;
+      --primary-container: #e8f2fd;
+      --on-primary-container: #0055ad;
+      --secondary: #bf4800;
+      --secondary-container: #fff2eb;
+      --tertiary: #1d1d1f;
+
+      /* Semantic */
+      --positive: #1d7d35;
+      --positive-container: #eaf7ed;
+      --warning: #9a5b00;
+      --warning-container: #fff6e5;
+      --error: #c9182b;
+      --error-container: #fdecee;
+      --on-error: #ffffff;
+
+      /* Data & Venn series */
+      --data-1: #0071e3;
+      --data-1-soft: rgba(0, 113, 227, 0.20);
+      --data-2: #bf4800;
+      --data-2-soft: rgba(191, 72, 0, 0.18);
+      --data-3: #1d7d35;
+      --data-3-soft: rgba(29, 125, 53, 0.18);
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      /* Focus */
+      --focus: #0071e3;
+
+      /* Fonts */
+      --font-headline: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      --font-label: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+      /* Type scale */
+      --display-size: clamp(2.15rem, 1.4rem + 2.4vw, 3.25rem);
+      --headline-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+      --subhead-size: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+      --body-size: clamp(0.96875rem, 0.94rem + 0.15vw, 1.03125rem);
+      --label-size: 0.8125rem;
+
+      /* Shape & effects */
+      --rounded-pill: 9999px;
+      --rounded-md: 12px;
+      --rounded-lg: 16px;
+      --headline-tracking: -0.03em;
+      --figure-tracking: -0.025em;
+      --tile-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      --tile-shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.08);
+      --header-height: 60px;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+      --space-2xl: 3.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+
+      --background: #121212;
+      --surface-card: #1c1c1e;
+      --surface-container-low: #18181a;
+      --surface-container: #2c2c2e;
+      --surface-container-high: #3a3a3c;
+      --surface-glass: rgba(18, 18, 18, 0.78);
+
+      --on-surface: #f5f5f7;
+      --on-surface-variant: #a1a1a6;
+
+      --outline: rgba(255, 255, 255, 0.14);
+      --outline-variant: rgba(255, 255, 255, 0.09);
+
+      --primary: #2997ff;
+      --primary-hover: #53acff;
+      --on-primary: #000000;
+      --primary-container: rgba(41, 151, 255, 0.18);
+      --on-primary-container: #6cb8ff;
+      --secondary: #ff8a3d;
+      --secondary-container: rgba(255, 138, 61, 0.16);
+      --tertiary: #f5f5f7;
+
+      --positive: #30d158;
+      --positive-container: rgba(48, 209, 88, 0.16);
+      --warning: #ffd60a;
+      --warning-container: rgba(255, 214, 10, 0.14);
+      --error: #ff453a;
+      --error-container: rgba(255, 69, 58, 0.18);
+      --on-error: #000000;
+
+      --data-1: #2997ff;
+      --data-1-soft: rgba(41, 151, 255, 0.25);
+      --data-2: #ff8a3d;
+      --data-2-soft: rgba(255, 138, 61, 0.22);
+      --data-3: #30d158;
+      --data-3-soft: rgba(48, 209, 88, 0.22);
+      --data-4: #bf5af2;
+      --data-context: #636366;
+
+      --focus: #2997ff;
+      --tile-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+      --tile-shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: clip;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--dur-short) var(--ease-in-out), color var(--dur-short) var(--ease-in-out);
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 2.5px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Fixed Frosted-Glass Header */
+    .top-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      z-index: 100;
+      background-color: var(--surface-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--outline-variant);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-lg);
+      gap: var(--space-md);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-card);
+      color: var(--on-surface);
+      cursor: pointer;
+    }
+
+    .course-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.05rem;
+      letter-spacing: -0.02em;
+      color: var(--on-surface);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .course-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 10px;
+      border-radius: var(--rounded-pill);
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: 0.75rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-shrink: 0;
+    }
+
+    .progress-readout {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .header-progress-track {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2.5px;
+      background: transparent;
+      pointer-events: none;
+    }
+
+    .header-progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--primary);
+      transition: width var(--dur-micro) linear;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 36px;
+      padding: 6px 14px;
+      border-radius: var(--rounded-pill);
+      border: 1px solid var(--outline);
+      background-color: var(--surface-card);
+      color: var(--on-surface);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--surface-container);
+    }
+
+    /* App Shell Layout: Sidebar + Main Content */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 276px minmax(0, 1fr);
+      gap: var(--space-xl);
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: calc(var(--header-height) + var(--space-xl)) var(--space-lg) var(--space-2xl);
+      align-items: start;
+    }
+
+    .app-shell * {
+      min-width: 0;
+    }
+
+    /* Left Accordion Sidebar */
+    .sidebar {
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-lg));
+      max-height: calc(100vh - var(--header-height) - var(--space-xl));
+      overflow-y: auto;
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      box-shadow: var(--tile-shadow);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-xs) var(--space-sm) var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      margin-bottom: var(--space-sm);
+    }
+
+    .sidebar-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .sidebar-mastery {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .nav-group {
+      margin-bottom: var(--space-xs);
+    }
+
+    .nav-accordion-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: 9px 12px;
+      border: 0;
+      border-radius: var(--rounded-md);
+      background: transparent;
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .nav-accordion-btn:hover {
+      background-color: var(--surface-container-low);
+    }
+
+    .nav-accordion-btn.is-active-group {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .nav-accordion-chevron {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .nav-group.is-open .nav-accordion-chevron {
+      transform: rotate(180deg);
+    }
+
+    .nav-sublist {
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      padding: 4px 0 6px 12px;
+    }
+
+    .nav-group.is-open .nav-sublist {
+      display: flex;
+    }
+
+    .nav-sublink {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 12px;
+      border-radius: var(--rounded-pill);
+      color: var(--on-surface-variant);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .nav-sublink:hover {
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+
+    .nav-sublink.is-active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    /* Main Content Column */
+    .main-column {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+    }
+
+    /* Hero Section */
+    .hero-block {
+      text-align: center;
+      padding: var(--space-lg) 0 var(--space-md);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--secondary);
+      background-color: var(--secondary-container);
+      padding: 4px 12px;
+      border-radius: var(--rounded-pill);
+      margin-bottom: var(--space-md);
+    }
+
+    .hero-block h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.07;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .hero-lede {
+      font-size: clamp(1.05rem, 1rem + 0.35vw, 1.2rem);
+      color: var(--on-surface-variant);
+      max-width: 56ch;
+      margin: var(--space-md) auto var(--space-xl);
+      line-height: 1.55;
+    }
+
+    /* 3 Perspectives + Overview Bento Grid */
+    .bento-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(185px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      text-align: left;
+    }
+
+    .stat-tile {
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--tile-shadow);
+    }
+
+    .stat-tile .stat-kicker {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-tile .stat-value {
+      font-family: var(--font-headline);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: var(--figure-tracking);
+      line-height: 1.15;
+      color: var(--on-surface);
+      margin-bottom: var(--space-xs);
+    }
+
+    .stat-tile .stat-desc {
+      font-size: 0.84rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Module Sections */
+    .module-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+    }
+
+    .module-header {
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .module-tag {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .module-header h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.12;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .mastered-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 38px;
+      padding: 6px 14px;
+      border-radius: var(--rounded-pill);
+      border: 1px solid var(--outline);
+      background-color: var(--surface-card);
+      color: var(--on-surface);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .mastered-btn:hover {
+      background-color: var(--surface-container);
+    }
+
+    .mastered-btn.is-done {
+      background-color: var(--positive-container);
+      color: var(--positive);
+      border-color: transparent;
+    }
+
+    /* Cards inside Modules */
+    .card {
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--tile-shadow);
+    }
+
+    .card h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      margin: 0 0 var(--space-md);
+      color: var(--on-surface);
+      scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+    }
+
+    .summary-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .summary-list li {
+      color: var(--on-surface);
+      max-width: 68ch;
+    }
+
+    .summary-list li strong {
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    /* Callout Grid (Formulas & Definitions) */
+    .callout-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    .formula-callout {
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-left: 3.5px solid var(--primary);
+      border-radius: var(--rounded-md);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .formula-callout.is-accent-orange {
+      border-left-color: var(--secondary);
+    }
+
+    .formula-callout.is-accent-green {
+      border-left-color: var(--positive);
+    }
+
+    .callout-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    .callout-formula {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--surface-container-low);
+      border-radius: 8px;
+      border: 1px solid var(--outline-variant);
+      overflow-x: auto;
+      color: var(--on-surface);
+    }
+
+    .callout-note {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Collapsible Praxisbeispiel & Info-Tabs */
+    .interactive-box {
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--tile-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .interactive-box-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .interactive-box-head h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      margin: 0;
+      scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+    }
+
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 8px 18px;
+      border-radius: var(--rounded-pill);
+      border: 0;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-pill:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-pill.btn-secondary {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .btn-pill.btn-secondary:hover {
+      background-color: var(--surface-container-high);
+    }
+
+    .collapsible-panel {
+      display: none;
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .collapsible-panel.is-open {
+      display: block;
+    }
+
+    /* Segmented Tabs (Info-Tabs & Before/After) */
+    .segmented-bar {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 4px;
+      border-radius: var(--rounded-md);
+      background-color: var(--surface-container);
+      margin-bottom: var(--space-md);
+    }
+
+    .seg-btn {
+      min-height: 36px;
+      padding: 6px 14px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--on-surface-variant);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .seg-btn:hover {
+      color: var(--on-surface);
+    }
+
+    .seg-btn.is-active {
+      background-color: var(--surface-card);
+      color: var(--on-surface);
+      font-weight: 600;
+      box-shadow: var(--tile-shadow);
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.is-active {
+      display: block;
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      background-color: var(--surface-container-low);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--outline-variant);
+      color: var(--on-surface);
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr.is-highlighted-row td {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+    }
+
+    .truth-val-1 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background-color: var(--positive-container);
+      color: var(--positive);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+
+    .truth-val-0 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      background-color: var(--error-container);
+      color: var(--error);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+
+    /* Interactive Truth Lab Controls */
+    .preset-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: var(--space-md);
+    }
+
+    .chip-btn {
+      min-height: 36px;
+      padding: 6px 14px;
+      border-radius: var(--rounded-pill);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .chip-btn:hover {
+      background-color: var(--surface-container);
+    }
+
+    .chip-btn.is-active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: transparent;
+    }
+
+    .var-toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background-color: var(--surface-container-low);
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      margin-bottom: var(--space-md);
+    }
+
+    .var-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .var-switch button {
+      min-width: 68px;
+      min-height: 34px;
+      border-radius: var(--rounded-pill);
+      border: 1px solid var(--outline);
+      background-color: var(--surface-card);
+      color: var(--on-surface);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .var-switch button.is-true {
+      background-color: var(--positive-container);
+      color: var(--positive);
+      border-color: transparent;
+    }
+
+    .var-switch button.is-false {
+      background-color: var(--error-container);
+      color: var(--error);
+      border-color: transparent;
+    }
+
+    /* Interactive Venn Diagram */
+    .venn-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .venn-svg-box {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .venn-svg-box svg {
+      width: 100%;
+      max-width: 410px;
+      height: auto;
+      display: block;
+    }
+
+    .venn-result-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .customer-pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: var(--space-xs);
+    }
+
+    .customer-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      height: 32px;
+      padding: 0 10px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      font-weight: 500;
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+    }
+
+    .customer-chip.is-selected {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    /* Quantifier Checker Cards */
+    .quant-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .quant-item {
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--surface-container-low);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .quant-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .quant-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .quant-feedback {
+      display: none;
+      font-size: 0.875rem;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 8px;
+    }
+
+    .quant-feedback.is-visible {
+      display: block;
+    }
+
+    .quant-feedback.is-right {
+      background-color: var(--positive-container);
+      color: var(--positive);
+    }
+
+    .quant-feedback.is-wrong {
+      background-color: var(--error-container);
+      color: var(--error);
+    }
+
+    /* Klausur-Relevanz-Badge */
+    .relevance-badge {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded-md);
+      background-color: var(--primary-container);
+      border: 1px solid var(--outline-variant);
+    }
+
+    .relevance-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--on-primary-container);
+    }
+
+    .relevance-reason {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--on-surface);
+      line-height: 1.5;
+    }
+
+    /* Probeklausur Section */
+    .exam-summary-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--tile-shadow);
+    }
+
+    .exam-score-value {
+      font-family: var(--font-headline);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: var(--figure-tracking);
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .exam-task {
+      background-color: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      box-shadow: var(--tile-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .exam-task-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .exam-pts-pill {
+      padding: 4px 12px;
+      border-radius: var(--rounded-pill);
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .mc-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mc-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      cursor: pointer;
+      text-align: left;
+      font-size: 0.92rem;
+      color: var(--on-surface);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .mc-option:hover {
+      background-color: var(--surface-container);
+    }
+
+    .mc-option.is-selected {
+      background-color: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+      font-weight: 500;
+    }
+
+    .mc-option.is-correct-ans {
+      background-color: var(--positive-container);
+      border-color: var(--positive);
+      color: var(--positive);
+    }
+
+    .mc-option.is-wrong-ans {
+      background-color: var(--error-container);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .exam-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-field-group label {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .input-field-group input,
+    .input-field-group select {
+      min-height: 42px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--outline);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.92rem;
+    }
+
+    .set-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .set-pick-btn {
+      min-width: 44px;
+      min-height: 40px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--outline);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .set-pick-btn.is-picked {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: transparent;
+    }
+
+    .exam-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .exam-feedback {
+      display: none;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .exam-feedback.is-visible {
+      display: block;
+    }
+
+    .exam-feedback.is-ok {
+      background-color: var(--positive-container);
+      color: var(--positive);
+    }
+
+    .exam-feedback.is-err {
+      background-color: var(--error-container);
+      color: var(--error);
+    }
+
+    .solution-panel {
+      display: none;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded-md);
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      font-size: 0.9rem;
+    }
+
+    .solution-panel.is-open {
+      display: block;
+    }
+
+    .solution-panel h4 {
+      margin: 0 0 var(--space-sm);
+      font-size: 0.92rem;
+      color: var(--on-surface);
+    }
+
+    .grading-list {
+      margin: var(--space-sm) 0 0;
+      padding-left: 1.25rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      padding: var(--space-xl) 0 var(--space-lg);
+      border-top: 1px solid var(--outline-variant);
+      color: var(--on-surface-variant);
+      font-size: 0.84rem;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+        padding-inline: var(--space-md);
+      }
+
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+
+      .sidebar {
+        display: none;
+        position: fixed;
+        top: calc(var(--header-height) + 8px);
+        left: var(--space-md);
+        right: var(--space-md);
+        max-height: 70vh;
+        z-index: 95;
+        box-shadow: var(--tile-shadow-hover);
+      }
+
+      .sidebar.is-mobile-open {
+        display: block;
+      }
+
+      .venn-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .course-badge {
+        display: none;
+      }
+
+      .progress-readout span.progress-label {
+        display: none;
+      }
+
+      .card, .interactive-box, .exam-task {
+        padding: var(--space-lg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fixierter Frosted-Glass Header -->
+  <header class="top-header">
+    <div class="header-left">
+      <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Kapitelnavigation umschalten" onclick="toggleMobileSidebar()">
+        <i data-lucide="menu" width="20" height="20" aria-hidden="true"></i>
+      </button>
+      <span class="course-title">Logik &amp; Mathematische Grundlagen</span>
+      <span class="course-badge">Interaktiver Lernzettel</span>
+    </div>
+    <div class="header-right">
+      <div class="progress-readout" aria-live="polite">
+        <span class="progress-label">Lesefortschritt</span>
+        <strong id="read-progress-pct">0 %</strong>
+      </div>
+      <button type="button" class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Farbschema wechseln">
+        <i data-lucide="moon" id="theme-icon" width="16" height="16" aria-hidden="true"></i>
+        <span id="theme-label">Dark Mode</span>
+      </button>
+    </div>
+    <div class="header-progress-track" aria-hidden="true">
+      <div class="header-progress-fill" id="header-progress-fill"></div>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <!-- Linke Accordion-Sidebar -->
+    <aside class="sidebar" id="sidebar-nav" aria-label="Kapitelgliederung">
+      <div class="sidebar-header">
+        <span class="sidebar-label">Kapitel-Gliederung</span>
+        <span class="sidebar-mastery" id="mastery-counter">0 / 4 fertig</span>
+      </div>
+
+      <nav>
+        <div class="nav-group is-open" data-group="m1">
+          <button type="button" class="nav-accordion-btn" onclick="toggleAccordion('m1')" aria-expanded="true">
+            <span>1. Aussagenlogik &amp; Tabellen</span>
+            <i data-lucide="chevron-down" class="nav-accordion-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="nav-sublist">
+            <a href="#sec-aussagen" class="nav-sublink" data-target="sec-aussagen" onclick="handleNavClick(event, 'sec-aussagen')">Kernkonzepte &amp; Nutzen</a>
+            <a href="#sec-junktoren" class="nav-sublink" data-target="sec-junktoren" onclick="handleNavClick(event, 'sec-junktoren')">Junktoren &amp; Regeln</a>
+            <a href="#sec-wahrheitslabor" class="nav-sublink" data-target="sec-wahrheitslabor" onclick="handleNavClick(event, 'sec-wahrheitslabor')">Wahrheitstabellen-Labor</a>
+          </div>
+        </div>
+
+        <div class="nav-group is-open" data-group="m2">
+          <button type="button" class="nav-accordion-btn" onclick="toggleAccordion('m2')" aria-expanded="true">
+            <span>2. Äquivalenzen &amp; Gesetze</span>
+            <i data-lucide="chevron-down" class="nav-accordion-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="nav-sublist">
+            <a href="#sec-gesetze" class="nav-sublink" data-target="sec-gesetze" onclick="handleNavClick(event, 'sec-gesetze')">De Morgan &amp; Absorption</a>
+            <a href="#sec-umformung" class="nav-sublink" data-target="sec-umformung" onclick="handleNavClick(event, 'sec-umformung')">Vorher-Nachher-Vergleich</a>
+          </div>
+        </div>
+
+        <div class="nav-group is-open" data-group="m3">
+          <button type="button" class="nav-accordion-btn" onclick="toggleAccordion('m3')" aria-expanded="true">
+            <span>3. Mengenlehre &amp; Venn</span>
+            <i data-lucide="chevron-down" class="nav-accordion-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="nav-sublist">
+            <a href="#sec-mengen" class="nav-sublink" data-target="sec-mengen" onclick="handleNavClick(event, 'sec-mengen')">Mächtigkeit &amp; Zahlen</a>
+            <a href="#sec-venn" class="nav-sublink" data-target="sec-venn" onclick="handleNavClick(event, 'sec-venn')">Venn-Labor (k₁–k₈)</a>
+          </div>
+        </div>
+
+        <div class="nav-group is-open" data-group="m4">
+          <button type="button" class="nav-accordion-btn" onclick="toggleAccordion('m4')" aria-expanded="true">
+            <span>4. Prädikate &amp; Quantoren</span>
+            <i data-lucide="chevron-down" class="nav-accordion-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="nav-sublist">
+            <a href="#sec-quantoren" class="nav-sublink" data-target="sec-quantoren" onclick="handleNavClick(event, 'sec-quantoren')">All- &amp; Existenzquantor</a>
+            <a href="#sec-quant-check" class="nav-sublink" data-target="sec-quant-check" onclick="handleNavClick(event, 'sec-quant-check')">Wahrheits-Checker</a>
+          </div>
+        </div>
+
+        <div class="nav-group is-open" data-group="m5">
+          <button type="button" class="nav-accordion-btn" onclick="toggleAccordion('m5')" aria-expanded="true">
+            <span>5. Probeklausur</span>
+            <i data-lucide="chevron-down" class="nav-accordion-chevron" aria-hidden="true"></i>
+          </button>
+          <div class="nav-sublist">
+            <a href="#sec-probeklausur" class="nav-sublink" data-target="sec-probeklausur" onclick="handleNavClick(event, 'sec-probeklausur')">5 Klausuraufgaben (20 P.)</a>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Hauptbereich -->
+    <main class="main-column">
+      <!-- Hero -->
+      <section class="hero-block">
+        <span class="eyebrow">Studienleitfaden · Aussagenlogik, Algebra &amp; Mengen</span>
+        <h1>Klar denken. Präzise formalisieren.</h1>
+        <p class="hero-lede">
+          Kompakte Zusammenfassung der Logik- und Mengengrundlagen mit interaktiven Wahrheitstabellen, einem Live-Venn-Diagramm zum Kundendatensatz \(k_1\)–\(k_8\) und einer vollständigen Probeklausur samt Korrekturschema.
+        </p>
+
+        <div class="bento-stats">
+          <div class="stat-tile">
+            <div class="stat-kicker">Fachliche Perspektive</div>
+            <div class="stat-value">0 Fehler</div>
+            <p class="stat-desc">Vermeidung von Fehlentscheidungen und Missverständnissen in Geschäftsregeln.</p>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-kicker">Methodische Perspektive</div>
+            <div class="stat-value">\(2^n\)</div>
+            <p class="stat-desc">Formale Grundlagen für Automatisierung, Filterabfragen und Software-Logik.</p>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-kicker">Persönliche Perspektive</div>
+            <div class="stat-value">100 %</div>
+            <p class="stat-desc">Sicherheit im Handeln und klare Argumentation gegenüber Kunden und Kollegen.</p>
+          </div>
+          <div class="stat-tile">
+            <div class="stat-kicker">Trainingsumfang</div>
+            <div class="stat-value">20 P.</div>
+            <p class="stat-desc">4 Themenmodule plus 5 Klausuraufgaben mit Schritt-für-Schritt-Musterlösung.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODUL 1: Aussagenlogik & Wahrheitstabellen -->
+      <section class="module-section" id="sec-aussagen">
+        <div class="module-header">
+          <div>
+            <span class="module-tag">Modul 1 · Aussagenlogik &amp; Junktoren</span>
+            <h2>Aussagenlogik &amp; Wahrheitstabellen</h2>
+          </div>
+          <button type="button" class="mastered-btn" id="master-btn-m1" onclick="toggleMastered('m1')">
+            <i data-lucide="check-circle-2" width="16" height="16" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+
+        <!-- 1. Stichpunkt-Zusammenfassung -->
+        <div class="card">
+          <h3>Kernkonzepte im Überblick</h3>
+          <ul class="summary-list">
+            <li><strong>Aussage (Proposition):</strong> Jeder sprachliche Satz, dem sich eindeutig ein Wahrheitswert zuordnen lässt — entweder <em>wahr</em> (\(1\) / \(W\)) oder <em>falsch</em> (\(0\) / \(F\)), aber niemals beides zugleich (Prinzip der Zweiwertigkeit).</li>
+            <li><strong>Atomare vs. zusammengesetzte Aussagen:</strong> Elementare Teilaussagen (\(A, B, C\)) werden durch logische Operatoren (<em>Junktoren</em>) zu komplexen Regeln verknüpft.</li>
+            <li><strong>\(2^n\)-Zeilenregel:</strong> Besitzt eine Formel \(n\) atomare Variablen, umfasst ihre vollständige Wahrheitstabelle genau \(2^n\) Kombinationen (bei \(n=2\) also \(4\) Zeilen; bei \(n=3\) genau \(8\) Zeilen von \(000\) bis \(111\)).</li>
+            <li><strong>Klammer- und Bindungsregeln:</strong> Negation (\(\neg\)) bindet am stärksten, gefolgt von Konjunktion (\(\land\)) und Disjunktion (\(\lor\)); Implikation (\(\rightarrow\)) und Äquivalenz (\(\leftrightarrow\)) binden am schwächsten.</li>
+          </ul>
+        </div>
+
+        <!-- 2. Formel- & Definition-Callout-Boxen -->
+        <div class="callout-grid" id="sec-junktoren">
+          <div class="formula-callout">
+            <span class="callout-title">Konjunktion (UND) &amp; Inklusives ODER</span>
+            <div class="callout-formula">\(A \land B\) &nbsp;·&nbsp; \(A \lor B\)</div>
+            <p class="callout-note">\(A \land B\) ist nur wahr, wenn beide wahr sind. \(A \lor B\) ist inklusiv („beides geht“): wahr, sobald mindestens eine Teilaussage wahr ist.</p>
+          </div>
+
+          <div class="formula-callout is-accent-orange">
+            <span class="callout-title">Exklusives ODER (Kontravalenz / XOR)</span>
+            <div class="callout-formula">\(A \oplus B \equiv (A \land \neg B) \lor (\neg A \land B)\)</div>
+            <p class="callout-note">„Nur eins oder das andere“: genau dann wahr, wenn \(A\) und \(B\) unterschiedliche Wahrheitswerte besitzen.</p>
+          </div>
+
+          <div class="formula-callout">
+            <span class="callout-title">Implikation (WENN-DANN-Beziehung)</span>
+            <div class="callout-formula">\(A \rightarrow B \equiv \neg A \lor B\)</div>
+            <p class="callout-note">Merksatz aus der Vorlesung: „Vorne negieren und Pfeil zu ODER.“ Nur falsch, wenn die Prämisse \(A=1\) gilt, aber die Konsequenz \(B=0\) eintritt.</p>
+          </div>
+
+          <div class="formula-callout is-accent-green">
+            <span class="callout-title">Äquivalenz (Bikonditional)</span>
+            <div class="callout-formula">\(A \leftrightarrow B \equiv (A \rightarrow B) \land (B \rightarrow A)\)</div>
+            <p class="callout-note">Genau dann wahr, wenn beide Teilaussagen denselben Wahrheitswert haben (\(00 \mapsto 1\) und \(11 \mapsto 1\)).</p>
+          </div>
+        </div>
+
+        <!-- 3. Interaktives Praxisbeispiel (Aufklappbar + Info-Tabs) -->
+        <div class="interactive-box">
+          <div class="interactive-box-head">
+            <h3>Praxisbeispiele: Geschäftsregeln &amp; Fehlschlüsse</h3>
+            <button type="button" class="btn-pill btn-secondary" id="toggle-ex-m1" onclick="toggleCollapsible('panel-ex-m1', 'toggle-ex-m1', 'Beispiel anzeigen', 'Beispiel ausblenden')">
+              <i data-lucide="chevron-down" width="16" height="16" aria-hidden="true"></i>
+              <span>Beispiel anzeigen</span>
+            </button>
+          </div>
+
+          <div class="collapsible-panel" id="panel-ex-m1">
+            <div class="segmented-bar" role="tablist" aria-label="Praxisbeispiele Aussagenlogik">
+              <button type="button" class="seg-btn is-active" onclick="switchTab('m1-tabs', 0, this)">Rabatt-Regel</button>
+              <button type="button" class="seg-btn" onclick="switchTab('m1-tabs', 1, this)">Portal-Rechte</button>
+              <button type="button" class="seg-btn" onclick="switchTab('m1-tabs', 2, this)">Trugschluss „Holz brennt“</button>
+            </div>
+
+            <div id="m1-tabs">
+              <div class="tab-pane is-active">
+                <p><strong>Ausgangsregel:</strong> „Wenn ein Kunde einen jährlichen Umsatz von über \(40.000\) hat (\(U\)) <strong>UND</strong> seit mehr als drei Jahren Kunde ist (\(D\)), <strong>DANN</strong> erhält er \(5\,\%\) Rabatt (\(R\)).“</p>
+                <p>Formal: \((U \land D) \rightarrow R\).</p>
+                <p><strong>Prüfung der Gegenregel:</strong> „Wenn Umsatz \(\le 40.000\) <strong>UND</strong> weniger als 3 Jahre Kunde, DANN kein Rabatt.“ Achtung: Das ist <em>nicht</em> das vollständige Gegenteil von \(U \land D\)! Nach De Morgan lautet die echte Negation der Bedingung \(\neg(U \land D) \equiv \neg U \lor \neg D\) — also genügt schon <strong>ein</strong> nicht erfülltes Kriterium (ODER), um den Anspruch zu verlieren.</p>
+              </div>
+              <div class="tab-pane">
+                <p><strong>Mitarbeiter-Regel:</strong> „Wenn ein Mitarbeiter Zugang für ein Portal benötigt (\(Z\)) <strong>UND</strong> in Abteilung X arbeitet (\(X\)), <strong>DANN</strong> vergebe die ihm benötigten Rechte (\(R\)).“</p>
+                <p>Formal: \((Z \land X) \rightarrow R\).</p>
+                <p><strong>Automatisierungs-Effekt:</strong> Durch die exakte Konjunktion \(Z \land X\) entsteht eine eindeutige Entscheidungsmatrix mit \(2^2 = 4\) Fällen. Nur bei \((Z=1, X=1)\) greift die Rechtevergabe zwingend.</p>
+              </div>
+              <div class="tab-pane">
+                <p><strong>Logikfehler bei der Umkehrung:</strong> „Hexen brennen; Holz brennt; Enten und Holz schwimmen.“</p>
+                <p>Aus „Wenn Hexe, dann brennt“ (\(H \rightarrow B\)) und „Nicht nur Holz brennt“ folgt <strong>nicht</strong> \(B \rightarrow H\)! Der Schluss von einer wahren Konsequenz auf die Prämisse ist ein klassischer Fehlschluss (Bejahung des Konsequens). Erst „Nur Enten und Holz schwimmen“ liefert eine notwendige Bedingung für das Gewicht.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interaktives Wahrheitstabellen-Labor -->
+        <div class="interactive-box" id="sec-wahrheitslabor">
+          <div class="interactive-box-head">
+            <h3>Interaktives Wahrheitstabellen-Labor</h3>
+            <span class="callout-note">Formel wählen &amp; Eingabewerte testen</span>
+          </div>
+
+          <div class="preset-pills" role="group" aria-label="Formelauswahl">
+            <button type="button" class="chip-btn is-active" onclick="selectTruthPreset('imp', this)">A → B</button>
+            <button type="button" class="chip-btn" onclick="selectTruthPreset('xor', this)">A ⊕ B (XOR)</button>
+            <button type="button" class="chip-btn" onclick="selectTruthPreset('bicon', this)">A ↔ B</button>
+            <button type="button" class="chip-btn" onclick="selectTruthPreset('abs', this)">A ∨ (A ∧ B)</button>
+            <button type="button" class="chip-btn" onclick="selectTruthPreset('chain3', this)">(A → B) → C (8 Zeilen)</button>
+          </div>
+
+          <div class="var-toggle-row">
+            <div class="var-switch">
+              <span>A =</span>
+              <button type="button" id="var-btn-A" class="is-true" onclick="toggleLabVar('A')">1 (wahr)</button>
+            </div>
+            <div class="var-switch">
+              <span>B =</span>
+              <button type="button" id="var-btn-B" class="is-false" onclick="toggleLabVar('B')">0 (falsch)</button>
+            </div>
+            <div class="var-switch" id="var-wrap-C" style="display: none;">
+              <span>C =</span>
+              <button type="button" id="var-btn-C" class="is-true" onclick="toggleLabVar('C')">1 (wahr)</button>
+            </div>
+            <div style="margin-left: auto; font-size: 0.9rem;">
+              Aktives Ergebnis: <span id="lab-live-result" class="truth-val-0">0</span>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table id="truth-lab-table">
+              <thead id="truth-lab-head"></thead>
+              <tbody id="truth-lab-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. Klausur-Relevanz-Badge -->
+        <div class="relevance-badge">
+          <div class="relevance-top">
+            <i data-lucide="target" width="18" height="18" aria-hidden="true"></i>
+            <span>Klausurwahrscheinlichkeit: 95 % — Sehr Hoch</span>
+          </div>
+          <p class="relevance-reason">
+            Wahrheitstabellen für zusammengesetzte Ausdrücke (inklusive der kritischen Zeile \(A=1, B=0\) bei \(A \rightarrow B\)) und das Übersetzen von Alltagsregeln in logische Junktoren gehören zum absoluten Pflichtprogramm fast jeder Klausur.
+          </p>
+        </div>
+      </section>
+
+      <!-- MODUL 2: Äquivalenzen & Boolesche Logikgesetze -->
+      <section class="module-section" id="sec-gesetze">
+        <div class="module-header">
+          <div>
+            <span class="module-tag">Modul 2 · Logische Algebra</span>
+            <h2>Äquivalenzen &amp; Boolesche Logikgesetze</h2>
+          </div>
+          <button type="button" class="mastered-btn" id="master-btn-m2" onclick="toggleMastered('m2')">
+            <i data-lucide="check-circle-2" width="16" height="16" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+
+        <!-- 1. Stichpunkt-Zusammenfassung -->
+        <div class="card">
+          <h3>Kernkonzepte der Termumformung</h3>
+          <ul class="summary-list">
+            <li><strong>Logische Äquivalenz (\(\equiv\)):</strong> Zwei Formeln sind genau dann äquivalent, wenn sie für alle denkbaren Variablenbelegungen identische Wahrheitswerte liefern.</li>
+            <li><strong>Dualität zwischen Logik und Mengenlehre:</strong> Fast jedes Gesetz gilt analog für Aussagen (\(\land, \lor, \neg\)) und Mengen (\(\cap, \cup, \complement\)).</li>
+            <li><strong>Neutralität &amp; Tautologie (\(T\) / \(F\)):</strong> \(A \lor T \equiv T\) („AvT ist immer wahr“), \(A \land T \equiv A\), \(A \lor F \equiv A\) und \(A \land F \equiv F\).</li>
+            <li><strong>Kommutativität &amp; Idempotenz:</strong> Operanden dürfen vertauscht werden (\(A \land B \equiv B \land A\)); doppelte Verknüpfungen kollabieren (\(A \land A \equiv A\), \(A \lor A \equiv A\)).</li>
+            <li><strong>Doppelte &amp; dreifache Negation:</strong> \(\neg\neg A \equiv A\) hebt sich paarweise auf; bei ungerader Anzahl bleibt eine Negation stehen (\(\neg\neg\neg A \equiv \neg A\)).</li>
+          </ul>
+        </div>
+
+        <!-- 2. Formel- & Definition-Callouts -->
+        <div class="callout-grid">
+          <div class="formula-callout">
+            <span class="callout-title">De Morgansche Gesetze</span>
+            <div class="callout-formula">\(\neg(A \land B) \equiv \neg A \lor \neg B\)<br>\(\neg(A \lor B) \equiv \neg A \land \neg B\)</div>
+            <p class="callout-note">Beim Hineinziehen der Negation in eine Klammer dreht sich das Verknüpfungszeichen um (\(\land \leftrightarrow \lor\)). Bei Mengen: \(\complement(P \cup N) = \complement(P) \cap \complement(N)\).</p>
+          </div>
+
+          <div class="formula-callout is-accent-orange">
+            <span class="callout-title">Absorptionsgesetz</span>
+            <div class="callout-formula">\(A \lor (A \land B) \equiv A\)<br>\(A \land (A \lor B) \equiv A\)</div>
+            <p class="callout-note">Ist \(A\) wahr, ist \(A \lor (A \land B)\) sofort wahr; ist \(A\) falsch, sind beide Teile falsch. In Mengen: \(M \cap (M \cup N) = M\).</p>
+          </div>
+
+          <div class="formula-callout is-accent-green">
+            <span class="callout-title">Distributivgesetz</span>
+            <div class="callout-formula">\(A \land (B \lor C) \equiv (A \land B) \lor (A \land C)\)<br>\(A \lor (B \land C) \equiv (A \lor B) \land (A \lor C)\)</div>
+            <p class="callout-note">Ausmultiplizieren und Ausklammern wie in der Algebra — funktioniert aber in beide Richtungen! In Mengen: \(M \cap (N \cup W) = (M \cap N) \cup (M \cap W)\).</p>
+          </div>
+
+          <div class="formula-callout">
+            <span class="callout-title">Implikation &amp; Kontraposition</span>
+            <div class="callout-formula">\(A \rightarrow B \equiv \neg A \lor B \equiv \neg B \rightarrow \neg A\)</div>
+            <p class="callout-note">Erlaubt es, jeden Pfeil in \(\neg\) und \(\lor\) umzuwandeln, bevor De Morgan oder das Distributivgesetz angewendet werden.</p>
+          </div>
+        </div>
+
+        <!-- 3. Interaktives Praxisbeispiel: Vorher-Nachher-Vergleich -->
+        <div class="interactive-box" id="sec-umformung">
+          <div class="interactive-box-head">
+            <h3>Vorher-Nachher-Vergleich: Formeln &amp; Mengenausdrücke vereinfachen</h3>
+            <button type="button" class="btn-pill btn-secondary" id="toggle-ex-m2" onclick="toggleCollapsible('panel-ex-m2', 'toggle-ex-m2', 'Beispiel anzeigen', 'Beispiel ausblenden')">
+              <i data-lucide="chevron-down" width="16" height="16" aria-hidden="true"></i>
+              <span>Beispiel anzeigen</span>
+            </button>
+          </div>
+
+          <div class="collapsible-panel" id="panel-ex-m2">
+            <div class="segmented-bar" role="tablist" aria-label="Umformungsvergleich">
+              <button type="button" class="seg-btn is-active" onclick="switchTab('m2-tabs', 0, this)">Vorher (Rohausdruck)</button>
+              <button type="button" class="seg-btn" onclick="switchTab('m2-tabs', 1, this)">Umformungsschritte</button>
+              <button type="button" class="seg-btn" onclick="switchTab('m2-tabs', 2, this)">Nachher (Minimalform)</button>
+            </div>
+
+            <div id="m2-tabs">
+              <div class="tab-pane is-active">
+                <p><strong>Fall 1 (Aussagenlogik):</strong> Vereinfache \(F = (A \land B) \lor (A \land \neg B)\).</p>
+                <p><strong>Fall 2 (Mengenalgebra aus dem Skript):</strong> Vereinfache die Abfrage „Weder Premium noch Newsletter-Abo“: \(\complement(P \cup N)\).</p>
+                <p><strong>Fall 3 (Absorption):</strong> Vereinfache \(M \cap (M \cup N)\) für beliebige Kundenmengen.</p>
+              </div>
+              <div class="tab-pane">
+                <ol class="summary-list">
+                  <li><strong>Fall 1:</strong> Ausklammern via Distributivgesetz: \((A \land B) \lor (A \land \neg B) \equiv A \land (B \lor \neg B)\). Da \(B \lor \neg B \equiv T\) (Tautologie), folgt \(A \land T \equiv A\).</li>
+                  <li><strong>Fall 2:</strong> Anwendung von De Morgan auf \(\complement(P \cup N)\): Das Komplement dreht \(\cup\) zu \(\cap\) und ergibt \(\complement(P) \cap \complement(N)\).</li>
+                  <li><strong>Fall 3:</strong> In \(M \cap (M \cup N)\) ist \(M\) automatisch eine Teilmenge von \(M \cup N\). Der Schnitt liefert exakt die kleinere Menge \(M\) (Absorptionsgesetz).</li>
+                </ol>
+              </div>
+              <div class="tab-pane">
+                <p><strong>Fall 1 Ergebnis:</strong> \(F \equiv A\) — die Variable \(B\) hat keinerlei Einfluss auf das Endergebnis.</p>
+                <p><strong>Fall 2 Ergebnis:</strong> \(\complement(P) \cap \complement(N) = \{k_2, k_7\}\) — alle Kunden, die <em>kein</em> Premium haben <strong>und</strong> <em>keinen</em> Newsletter beziehen.</p>
+                <p><strong>Fall 3 Ergebnis:</strong> \(M \cap (M \cup N) = M\) — spart komplette Berechnungen ein.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Klausur-Relevanz-Badge -->
+        <div class="relevance-badge">
+          <div class="relevance-top">
+            <i data-lucide="target" width="18" height="18" aria-hidden="true"></i>
+            <span>Klausurwahrscheinlichkeit: 90 % — Sehr Hoch</span>
+          </div>
+          <p class="relevance-reason">
+            Typische Prüfungsaufgabe: Eine lange Formel ohne Wahrheitstabelle Schritt für Schritt auf eine minimale Form reduzieren — insbesondere De Morgan, die Auflösung \(A \rightarrow B \equiv \neg A \lor B\) und das Absorptionsgesetz werden fast immer kombiniert.
+          </p>
+        </div>
+      </section>
+
+      <!-- MODUL 3: Mengenlehre & Venn-Diagramme -->
+      <section class="module-section" id="sec-mengen">
+        <div class="module-header">
+          <div>
+            <span class="module-tag">Modul 3 · Mengen &amp; Relationen</span>
+            <h2>Mengenlehre &amp; Venn-Diagramme</h2>
+          </div>
+          <button type="button" class="mastered-btn" id="master-btn-m3" onclick="toggleMastered('m3')">
+            <i data-lucide="check-circle-2" width="16" height="16" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+
+        <!-- 1. Stichpunkt-Zusammenfassung -->
+        <div class="card">
+          <h3>Kernkonzepte der Mengenlehre</h3>
+          <ul class="summary-list">
+            <li><strong>Darstellungsformen:</strong> <em>Aufzählend</em> z. B. \(P = \{k_1, k_4, k_6\}\) oder <em>beschreibend</em> z. B. \(\{x \in \mathbb{N} \mid x \text{ ist Teiler von } 12\} = \{1, 2, 3, 4, 6, 12\}\).</li>
+            <li><strong>Keine Dopplung, keine Reihenfolge:</strong> In Mengen zählt jedes Element nur einmal und die Reihenfolge ist irrelevant: \(\{1, 2, 3\} = \{3, 1, 2, 2\}\).</li>
+            <li><strong>Konvention bei \(\mathbb{N}\):</strong> Je nach Definition zählt \(0 \in \mathbb{N}\) mit oder nicht (\(\mathbb{N}_0\) vs. \(\mathbb{N}^+\)) — in Klausuren immer auf die vorgegebene Definition achten!</li>
+            <li><strong>Element (\(\in\)) vs. Teilmenge (\(\subseteq\)):</strong> Ein einzelner Kunde \(k_1\) ist ein <em>Element</em> von \(St\) (\(k_1 \in St\)), während die ein-elementige Menge \(\{k_1\}\) eine <em>Teilmenge</em> ist (\(\{k_1\} \subseteq St\)).</li>
+            <li><strong>Leere Menge \(\emptyset\):</strong> Die leere Menge \(\emptyset = \{\}\) besitzt die Mächtigkeit \(|\emptyset| = 0\) und ist <strong>immer</strong> Teilmenge jeder beliebigen Menge (\(\emptyset \subseteq M\) ist stets wahr).</li>
+          </ul>
+        </div>
+
+        <!-- 2. Formel- & Definition-Callouts -->
+        <div class="callout-grid">
+          <div class="formula-callout">
+            <span class="callout-title">Mächtigkeit (Kardinalität)</span>
+            <div class="callout-formula">\(|M| = \text{Anzahl eindeutiger Elemente}\)</div>
+            <p class="callout-note">Achtung Klausurfalle: \(|\emptyset| = 0\), aber \(|\{\emptyset\}| = 1\), da die äußere Menge ein Element (die leere Menge) enthält!</p>
+          </div>
+
+          <div class="formula-callout is-accent-orange">
+            <span class="callout-title">Potenzmenge \(\mathcal{P}(M)\)</span>
+            <div class="callout-formula">\(|\mathcal{P}(M)| = 2^{|M|}\)</div>
+            <p class="callout-note">Menge aller Teilmengen: Bei \(3\) Extras \(\{h, s, x\}\) gibt es \(2^3 = 8\) Teilmengen (von \(\emptyset\) bis \(\{h, s, x\}\)); bei \(11\) Extras \(2^{11} = 2048\) Möglichkeiten.</p>
+          </div>
+
+          <div class="formula-callout is-accent-green">
+            <span class="callout-title">Schnitt, Vereinigung &amp; Differenz</span>
+            <div class="callout-formula">\(A \cap B \quad \cdot \quad A \cup B \quad \cdot \quad A \setminus B\)</div>
+            <p class="callout-note">\(A \cap B\): in beiden; \(A \cup B\): in mindestens einer; \(A \setminus B\): Elemente aus \(A\), die <em>nicht</em> in \(B\) liegen.</p>
+          </div>
+
+          <div class="formula-callout">
+            <span class="callout-title">Komplement \(\complement(M)\)</span>
+            <div class="callout-formula">\(\complement(M) = G \setminus M\)</div>
+            <p class="callout-note">Alle Elemente der Grundmenge \(G = \{k_1, \dots, k_8\}\), die nicht in \(M\) enthalten sind. Beispiel: \(\complement(\{k_1, k_6\})\) hat Mächtigkeit \(6\).</p>
+          </div>
+        </div>
+
+        <!-- 3. Interaktives Praxisbeispiel (Aufklappbar) -->
+        <div class="interactive-box">
+          <div class="interactive-box-head">
+            <h3>Praxisbeispiel: Mengenvergleich &amp; Teilmengen-Fallen</h3>
+            <button type="button" class="btn-pill btn-secondary" id="toggle-ex-m3" onclick="toggleCollapsible('panel-ex-m3', 'toggle-ex-m3', 'Beispiel anzeigen', 'Beispiel ausblenden')">
+              <i data-lucide="chevron-down" width="16" height="16" aria-hidden="true"></i>
+              <span>Beispiel anzeigen</span>
+            </button>
+          </div>
+
+          <div class="collapsible-panel" id="panel-ex-m3">
+            <ul class="summary-list">
+              <li><strong>Sind \(\{x \in \mathbb{N} \mid x \text{ gerade}, x \le 6\}\) und \(\{2, 4, 6\}\) gleich?</strong> Hängt von der Definition von \(\mathbb{N}\) ab! Zählt \(0\) zu \(\mathbb{N}\), enthält die erste Menge zusätzlich die \(0\) (\(\{0, 2, 4, 6\}\)) und beide sind <em>ungleich</em>.</li>
+              <li><strong>Gilt \(P \subseteq St\)?</strong> Nein: \(P = \{k_1, k_4, k_6\}\) und \(St = \{k_1, k_3, k_7\}\). Zwar ist \(k_1\) in \(St\), aber \(k_4\) und \(k_6\) nicht — daher ist \(P\) keine Teilmenge von \(St\).</li>
+              <li><strong>Bestellungen-Beispiel:</strong> Die Menge \(Z = \{k_2, k_7\}\) („keine Bestellungen“) hat Mächtigkeit \(|Z| = 2\). Die Frage „Ist mindestens \(5\) Bestellungen eindeutig?“ verlangt ein klares Grund-Prädikat.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Interaktives Venn-Diagramm für das Kundenmodell k1..k8 -->
+        <div class="interactive-box" id="sec-venn">
+          <div class="interactive-box-head">
+            <h3>Interaktives Venn-Diagramm: Kundenmodell \(k_1\)–\(k_8\)</h3>
+            <span class="callout-note">Grundmenge \(K = \{k_1, k_2, k_3, k_4, k_5, k_6, k_7, k_8\}\)</span>
+          </div>
+
+          <div class="preset-pills" role="group" aria-label="Mengenoperationen auswählen">
+            <button type="button" class="chip-btn is-active" onclick="selectVennOp('P_int_N', this)">P ∩ N</button>
+            <button type="button" class="chip-btn" onclick="selectVennOp('St_int_N', this)">St ∩ N</button>
+            <button type="button" class="chip-btn" onclick="selectVennOp('N_diff_P', this)">N \ P</button>
+            <button type="button" class="chip-btn" onclick="selectVennOp('P_diff_N', this)">P \ N</button>
+            <button type="button" class="chip-btn" onclick="selectVennOp('St_N_no_P', this)">(N ∩ St) \ P</button>
+            <button type="button" class="chip-btn" onclick="selectVennOp('comp_P_U_N', this)">∁(P ∪ N)</button>
+            <button type="button" class="chip-btn" onclick="selectVennOp('P_U_N', this)">P ∪ N</button>
+          </div>
+
+          <div class="venn-layout">
+            <div class="venn-svg-box">
+              <svg viewBox="0 0 400 300" role="img" aria-label="Venn-Diagramm der Kundenmengen Premium, Newsletter und Stuttgart">
+                <!-- Universe K background -->
+                <rect id="venn-region-bg" x="8" y="8" width="384" height="284" rx="16" fill="var(--surface-card)" stroke="var(--outline)" stroke-width="1.5"/>
+                <text x="22" y="28" font-size="12" font-weight="600" fill="var(--on-surface-variant)">K (Grundmenge)</text>
+                <text x="320" y="268" font-size="11.5" font-weight="600" fill="var(--on-surface-variant)">außerhalb: k₂</text>
+
+                <!-- Circle P (Premium): top-left -->
+                <circle id="venn-circ-P" cx="155" cy="122" r="78" fill="var(--data-1-soft)" stroke="var(--data-1)" stroke-width="2"/>
+                <text x="90" y="68" font-size="12" font-weight="700" fill="var(--data-1)">P (Premium)</text>
+
+                <!-- Circle N (Newsletter): top-right -->
+                <circle id="venn-circ-N" cx="245" cy="122" r="78" fill="var(--data-2-soft)" stroke="var(--data-2)" stroke-width="2"/>
+                <text x="242" y="68" font-size="12" font-weight="700" fill="var(--data-2)">N (Newsletter)</text>
+
+                <!-- Circle St (Stuttgart): bottom-center -->
+                <circle id="venn-circ-St" cx="200" cy="196" r="76" fill="var(--data-3-soft)" stroke="var(--data-3)" stroke-width="2"/>
+                <text x="155" y="284" font-size="12" font-weight="700" fill="var(--data-3)">St (Stuttgart)</text>
+
+                <!-- Customer placement labels in exact regions -->
+                <text id="vk-k4" x="115" y="114" font-size="13" font-weight="600" fill="var(--on-surface)">k₄</text>
+                <text id="vk-k6" x="193" y="106" font-size="13" font-weight="600" fill="var(--on-surface)">k₆</text>
+                <text id="vk-k1" x="193" y="152" font-size="13" font-weight="700" fill="var(--on-surface)">k₁</text>
+                <text id="vk-k5k8" x="266" y="114" font-size="13" font-weight="600" fill="var(--on-surface)">k₅, k₈</text>
+                <text id="vk-k3" x="228" y="182" font-size="13" font-weight="600" fill="var(--on-surface)">k₃</text>
+                <text id="vk-k7" x="193" y="238" font-size="13" font-weight="600" fill="var(--on-surface)">k₇</text>
+                <text id="vk-k2" x="42" y="256" font-size="13" font-weight="600" fill="var(--on-surface)">k₂</text>
+              </svg>
+            </div>
+
+            <div class="venn-result-panel">
+              <div>
+                <span class="callout-note">Ausgewählter Ausdruck</span>
+                <div class="callout-formula" id="venn-expr-title">P ∩ N</div>
+              </div>
+              <p class="callout-note" id="venn-expr-desc">
+                Alle Kunden, die sowohl Premiumkunden sind als auch den Newsletter abonniert haben.
+              </p>
+              <div>
+                <span class="callout-note">Resultierende Menge &amp; Mächtigkeit: <strong id="venn-card-badge">|M| = 2</strong></span>
+                <div class="customer-pill-grid" id="venn-customer-grid"></div>
+              </div>
+              <div class="callout-note" style="margin-top: var(--space-xs);">
+                Definitionen: \(P=\{k_1,k_4,k_6\}\), \(N=\{k_1,k_3,k_5,k_6,k_8\}\), \(St=\{k_1,k_3,k_7\}\), \(Z=\{k_2,k_7\}\).
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Klausur-Relevanz-Badge -->
+        <div class="relevance-badge">
+          <div class="relevance-top">
+            <i data-lucide="target" width="18" height="18" aria-hidden="true"></i>
+            <span>Klausurwahrscheinlichkeit: 85 % — Hoch</span>
+          </div>
+          <p class="relevance-reason">
+            Mengenoperationen auf gegebenen Datensätzen (\(A \setminus B\), \(\complement(P \cup N)\)) sowie Detailfragen zu Mächtigkeiten (\(|\emptyset|\) vs. \(|\{\emptyset\}|\), Dopplungen, \(\mathbb{N}\) mit/ohne \(0\)) sind beliebte Kurzaufgaben zur Überprüfung präziser Notation.
+          </p>
+        </div>
+      </section>
+
+      <!-- MODUL 4: Prädikatenlogik & Quantoren -->
+      <section class="module-section" id="sec-quantoren">
+        <div class="module-header">
+          <div>
+            <span class="module-tag">Modul 4 · Prädikatenlogik</span>
+            <h2>Prädikatenlogik &amp; Quantoren</h2>
+          </div>
+          <button type="button" class="mastered-btn" id="master-btn-m4" onclick="toggleMastered('m4')">
+            <i data-lucide="check-circle-2" width="16" height="16" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+
+        <!-- 1. Stichpunkt-Zusammenfassung -->
+        <div class="card">
+          <h3>Kernkonzepte der Quantorenlogik</h3>
+          <ul class="summary-list">
+            <li><strong>Allquantor (\(\forall\)):</strong> „Für alle \(x\) aus der Grundmenge \(M\) gilt die Eigenschaft \(A(x)\).“ Eine Allaussage ist bereits <strong>falsch</strong>, sobald ein einziges <em>Gegenbeispiel</em> existiert.</li>
+            <li><strong>Existenzquantor (\(\exists\)):</strong> „Es existiert mindestens ein \(x\) aus \(M\), für das \(A(x)\) gilt.“ Eine Existenzaussage ist bereits <strong>wahr</strong>, sobald ein einziges passendes Beispiel (<em>Zeuge</em>) gefunden wird.</li>
+            <li><strong>Bezug zu Mengen:</strong> \(\forall x \in P : x \in N\) ist logisch gleichbedeutend mit der Teilmengenbeziehung \(P \subseteq N\).</li>
+            <li><strong>Präzise Negation:</strong> Aus „Nicht alle …“ wird „Mindestens einer nicht …“; aus „Es gibt keinen …“ wird „Alle erfüllen das Gegenteil“.</li>
+          </ul>
+        </div>
+
+        <!-- 2. Formel- & Definition-Callouts -->
+        <div class="callout-grid">
+          <div class="formula-callout">
+            <span class="callout-title">Allquantor-Notation</span>
+            <div class="callout-formula">\(\forall x \in M : A(x)\)</div>
+            <p class="callout-note">„Für alle Elemente \(x\) in \(M\) gilt \(A(x)\).“ Beweis erfordert Prüfung aller Elemente; Widerlegung erfordert nur ein Gegenbeispiel.</p>
+          </div>
+
+          <div class="formula-callout is-accent-orange">
+            <span class="callout-title">Existenzquantor-Notation</span>
+            <div class="callout-formula">\(\exists x \in M : A(x)\)</div>
+            <p class="callout-note">„Mindestens ein \(x\) in \(M\) erfüllt \(A(x)\).“ (Achtung: „Mindestens ein“ schließt „alle“ nicht aus!)</p>
+          </div>
+
+          <div class="formula-callout is-accent-green">
+            <span class="callout-title">Negation von Quantoren</span>
+            <div class="callout-formula">\(\neg(\forall x \in M : A(x)) \equiv \exists x \in M : \neg A(x)\)<br>\(\neg(\exists x \in M : A(x)) \equiv \forall x \in M : \neg A(x)\)</div>
+            <p class="callout-note">Beim Negieren klappt der Quantor um (\(\forall \leftrightarrow \exists\)) und die Negation wandert vor das Prädikat \(A(x)\).</p>
+          </div>
+        </div>
+
+        <!-- 3. Interaktives Praxisbeispiel + Wahrheits-Checker -->
+        <div class="interactive-box">
+          <div class="interactive-box-head">
+            <h3>Praxisbeispiel: Quantoren auf der leeren Menge \(\emptyset\)</h3>
+            <button type="button" class="btn-pill btn-secondary" id="toggle-ex-m4" onclick="toggleCollapsible('panel-ex-m4', 'toggle-ex-m4', 'Beispiel anzeigen', 'Beispiel ausblenden')">
+              <i data-lucide="chevron-down" width="16" height="16" aria-hidden="true"></i>
+              <span>Beispiel anzeigen</span>
+            </button>
+          </div>
+
+          <div class="collapsible-panel" id="panel-ex-m4">
+            <p><strong>Klassischer Sonderfall:</strong> Was gilt für \(\forall x \in \emptyset : x \in P\) gegenüber \(\exists x \in \emptyset : x \in P\)?</p>
+            <ul class="summary-list">
+              <li><strong>Allaussage auf \(\emptyset\) ist stets wahr:</strong> Es existiert kein Gegenbeispiel in \(\emptyset\), das die Bedingung verletzen könnte („vacuous truth“).</li>
+              <li><strong>Existenzaussage auf \(\emptyset\) ist stets falsch:</strong> Man findet kein einziges Element als Zeugen.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Interaktiver Quantoren-Wahrheits-Checker -->
+        <div class="interactive-box" id="sec-quant-check">
+          <div class="interactive-box-head">
+            <h3>Interaktiver Quantoren-Wahrheits-Checker (Kunden \(k_1\)–\(k_8\))</h3>
+            <span class="callout-note">Prüfe die Originalaussagen aus dem Skript</span>
+          </div>
+
+          <div class="quant-list">
+            <div class="quant-item">
+              <div class="quant-top">
+                <div>
+                  <strong>1. \(\forall x \in P : x \in N\)</strong><br>
+                  <span class="callout-note">„Alle Premiumkunden sind Newsletter-Abonnenten.“</span>
+                </div>
+                <div class="quant-actions">
+                  <button type="button" class="chip-btn" onclick="checkQuant(0, true, this)">Wahr</button>
+                  <button type="button" class="chip-btn" onclick="checkQuant(0, false, this)">Falsch</button>
+                </div>
+              </div>
+              <div class="quant-feedback" id="qfb-0"></div>
+            </div>
+
+            <div class="quant-item">
+              <div class="quant-top">
+                <div>
+                  <strong>2. \(\forall x \in P : x \notin N\)</strong><br>
+                  <span class="callout-note">„Alle Premiumkunden sind keine Newsletter-Abonnenten.“</span>
+                </div>
+                <div class="quant-actions">
+                  <button type="button" class="chip-btn" onclick="checkQuant(1, true, this)">Wahr</button>
+                  <button type="button" class="chip-btn" onclick="checkQuant(1, false, this)">Falsch</button>
+                </div>
+              </div>
+              <div class="quant-feedback" id="qfb-1"></div>
+            </div>
+
+            <div class="quant-item">
+              <div class="quant-top">
+                <div>
+                  <strong>3. \(\exists x \in St : x \in P\)</strong><br>
+                  <span class="callout-note">„Mindestens ein Stuttgarter Kunde ist auch Premiumkunde.“</span>
+                </div>
+                <div class="quant-actions">
+                  <button type="button" class="chip-btn" onclick="checkQuant(2, true, this)">Wahr</button>
+                  <button type="button" class="chip-btn" onclick="checkQuant(2, false, this)">Falsch</button>
+                </div>
+              </div>
+              <div class="quant-feedback" id="qfb-2"></div>
+            </div>
+
+            <div class="quant-item">
+              <div class="quant-top">
+                <div>
+                  <strong>4. \(\forall x \in Z : x \notin P\)</strong><br>
+                  <span class="callout-note">„Kein Kunde ohne Bestellungen (\(Z = \{k_2, k_7\}\)) ist Premiumkunde.“</span>
+                </div>
+                <div class="quant-actions">
+                  <button type="button" class="chip-btn" onclick="checkQuant(3, true, this)">Wahr</button>
+                  <button type="button" class="chip-btn" onclick="checkQuant(3, false, this)">Falsch</button>
+                </div>
+              </div>
+              <div class="quant-feedback" id="qfb-3"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Klausur-Relevanz-Badge -->
+        <div class="relevance-badge">
+          <div class="relevance-top">
+            <i data-lucide="target" width="18" height="18" aria-hidden="true"></i>
+            <span>Klausurwahrscheinlichkeit: 80 % — Hoch</span>
+          </div>
+          <p class="relevance-reason">
+            In Klausuren müssen Sie fast immer vorgegebene Prädikate anhand einer konkreten Tabelle mit „wahr“ oder „falsch“ bewerten und bei falschen Allaussagen das exakte Gegenbeispiel benennen.
+          </p>
+        </div>
+      </section>
+
+      <!-- ABSCHLUSS: Interaktive Probeklausur & Wissenstest -->
+      <section class="module-section" id="sec-probeklausur">
+        <div class="module-header">
+          <div>
+            <span class="module-tag">Abschlusstest · 5 Aufgaben</span>
+            <h2>Interaktive Probeklausur &amp; Wissenstest</h2>
+          </div>
+          <button type="button" class="btn-pill btn-secondary" id="reset-exam-btn" onclick="resetExam(this)">
+            <i data-lucide="rotate-ccw" width="16" height="16" aria-hidden="true"></i>
+            <span>Zurücksetzen</span>
+          </button>
+        </div>
+
+        <div class="exam-summary-bar">
+          <div>
+            <span class="callout-note">Aktueller Punktestand</span>
+            <div class="exam-score-value" id="exam-total-score">0 / 20 Punkte</div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+            <span class="callout-note" id="exam-grade-hint">Löse die Aufgaben und prüfe deinen Rechenweg.</span>
+            <button type="button" class="btn-pill" onclick="gradeAllTasks()">
+              <i data-lucide="check-check" width="16" height="16" aria-hidden="true"></i>
+              <span>Gesamte Klausur auswerten</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Aufgabe 1 (Multiple Choice, 3 Punkte) -->
+        <article class="exam-task" id="task-1">
+          <div class="exam-task-header">
+            <h3>Aufgabe 1: Implikation in Geschäftsregeln (Multiple Choice)</h3>
+            <span class="exam-pts-pill" id="pts-task-1">0 / 3 Punkte</span>
+          </div>
+          <p>Gegeben ist die Portal-Regel: \(F = (Z \land X) \rightarrow R\) („Wenn Zugang benötigt \(Z\) UND in Abteilung X arbeitet \(X\), dann Rechte vergeben \(R\)“). Wann ist die Formel \(F\) insgesamt <strong>falsch</strong>?</p>
+
+          <div class="mc-options" id="mc-task-1">
+            <button type="button" class="mc-option" onclick="selectMc(1, 0, this)">A) Wenn der Mitarbeiter keinen Zugang benötigt (\(Z=0\)), nicht in X arbeitet (\(X=0\)), aber Rechte erhält (\(R=1\)).</button>
+            <button type="button" class="mc-option" onclick="selectMc(1, 1, this)">B) Wenn der Mitarbeiter Zugang benötigt (\(Z=1\)) und in Abteilung X arbeitet (\(X=1\)), aber keine Rechte erhält (\(R=0\)).</button>
+            <button type="button" class="mc-option" onclick="selectMc(1, 2, this)">C) Sobald mindestens eine der Bedingungen \(Z\) oder \(X\) falsch ist.</button>
+            <button type="button" class="mc-option" onclick="selectMc(1, 3, this)">D) Wenn \(Z=1\) und \(X=0\) gilt und keine Rechte vergeben werden (\(R=0\)).</button>
+          </div>
+
+          <div class="exam-actions">
+            <button type="button" class="btn-pill" onclick="checkTask1()">Antwort prüfen</button>
+            <button type="button" class="btn-pill btn-secondary" id="sol-btn-1" onclick="toggleCollapsible('sol-1', 'sol-btn-1', 'Musterlösung & Korrekturschema anzeigen', 'Musterlösung ausblenden')">Musterlösung &amp; Korrekturschema anzeigen</button>
+          </div>
+          <div class="exam-feedback" id="fb-task-1"></div>
+          <div class="solution-panel" id="sol-1">
+            <h4>Musterlösung &amp; Korrekturschema (3 Punkte)</h4>
+            <p><strong>Richtige Antwort: B.</strong> Die Implikation \((Z \land X) \rightarrow R\) ist äquivalent zu \(\neg(Z \land X) \lor R\). Sie wird nur dann falsch (\(0\)), wenn der vordere Teil (die Prämisse \(Z \land X\)) wahr (\(1\)) und die Konsequenz \(R\) falsch (\(0\)) ist. Dafür müssen \(Z=1\), \(X=1\) und \(R=0\) gelten.</p>
+            <ul class="grading-list">
+              <li>3 Punkte: Korrekte Auswahl der Option B.</li>
+              <li>0 Punkte: Bei Verwechslung mit einer Konjunktion oder falscher Implikationszeile.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Aufgabe 2 (Multiple Choice, 4 Punkte) -->
+        <article class="exam-task" id="task-2">
+          <div class="exam-task-header">
+            <h3>Aufgabe 2: Logikgesetze &amp; Termvereinfachung (Multiple Choice)</h3>
+            <span class="exam-pts-pill" id="pts-task-2">0 / 4 Punkte</span>
+          </div>
+          <p>Welcher Ausdruck ist logisch äquivalent zu der Formel \(G = \neg(\neg A \lor B) \lor (A \land (A \lor B))\)?</p>
+
+          <div class="mc-options" id="mc-task-2">
+            <button type="button" class="mc-option" onclick="selectMc(2, 0, this)">A) \(\neg A \land B\)</button>
+            <button type="button" class="mc-option" onclick="selectMc(2, 1, this)">B) \(A \lor B\)</button>
+            <button type="button" class="mc-option" onclick="selectMc(2, 2, this)">C) \(A\)</button>
+            <button type="button" class="mc-option" onclick="selectMc(2, 3, this)">D) \(B\)</button>
+          </div>
+
+          <div class="exam-actions">
+            <button type="button" class="btn-pill" onclick="checkTask2()">Antwort prüfen</button>
+            <button type="button" class="btn-pill btn-secondary" id="sol-btn-2" onclick="toggleCollapsible('sol-2', 'sol-btn-2', 'Musterlösung & Korrekturschema anzeigen', 'Musterlösung ausblenden')">Musterlösung &amp; Korrekturschema anzeigen</button>
+          </div>
+          <div class="exam-feedback" id="fb-task-2"></div>
+          <div class="solution-panel" id="sol-2">
+            <h4>Musterlösung &amp; Korrekturschema (4 Punkte)</h4>
+            <p><strong>Richtige Antwort: C (\(A\)).</strong> Rechenweg:</p>
+            <ol class="summary-list">
+              <li>De Morgan auf \(\neg(\neg A \lor B)\): ergibt \(\neg\neg A \land \neg B \equiv A \land \neg B\).</li>
+              <li>Absorption auf \(A \land (A \lor B)\): ergibt direkt \(A\).</li>
+              <li>Zusammensetzen: \((A \land \neg B) \lor A\). Erneute Anwendung des Absorptionsgesetzes liefert \(A\).</li>
+            </ol>
+            <ul class="grading-list">
+              <li>1 P.: De Morgan korrekt angewendet.</li>
+              <li>1 P.: Erste Absorption auf \(A \land (A \lor B)\) erkannt.</li>
+              <li>2 P.: Zweite Absorption zum Endergebnis \(A\) korrekt durchgeführt.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Aufgabe 3 (Definitions- & Fangfragen, 4 Punkte) -->
+        <article class="exam-task" id="task-3">
+          <div class="exam-task-header">
+            <h3>Aufgabe 3: Mächtigkeit, Dopplung &amp; Teilmengen (Definitionsaufgabe)</h3>
+            <span class="exam-pts-pill" id="pts-task-3">0 / 4 Punkte</span>
+          </div>
+          <p>Bestimmen Sie die exakte Mächtigkeit sowie die gültige Mengenbeziehung:</p>
+
+          <div class="exam-inputs-grid">
+            <div class="input-field-group">
+              <label for="inp-t3-m1">Mächtigkeit von \(M_1 = \{2, 4, 4, 8, 2\}\)</label>
+              <input type="number" id="inp-t3-m1" min="0" max="20" placeholder="Zahl eingeben" onchange="saveExamInputs()">
+            </div>
+            <div class="input-field-group">
+              <label for="inp-t3-m2">Mächtigkeit von \(M_2 = \{\emptyset\}\)</label>
+              <input type="number" id="inp-t3-m2" min="0" max="20" placeholder="Zahl eingeben" onchange="saveExamInputs()">
+            </div>
+            <div class="input-field-group">
+              <label for="inp-t3-sub">Gilt \(\emptyset \subseteq \{k_1, k_3\}\)?</label>
+              <select id="inp-t3-sub" onchange="saveExamInputs()">
+                <option value="">Bitte wählen…</option>
+                <option value="wahr">Wahr</option>
+                <option value="falsch">Falsch</option>
+              </select>
+            </div>
+            <div class="input-field-group">
+              <label for="inp-t3-pow">Anzahl Teilmengen von \(\{h, s, x\}\)</label>
+              <input type="number" id="inp-t3-pow" min="0" max="64" placeholder="Zahl eingeben" onchange="saveExamInputs()">
+            </div>
+          </div>
+
+          <div class="exam-actions">
+            <button type="button" class="btn-pill" onclick="checkTask3()">Antwort prüfen</button>
+            <button type="button" class="btn-pill btn-secondary" id="sol-btn-3" onclick="toggleCollapsible('sol-3', 'sol-btn-3', 'Musterlösung & Korrekturschema anzeigen', 'Musterlösung ausblenden')">Musterlösung &amp; Korrekturschema anzeigen</button>
+          </div>
+          <div class="exam-feedback" id="fb-task-3"></div>
+          <div class="solution-panel" id="sol-3">
+            <h4>Musterlösung &amp; Korrekturschema (4 Punkte)</h4>
+            <ul class="grading-list">
+              <li>1 P.: \(|M_1| = 3\) (Dopplungen werden in Mengen nicht gezählt: \(\{2, 4, 8\}\)).</li>
+              <li>1 P.: \(|\{\emptyset\}| = 1\) (im Gegensatz zu \(|\emptyset| = 0\) enthält diese Menge genau ein Element, nämlich die leere Menge selbst).</li>
+              <li>1 P.: \(\emptyset \subseteq \{k_1, k_3\}\) ist <strong>Wahr</strong> (die leere Menge ist Teilmenge jeder Menge).</li>
+              <li>1 P.: \(|\mathcal{P}(\{h, s, x\})| = 2^3 = 8\) Teilmengen.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Aufgabe 4 (Transferaufgabe Kundenmodell, 5 Punkte) -->
+        <article class="exam-task" id="task-4">
+          <div class="exam-task-header">
+            <h3>Aufgabe 4: Transferaufgabe Mengenoperationen (\(k_1\)–\(k_8\))</h3>
+            <span class="exam-pts-pill" id="pts-task-4">0 / 5 Punkte</span>
+          </div>
+          <p>Gegeben seien \(K = \{k_1, \dots, k_8\}\), \(P = \{k_1, k_4, k_6\}\), \(N = \{k_1, k_3, k_5, k_6, k_8\}\) und \(St = \{k_1, k_3, k_7\}\). Wählen Sie alle Kunden aus, die in der Zielmenge <strong>\(M = (N \setminus P) \cup \complement(P \cup N)\)</strong> enthalten sind:</p>
+
+          <div class="set-picker" id="set-picker-4" role="group" aria-label="Kunden auswählen">
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k1', this)">k₁</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k2', this)">k₂</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k3', this)">k₃</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k4', this)">k₄</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k5', this)">k₅</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k6', this)">k₆</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k7', this)">k₇</button>
+            <button type="button" class="set-pick-btn" onclick="toggleTask4Pick('k8', this)">k₈</button>
+          </div>
+
+          <div class="exam-actions">
+            <button type="button" class="btn-pill" onclick="checkTask4()">Antwort prüfen</button>
+            <button type="button" class="btn-pill btn-secondary" id="sol-btn-4" onclick="toggleCollapsible('sol-4', 'sol-btn-4', 'Musterlösung & Korrekturschema anzeigen', 'Musterlösung ausblenden')">Musterlösung &amp; Korrekturschema anzeigen</button>
+          </div>
+          <div class="exam-feedback" id="fb-task-4"></div>
+          <div class="solution-panel" id="sol-4">
+            <h4>Musterlösung &amp; Korrekturschema (5 Punkte)</h4>
+            <p><strong>Ergebnis: \(\{k_2, k_3, k_5, k_7, k_8\}\).</strong></p>
+            <ol class="summary-list">
+              <li>\(N \setminus P = \{k_3, k_5, k_8\}\) (Newsletter ohne Premium).</li>
+              <li>\(P \cup N = \{k_1, k_3, k_4, k_5, k_6, k_8\}\), also \(\complement(P \cup N) = \{k_2, k_7\}\) (weder Premium noch Newsletter).</li>
+              <li>Vereinigung beider Teilmengen ergibt \(\{k_2, k_3, k_5, k_7, k_8\}\) — das ist genau \(\complement(P)\), alle Nicht-Premiumkunden!</li>
+            </ol>
+            <ul class="grading-list">
+              <li>2 P.: Korrekte Teilmenge \(N \setminus P = \{k_3, k_5, k_8\}\).</li>
+              <li>2 P.: Korrektes Komplement \(\complement(P \cup N) = \{k_2, k_7\}\).</li>
+              <li>1 P.: Fehlerfreie Vereinigung zu \(\{k_2, k_3, k_5, k_7, k_8\}\).</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Aufgabe 5 (Transferaufgabe Quantoren, 4 Punkte) -->
+        <article class="exam-task" id="task-5">
+          <div class="exam-task-header">
+            <h3>Aufgabe 5: Transferaufgabe Quantoren &amp; Negation</h3>
+            <span class="exam-pts-pill" id="pts-task-5">0 / 4 Punkte</span>
+          </div>
+          <p>Betrachten Sie die Aussage: <em>„Alle Stuttgarter Kunden sind Newsletter-Abonnenten“</em> (\(\forall x \in St : x \in N\)), wobei \(St = \{k_1, k_3, k_7\}\) und \(N = \{k_1, k_3, k_5, k_6, k_8\}\).</p>
+
+          <div class="exam-inputs-grid">
+            <div class="input-field-group">
+              <label for="inp-t5-val">Wahrheitswert der Allaussage</label>
+              <select id="inp-t5-val" onchange="saveExamInputs()">
+                <option value="">Bitte wählen…</option>
+                <option value="wahr">Wahr</option>
+                <option value="falsch">Falsch</option>
+              </select>
+            </div>
+            <div class="input-field-group">
+              <label for="inp-t5-cex">Welcher Kunde liefert das Gegenbeispiel?</label>
+              <select id="inp-t5-cex" onchange="saveExamInputs()">
+                <option value="">Bitte wählen…</option>
+                <option value="k1">k₁</option>
+                <option value="k3">k₃</option>
+                <option value="k4">k₄</option>
+                <option value="k7">k₇</option>
+              </select>
+            </div>
+            <div class="input-field-group">
+              <label for="inp-t5-neg">Korrekte formale Negation</label>
+              <select id="inp-t5-neg" onchange="saveExamInputs()">
+                <option value="">Bitte wählen…</option>
+                <option value="all_not">∀x ∈ St : x ∉ N</option>
+                <option value="ex_not">∃x ∈ St : x ∉ N</option>
+                <option value="ex_in">∃x ∈ St : x ∈ N</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="exam-actions">
+            <button type="button" class="btn-pill" onclick="checkTask5()">Antwort prüfen</button>
+            <button type="button" class="btn-pill btn-secondary" id="sol-btn-5" onclick="toggleCollapsible('sol-5', 'sol-btn-5', 'Musterlösung & Korrekturschema anzeigen', 'Musterlösung ausblenden')">Musterlösung &amp; Korrekturschema anzeigen</button>
+          </div>
+          <div class="exam-feedback" id="fb-task-5"></div>
+          <div class="solution-panel" id="sol-5">
+            <h4>Musterlösung &amp; Korrekturschema (4 Punkte)</h4>
+            <ul class="grading-list">
+              <li>1 P.: Wahrheitswert = <strong>Falsch</strong>.</li>
+              <li>1 P.: Gegenbeispiel = <strong>\(k_7\)</strong>, denn \(k_7 \in St\), aber \(k_7 \notin N\).</li>
+              <li>2 P.: Negation = <strong>\(\exists x \in St : x \notin N\)</strong> („Mindestens ein Stuttgarter Kunde hat keinen Newsletter“).</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <footer class="page-footer">
+        Erstellt auf Basis der Vorlesungsunterlagen „Logik &amp; Algebra“ (Aussagenlogik, Junktoren, Boolesche Gesetze, Mengenmodell \(k_1\)–\(k_8\) und Quantoren).
+      </footer>
+    </main>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    const appState = {
+      theme: `light`,
+      mastered: { m1: false, m2: false, m3: false, m4: false },
+      truthPreset: `imp`,
+      labVars: { A: 1, B: 0, C: 1 },
+      vennOp: `P_int_N`,
+      exam: {
+        mc1: null,
+        mc2: null,
+        t3: { m1: ``, m2: ``, sub: ``, pow: `` },
+        t4: [],
+        t5: { val: ``, cex: ``, neg: `` },
+        scores: { t1: 0, t2: 0, t3: 0, t4: 0, t5: 0 },
+        checked: { t1: false, t2: false, t3: false, t4: false, t5: false }
+      }
+    };
+
+    const TRUTH_PRESETS = {
+      imp: {
+        vars: [`A`, `B`],
+        label: `A → B`,
+        evalFn: (v) => (v.A === 0 || v.B === 1 ? 1 : 0)
+      },
+      xor: {
+        vars: [`A`, `B`],
+        label: `A ⊕ B`,
+        evalFn: (v) => (v.A !== v.B ? 1 : 0)
+      },
+      bicon: {
+        vars: [`A`, `B`],
+        label: `A ↔ B`,
+        evalFn: (v) => (v.A === v.B ? 1 : 0)
+      },
+      abs: {
+        vars: [`A`, `B`],
+        label: `A ∨ (A ∧ B)`,
+        evalFn: (v) => (v.A === 1 || (v.A === 1 && v.B === 1) ? 1 : 0)
+      },
+      chain3: {
+        vars: [`A`, `B`, `C`],
+        label: `(A → B) → C`,
+        evalFn: (v) => {
+          const ab = (v.A === 0 || v.B === 1) ? 1 : 0;
+          return (ab === 0 || v.C === 1) ? 1 : 0;
+        }
+      }
+    };
+
+    const VENN_OPS = {
+      P_int_N: {
+        title: `P ∩ N`,
+        desc: `Alle Kunden, die sowohl Premiumkunden sind als auch den Newsletter abonniert haben.`,
+        members: [`k1`, `k6`],
+        highlight: { bg: false, P: true, N: true, St: false, mode: `PN` }
+      },
+      St_int_N: {
+        title: `St ∩ N`,
+        desc: `Alle Stuttgarter Kunden, die den Newsletter abonniert haben.`,
+        members: [`k1`, `k3`],
+        highlight: { bg: false, P: false, N: true, St: true, mode: `StN` }
+      },
+      N_diff_P: {
+        title: `N \\ P`,
+        desc: `Newsletter-Abonnenten ohne Premium-Status.`,
+        members: [`k3`, `k5`, `k8`],
+        highlight: { bg: false, P: false, N: true, St: false, mode: `NminusP` }
+      },
+      P_diff_N: {
+        title: `P \\ N`,
+        desc: `Premiumkunden ohne Newsletter-Abonnement.`,
+        members: [`k4`],
+        highlight: { bg: false, P: true, N: false, St: false, mode: `PminusN` }
+      },
+      St_N_no_P: {
+        title: `(N ∩ St) \\ P`,
+        desc: `Stuttgarter mit Newsletter, aber ohne Premium-Status.`,
+        members: [`k3`],
+        highlight: { bg: false, P: false, N: true, St: true, mode: `StNnoP` }
+      },
+      comp_P_U_N: {
+        title: `∁(P ∪ N) = ∁(P) ∩ ∁(N)`,
+        desc: `Alle Kunden, die weder Premiumkunde sind noch den Newsletter beziehen (De Morgan!).`,
+        members: [`k2`, `k7`],
+        highlight: { bg: true, P: false, N: false, St: false, mode: `comp` }
+      },
+      P_U_N: {
+        title: `P ∪ N`,
+        desc: `Alle Kunden, die Premiumkunde oder Newsletter-Abonnent (oder beides) sind.`,
+        members: [`k1`, `k3`, `k4`, `k5`, `k6`, `k8`],
+        highlight: { bg: false, P: true, N: true, St: false, mode: `union` }
+      }
+    };
+
+    const ALL_CUSTOMERS = [`k1`, `k2`, `k3`, `k4`, `k5`, `k6`, `k7`, `k8`];
+    const CUST_LABELS = { k1: `k₁`, k2: `k₂`, k3: `k₃`, k4: `k₄`, k5: `k₅`, k6: `k₆`, k7: `k₇`, k8: `k₈` };
+
+    const QUANT_ANSWERS = [
+      {
+        correct: false,
+        rightText: `Richtig! Die Aussage ist falsch. Gegenbeispiel: k₄ ist Premiumkunde (k₄ ∈ P), hat aber keinen Newsletter (k₄ ∉ N).`,
+        wrongText: `Nicht ganz: Für eine Allaussage genügt ein einziges Gegenbeispiel. Prüfe k₄: k₄ ∈ P, aber k₄ ∉ N — daher ist die Aussage falsch.`
+      },
+      {
+        correct: false,
+        rightText: `Richtig! Die Aussage ist falsch. Gegenbeispiel: k₁ und k₆ sind Premiumkunden und haben den Newsletter.`,
+        wrongText: `Nicht ganz: k₁ (und k₆) sind sowohl in P als auch in N. Damit ist „alle haben keinen Newsletter“ widerlegt.`
+      },
+      {
+        correct: true,
+        rightText: `Richtig! Für den Existenzquantor genügt ein Zeuge: k₁ liegt in St und auch in P (k₁ ∈ St ∩ P).`,
+        wrongText: `Nicht ganz: Prüfe k₁ — dieser Kunde kommt aus Stuttgart (k₁ ∈ St) und ist Premiumkunde (k₁ ∈ P). Damit ist die Existenzaussage wahr.`
+      },
+      {
+        correct: true,
+        rightText: `Richtig! Z = {k₂, k₇} und P = {k₁, k₄, k₆}. Keines der Elemente aus Z liegt in P.`,
+        wrongText: `Nicht ganz: Schau auf Z = {k₂, k₇}. Weder k₂ noch k₇ gehört zur Premiummenge P = {k₁, k₄, k₆}. Die Aussage ist wahr.`
+      }
+    ];
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+        } catch (err) {
+          // Safe fallback if API not ready
+        }
+      }
+    }
+
+    function applyTheme(theme) {
+      appState.theme = theme === `dark` ? `dark` : `light`;
+      document.documentElement.setAttribute(`data-theme`, appState.theme);
+      const label = document.getElementById(`theme-label`);
+      const icon = document.getElementById(`theme-icon`);
+      if (label) label.textContent = appState.theme === `dark` ? `Light Mode` : `Dark Mode`;
+      if (icon) {
+        icon.setAttribute(`data-lucide`, appState.theme === `dark` ? `sun` : `moon`);
+        if (window.lucide && typeof window.lucide.createIcons === `function`) {
+          window.lucide.createIcons();
+        }
+      }
+    }
+
+    function toggleTheme() {
+      applyTheme(appState.theme === `dark` ? `light` : `dark`);
+      persistState();
+    }
+
+    function toggleMobileSidebar() {
+      const sb = document.getElementById(`sidebar-nav`);
+      if (sb) sb.classList.toggle(`is-mobile-open`);
+    }
+
+    function toggleAccordion(groupId) {
+      const group = document.querySelector(`.nav-group[data-group="${groupId}"]`);
+      if (!group) return;
+      const isOpen = group.classList.toggle(`is-open`);
+      const btn = group.querySelector(`.nav-accordion-btn`);
+      if (btn) btn.setAttribute(`aria-expanded`, isOpen ? `true` : `false`);
+    }
+
+    function handleNavClick(evt, targetId) {
+      evt.preventDefault();
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: `smooth`, block: `start` });
+      }
+      const sb = document.getElementById(`sidebar-nav`);
+      if (sb && sb.classList.contains(`is-mobile-open`)) {
+        sb.classList.remove(`is-mobile-open`);
+      }
+    }
+
+    function toggleMastered(modId) {
+      appState.mastered[modId] = !appState.mastered[modId];
+      renderMasteredUI();
+      persistState();
+    }
+
+    function renderMasteredUI() {
+      let count = 0;
+      [`m1`, `m2`, `m3`, `m4`].forEach((id) => {
+        const btn = document.getElementById(`master-btn-${id}`);
+        const done = !!appState.mastered[id];
+        if (done) count += 1;
+        if (btn) {
+          btn.classList.toggle(`is-done`, done);
+          const span = btn.querySelector(`span`);
+          if (span) span.textContent = done ? `Abgeschlossen` : `Als gelernt markieren`;
+        }
+      });
+      const counter = document.getElementById(`mastery-counter`);
+      if (counter) counter.textContent = `${count} / 4 fertig`;
+    }
+
+    function toggleCollapsible(panelId, btnId, closedLabel, openLabel) {
+      const panel = document.getElementById(panelId);
+      const btn = document.getElementById(btnId);
+      if (!panel || !btn) return;
+      const open = panel.classList.toggle(`is-open`);
+      const span = btn.querySelector(`span`);
+      if (span) {
+        span.textContent = open ? openLabel : closedLabel;
+      } else {
+        btn.textContent = open ? openLabel : closedLabel;
+      }
+    }
+
+    function switchTab(containerId, index, clickedBtn) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const panes = container.querySelectorAll(`.tab-pane`);
+      panes.forEach((p, idx) => {
+        p.classList.toggle(`is-active`, idx === index);
+      });
+      if (clickedBtn && clickedBtn.parentElement) {
+        const btns = clickedBtn.parentElement.querySelectorAll(`.seg-btn`);
+        btns.forEach((b) => b.classList.remove(`is-active`));
+        clickedBtn.classList.add(`is-active`);
+      }
+    }
+
+    /* Truth Table Lab */
+    function selectTruthPreset(key, btn) {
+      if (!TRUTH_PRESETS[key]) return;
+      appState.truthPreset = key;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll(`.chip-btn`).forEach((b) => b.classList.remove(`is-active`));
+        btn.classList.add(`is-active`);
+      }
+      renderTruthLab();
+    }
+
+    function toggleLabVar(vName) {
+      appState.labVars[vName] = appState.labVars[vName] === 1 ? 0 : 1;
+      renderTruthLab();
+    }
+
+    function renderTruthLab() {
+      const preset = TRUTH_PRESETS[appState.truthPreset];
+      if (!preset) return;
+      const hasC = preset.vars.includes(`C`);
+      const wrapC = document.getElementById(`var-wrap-C`);
+      if (wrapC) wrapC.style.display = hasC ? `inline-flex` : `none`;
+
+      [`A`, `B`, `C`].forEach((v) => {
+        const btn = document.getElementById(`var-btn-${v}`);
+        if (!btn) return;
+        const val = appState.labVars[v];
+        btn.textContent = val === 1 ? `1 (wahr)` : `0 (falsch)`;
+        btn.className = val === 1 ? `is-true` : `is-false`;
+      });
+
+      const liveVal = preset.evalFn(appState.labVars);
+      const liveEl = document.getElementById(`lab-live-result`);
+      if (liveEl) {
+        liveEl.textContent = String(liveVal);
+        liveEl.className = liveVal === 1 ? `truth-val-1` : `truth-val-0`;
+      }
+
+      const thead = document.getElementById(`truth-lab-head`);
+      const tbody = document.getElementById(`truth-lab-body`);
+      if (!thead || !tbody) return;
+
+      const cols = preset.vars.map((v) => `<th>${v}</th>`).join(``) + `<th>${preset.label}</th>`;
+      thead.innerHTML = `<tr>${cols}</tr>`;
+
+      const rowsCount = Math.pow(2, preset.vars.length);
+      let rowsHtml = ``;
+      for (let i = 0; i < rowsCount; i += 1) {
+        const rowVars = {};
+        if (preset.vars.length === 2) {
+          rowVars.A = (i >> 1) & 1;
+          rowVars.B = i & 1;
+        } else {
+          rowVars.A = (i >> 2) & 1;
+          rowVars.B = (i >> 1) & 1;
+          rowVars.C = i & 1;
+        }
+        const res = preset.evalFn(rowVars);
+        const isMatch = rowVars.A === appState.labVars.A && rowVars.B === appState.labVars.B && (!hasC || rowVars.C === appState.labVars.C);
+        const cells = preset.vars.map((v) => `<td>${rowVars[v]}</td>`).join(``);
+        const resBadge = `<span class="${res === 1 ? `truth-val-1` : `truth-val-0`}">${res}</span>`;
+        rowsHtml += `<tr class="${isMatch ? `is-highlighted-row` : ``}">${cells}<td>${resBadge}</td></tr>`;
+      }
+      tbody.innerHTML = rowsHtml;
+    }
+
+    /* Interactive Venn Diagram */
+    function selectVennOp(opKey, btn) {
+      if (!VENN_OPS[opKey]) return;
+      appState.vennOp = opKey;
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll(`.chip-btn`).forEach((b) => b.classList.remove(`is-active`));
+        btn.classList.add(`is-active`);
+      }
+      renderVenn();
+    }
+
+    function renderVenn() {
+      const op = VENN_OPS[appState.vennOp];
+      if (!op) return;
+
+      const titleEl = document.getElementById(`venn-expr-title`);
+      const descEl = document.getElementById(`venn-expr-desc`);
+      const cardEl = document.getElementById(`venn-card-badge`);
+      const gridEl = document.getElementById(`venn-customer-grid`);
+
+      if (titleEl) titleEl.textContent = op.title;
+      if (descEl) descEl.textContent = op.desc;
+      if (cardEl) cardEl.textContent = `|M| = ${op.members.length}`;
+
+      if (gridEl) {
+        gridEl.innerHTML = ALL_CUSTOMERS.map((k) => {
+          const sel = op.members.includes(k);
+          return `<span class="customer-chip ${sel ? `is-selected` : ``}">${CUST_LABELS[k]}</span>`;
+        }).join(``);
+      }
+
+      const circP = document.getElementById(`venn-circ-P`);
+      const circN = document.getElementById(`venn-circ-N`);
+      const circSt = document.getElementById(`venn-circ-St`);
+      const bg = document.getElementById(`venn-region-bg`);
+
+      if (circP) circP.setAttribute(`fill-opacity`, op.highlight.P ? `0.95` : `0.25`);
+      if (circN) circN.setAttribute(`fill-opacity`, op.highlight.N ? `0.95` : `0.25`);
+      if (circSt) circSt.setAttribute(`fill-opacity`, op.highlight.St ? `0.95` : `0.25`);
+      if (bg) bg.setAttribute(`fill`, op.highlight.bg ? `var(--primary-container)` : `var(--surface-card)`);
+
+      const labelMap = {
+        k4: [`k4`],
+        k6: [`k6`],
+        k1: [`k1`],
+        k5k8: [`k5`, `k8`],
+        k3: [`k3`],
+        k7: [`k7`],
+        k2: [`k2`]
+      };
+
+      Object.keys(labelMap).forEach((domSuffix) => {
+        const el = document.getElementById(`vk-${domSuffix}`);
+        if (!el) return;
+        const active = labelMap[domSuffix].some((k) => op.members.includes(k));
+        el.setAttribute(`fill`, active ? `var(--primary)` : `var(--on-surface-variant)`);
+        el.setAttribute(`font-weight`, active ? `700` : `400`);
+      });
+    }
+
+    /* Quantifier Checker */
+    function checkQuant(idx, userBool, btn) {
+      const item = QUANT_ANSWERS[idx];
+      const fb = document.getElementById(`qfb-${idx}`);
+      if (!item || !fb) return;
+
+      if (btn && btn.parentElement) {
+        btn.parentElement.querySelectorAll(`.chip-btn`).forEach((b) => b.classList.remove(`is-active`));
+        btn.classList.add(`is-active`);
+      }
+
+      const isRight = userBool === item.correct;
+      fb.textContent = isRight ? item.rightText : item.wrongText;
+      fb.className = `quant-feedback is-visible ${isRight ? `is-right` : `is-wrong`}`;
+    }
+
+    /* Probeklausur */
+    function selectMc(taskNum, optIdx, btn) {
+      if (taskNum === 1) appState.exam.mc1 = optIdx;
+      if (taskNum === 2) appState.exam.mc2 = optIdx;
+      const group = document.getElementById(`mc-task-${taskNum}`);
+      if (group) {
+        group.querySelectorAll(`.mc-option`).forEach((b, i) => {
+          b.classList.remove(`is-selected`, `is-correct-ans`, `is-wrong-ans`);
+          if (i === optIdx) b.classList.add(`is-selected`);
+        });
+      }
+      persistState();
+    }
+
+    function checkTask1() {
+      const sel = appState.exam.mc1;
+      const fb = document.getElementById(`fb-task-1`);
+      const ptsEl = document.getElementById(`pts-task-1`);
+      const group = document.getElementById(`mc-task-1`);
+      if (!fb || !ptsEl) return;
+
+      if (sel === null) {
+        fb.textContent = `Bitte wähle zuerst eine Antwortmöglichkeit aus.`;
+        fb.className = `exam-feedback is-visible is-err`;
+        return;
+      }
+
+      const isOk = sel === 1;
+      appState.exam.scores.t1 = isOk ? 3 : 0;
+      appState.exam.checked.t1 = true;
+
+      if (group) {
+        group.querySelectorAll(`.mc-option`).forEach((b, i) => {
+          b.classList.remove(`is-correct-ans`, `is-wrong-ans`);
+          if (i === 1 && isOk) b.classList.add(`is-correct-ans`);
+          if (i === sel && !isOk) b.classList.add(`is-wrong-ans`);
+        });
+      }
+
+      ptsEl.textContent = `${appState.exam.scores.t1} / 3 Punkte`;
+      fb.textContent = isOk
+        ? `Korrekt! Nur bei Prämisse = 1 (Z=1, X=1) und Konsequenz = 0 (R=0) ist die Implikation falsch.`
+        : `Nicht korrekt. Prüfe die Wahrheitstabelle von A → B: Sie ist nur bei 1 → 0 falsch.`;
+      fb.className = `exam-feedback is-visible ${isOk ? `is-ok` : `is-err`}`;
+      updateExamTotal();
+      persistState();
+    }
+
+    function checkTask2() {
+      const sel = appState.exam.mc2;
+      const fb = document.getElementById(`fb-task-2`);
+      const ptsEl = document.getElementById(`pts-task-2`);
+      const group = document.getElementById(`mc-task-2`);
+      if (!fb || !ptsEl) return;
+
+      if (sel === null) {
+        fb.textContent = `Bitte wähle zuerst eine Option aus.`;
+        fb.className = `exam-feedback is-visible is-err`;
+        return;
+      }
+
+      const isOk = sel === 2;
+      appState.exam.scores.t2 = isOk ? 4 : 0;
+      appState.exam.checked.t2 = true;
+
+      if (group) {
+        group.querySelectorAll(`.mc-option`).forEach((b, i) => {
+          b.classList.remove(`is-correct-ans`, `is-wrong-ans`);
+          if (i === 2 && isOk) b.classList.add(`is-correct-ans`);
+          if (i === sel && !isOk) b.classList.add(`is-wrong-ans`);
+        });
+      }
+
+      ptsEl.textContent = `${appState.exam.scores.t2} / 4 Punkte`;
+      fb.textContent = isOk
+        ? `Ausgezeichnet! Nach De Morgan und doppelter Absorption bleibt exakt A übrig.`
+        : `Noch nicht ganz. Tipp: Löse zuerst ¬(¬A ∨ B) mit De Morgan auf und wende auf beide Seiten das Absorptionsgesetz an.`;
+      fb.className = `exam-feedback is-visible ${isOk ? `is-ok` : `is-err`}`;
+      updateExamTotal();
+      persistState();
+    }
+
+    function saveExamInputs() {
+      const m1 = document.getElementById(`inp-t3-m1`);
+      const m2 = document.getElementById(`inp-t3-m2`);
+      const sub = document.getElementById(`inp-t3-sub`);
+      const pow = document.getElementById(`inp-t3-pow`);
+      appState.exam.t3 = {
+        m1: m1 ? m1.value : ``,
+        m2: m2 ? m2.value : ``,
+        sub: sub ? sub.value : ``,
+        pow: pow ? pow.value : ``
+      };
+
+      const val = document.getElementById(`inp-t5-val`);
+      const cex = document.getElementById(`inp-t5-cex`);
+      const neg = document.getElementById(`inp-t5-neg`);
+      appState.exam.t5 = {
+        val: val ? val.value : ``,
+        cex: cex ? cex.value : ``,
+        neg: neg ? neg.value : ``
+      };
+      persistState();
+    }
+
+    function checkTask3() {
+      saveExamInputs();
+      const t3 = appState.exam.t3;
+      const fb = document.getElementById(`fb-task-3`);
+      const ptsEl = document.getElementById(`pts-task-3`);
+      if (!fb || !ptsEl) return;
+
+      let pts = 0;
+      if (String(t3.m1).trim() === `3`) pts += 1;
+      if (String(t3.m2).trim() === `1`) pts += 1;
+      if (t3.sub === `wahr`) pts += 1;
+      if (String(t3.pow).trim() === `8`) pts += 1;
+
+      appState.exam.scores.t3 = pts;
+      appState.exam.checked.t3 = true;
+      ptsEl.textContent = `${pts} / 4 Punkte`;
+
+      const full = pts === 4;
+      fb.textContent = full
+        ? `Perfekt! Alle 4 Teilfragen (inklusive |{∅}| = 1 und 2³ = 8) sind korrekt gelöst.`
+        : `Du hast ${pts} von 4 Teilpunkten erreicht. Öffne das Korrekturschema, um die genauen Erklärungen zu prüfen.`;
+      fb.className = `exam-feedback is-visible ${full ? `is-ok` : `is-err`}`;
+      updateExamTotal();
+      persistState();
+    }
+
+    function toggleTask4Pick(cust, btn) {
+      const idx = appState.exam.t4.indexOf(cust);
+      if (idx === -1) {
+        appState.exam.t4.push(cust);
+        if (btn) btn.classList.add(`is-picked`);
+      } else {
+        appState.exam.t4.splice(idx, 1);
+        if (btn) btn.classList.remove(`is-picked`);
+      }
+      persistState();
+    }
+
+    function checkTask4() {
+      const fb = document.getElementById(`fb-task-4`);
+      const ptsEl = document.getElementById(`pts-task-4`);
+      if (!fb || !ptsEl) return;
+
+      const target = [`k2`, `k3`, `k5`, `k7`, `k8`];
+      const picks = appState.exam.t4;
+
+      if (picks.length === 0) {
+        fb.textContent = `Bitte wähle mindestens einen Kunden aus der Liste aus.`;
+        fb.className = `exam-feedback is-visible is-err`;
+        return;
+      }
+
+      const correctCount = picks.filter((k) => target.includes(k)).length;
+      const wrongCount = picks.filter((k) => !target.includes(k)).length;
+      let pts = Math.max(0, correctCount - wrongCount);
+      if (pts > 5) pts = 5;
+
+      appState.exam.scores.t4 = pts;
+      appState.exam.checked.t4 = true;
+      ptsEl.textContent = `${pts} / 5 Punkte`;
+
+      const full = pts === 5 && picks.length === 5;
+      fb.textContent = full
+        ? `Volle Punktzahl! {k₂, k₃, k₅, k₇, k₈} ist exakt die gesuchte Menge.`
+        : `${pts} von 5 Punkten (${correctCount} richtige, ${wrongCount} falsche Auswahl). Tipp: Vereinige N \\ P mit ∁(P ∪ N).`;
+      fb.className = `exam-feedback is-visible ${full ? `is-ok` : `is-err`}`;
+      updateExamTotal();
+      persistState();
+    }
+
+    function checkTask5() {
+      saveExamInputs();
+      const t5 = appState.exam.t5;
+      const fb = document.getElementById(`fb-task-5`);
+      const ptsEl = document.getElementById(`pts-task-5`);
+      if (!fb || !ptsEl) return;
+
+      let pts = 0;
+      if (t5.val === `falsch`) pts += 1;
+      if (t5.cex === `k7`) pts += 1;
+      if (t5.neg === `ex_not`) pts += 2;
+
+      appState.exam.scores.t5 = pts;
+      appState.exam.checked.t5 = true;
+      ptsEl.textContent = `${pts} / 4 Punkte`;
+
+      const full = pts === 4;
+      fb.textContent = full
+        ? `Exzellent! k₇ widerlegt die Allaussage und ¬(∀x ∈ St : x ∈ N) ≡ ∃x ∈ St : x ∉ N.`
+        : `${pts} von 4 Punkten erreicht. Prüfe das Gegenbeispiel in St = {k₁, k₃, k₇} und die Quantor-Negationsregel.`;
+      fb.className = `exam-feedback is-visible ${full ? `is-ok` : `is-err`}`;
+      updateExamTotal();
+      persistState();
+    }
+
+    function gradeAllTasks() {
+      checkTask1();
+      checkTask2();
+      checkTask3();
+      checkTask4();
+      checkTask5();
+    }
+
+    function updateExamTotal() {
+      const s = appState.exam.scores;
+      const total = s.t1 + s.t2 + s.t3 + s.t4 + s.t5;
+      const totalEl = document.getElementById(`exam-total-score`);
+      const hintEl = document.getElementById(`exam-grade-hint`);
+      if (totalEl) totalEl.textContent = `${total} / 20 Punkte`;
+      if (hintEl) {
+        if (total >= 18) hintEl.textContent = `Sehr gut — sicher klausurbereit!`;
+        else if (total >= 14) hintEl.textContent = `Gute Basis — prüfe noch einzelne Details.`;
+        else if (total >= 10) hintEl.textContent = `Bestanden — wiederhole Gesetze und Quantoren.`;
+        else hintEl.textContent = `Löse die Aufgaben und prüfe deinen Rechenweg.`;
+      }
+    }
+
+    function resetExam(btn) {
+      if (btn && btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        const span = btn.querySelector(`span`);
+        if (span) span.textContent = `Nochmal klicken zum Löschen`;
+        return;
+      }
+      if (btn) {
+        btn.dataset.armed = `false`;
+        const span = btn.querySelector(`span`);
+        if (span) span.textContent = `Zurücksetzen`;
+      }
+
+      appState.exam = {
+        mc1: null,
+        mc2: null,
+        t3: { m1: ``, m2: ``, sub: ``, pow: `` },
+        t4: [],
+        t5: { val: ``, cex: ``, neg: `` },
+        scores: { t1: 0, t2: 0, t3: 0, t4: 0, t5: 0 },
+        checked: { t1: false, t2: false, t3: false, t4: false, t5: false }
+      };
+
+      restoreExamUI();
+      persistState();
+    }
+
+    function restoreExamUI() {
+      const ex = appState.exam;
+
+      [1, 2].forEach((n) => {
+        const group = document.getElementById(`mc-task-${n}`);
+        const sel = n === 1 ? ex.mc1 : ex.mc2;
+        if (group) {
+          group.querySelectorAll(`.mc-option`).forEach((b, i) => {
+            b.classList.remove(`is-selected`, `is-correct-ans`, `is-wrong-ans`);
+            if (sel === i) b.classList.add(`is-selected`);
+          });
+        }
+      });
+
+      const m1 = document.getElementById(`inp-t3-m1`);
+      const m2 = document.getElementById(`inp-t3-m2`);
+      const sub = document.getElementById(`inp-t3-sub`);
+      const pow = document.getElementById(`inp-t3-pow`);
+      if (m1) m1.value = ex.t3.m1 || ``;
+      if (m2) m2.value = ex.t3.m2 || ``;
+      if (sub) sub.value = ex.t3.sub || ``;
+      if (pow) pow.value = ex.t3.pow || ``;
+
+      const picker = document.getElementById(`set-picker-4`);
+      if (picker) {
+        const btns = picker.querySelectorAll(`.set-pick-btn`);
+        ALL_CUSTOMERS.forEach((k, idx) => {
+          if (btns[idx]) btns[idx].classList.toggle(`is-picked`, ex.t4.includes(k));
+        });
+      }
+
+      const val = document.getElementById(`inp-t5-val`);
+      const cex = document.getElementById(`inp-t5-cex`);
+      const neg = document.getElementById(`inp-t5-neg`);
+      if (val) val.value = ex.t5.val || ``;
+      if (cex) cex.value = ex.t5.cex || ``;
+      if (neg) neg.value = ex.t5.neg || ``;
+
+      const maxPts = { 1: 3, 2: 4, 3: 4, 4: 5, 5: 4 };
+      [1, 2, 3, 4, 5].forEach((n) => {
+        const ptsEl = document.getElementById(`pts-task-${n}`);
+        const fbEl = document.getElementById(`fb-task-${n}`);
+        const score = ex.scores[`t${n}`] || 0;
+        if (ptsEl) ptsEl.textContent = `${score} / ${maxPts[n]} Punkte`;
+        if (fbEl && !ex.checked[`t${n}`]) {
+          fbEl.className = `exam-feedback`;
+          fbEl.textContent = ``;
+        }
+      });
+
+      updateExamTotal();
+    }
+
+    /* Scroll Progress & Active Sidebar Pill */
+    function updateScrollProgress() {
+      const docEl = document.documentElement;
+      const scrollTop = window.scrollY || docEl.scrollTop || 0;
+      const scrollHeight = docEl.scrollHeight - window.innerHeight;
+      const pct = scrollHeight > 0 ? Math.min(100, Math.max(0, Math.round((scrollTop / scrollHeight) * 100))) : 0;
+
+      const fill = document.getElementById(`header-progress-fill`);
+      const text = document.getElementById(`read-progress-pct`);
+      if (fill) fill.style.width = `${pct}%`;
+      if (text) text.textContent = `${pct} %`;
+    }
+
+    function initScrollSpy() {
+      const links = Array.from(document.querySelectorAll(`.nav-sublink`));
+      const targets = links
+        .map((lnk) => document.getElementById(lnk.getAttribute(`data-target`)))
+        .filter(Boolean);
+
+      if (!(`IntersectionObserver` in window) || targets.length === 0) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            links.forEach((lnk) => {
+              const active = lnk.getAttribute(`data-target`) === id;
+              lnk.classList.toggle(`is-active`, active);
+            });
+            document.querySelectorAll(`.nav-group`).forEach((grp) => {
+              const hasActive = !!grp.querySelector(`.nav-sublink.is-active`);
+              const btn = grp.querySelector(`.nav-accordion-btn`);
+              if (btn) btn.classList.toggle(`is-active-group`, hasActive);
+            });
+          }
+        });
+      }, { rootMargin: `-18% 0px -68% 0px`, threshold: 0.01 });
+
+      targets.forEach((t) => observer.observe(t));
+    }
+
+    async function initApp() {
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+
+      if (typeof renderMathInElement === `function`) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: `$$`, right: `$$`, display: true },
+            { left: `\\[`, right: `\\]`, display: true },
+            { left: `\\(`, right: `\\)`, display: false }
+          ],
+          throwOnError: false
+        });
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.theme) appState.theme = saved.theme;
+            if (saved.mastered) appState.mastered = Object.assign(appState.mastered, saved.mastered);
+            if (saved.exam) {
+              appState.exam = Object.assign(appState.exam, saved.exam);
+            }
+          }
+        } catch (err) {
+          // Ignore restore errors gracefully
+        }
+      }
+
+      applyTheme(appState.theme);
+      renderMasteredUI();
+      renderTruthLab();
+      renderVenn();
+      restoreExamUI();
+      updateScrollProgress();
+      initScrollSpy();
+
+      window.addEventListener(`scroll`, updateScrollProgress, { passive: true });
+      window.addEventListener(`resize`, updateScrollProgress, { passive: true });
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
