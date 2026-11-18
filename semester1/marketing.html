@@ -1,0 +1,2400 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="showroom">
+  <title>Marketing Kompendium — Prof. Dr. Michael Bungert (2026)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #fbfbfd;
+      --surface-container-low: #f5f5f7;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+      --outline: #d2d2d7;
+      --outline-variant: #e5e5ea;
+      --primary: #006bd6;
+      --on-primary: #ffffff;
+      --primary-container: #e8f1fd;
+      --on-primary-container: #0058b0;
+      --secondary: #bf4800;
+      --tertiary: #1d1d1f;
+      --error: #d70015;
+      --on-error: #ffffff;
+      --positive: #1d7a34;
+      --positive-container: #e6f5ea;
+      --warning: #a35200;
+      --warning-container: #fdf0e2;
+      --focus: #006bd6;
+
+      --data-1: #006bd6;
+      --data-2: #bf4800;
+      --data-3: #248a3d;
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      --font-headline: 'Inter Tight', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-label: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --display-size: clamp(2.35rem, 1.5rem + 3.2vw, 4rem);
+      --headline-size: clamp(1.75rem, 1.25rem + 1.8vw, 2.5rem);
+      --subhead-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.4375rem);
+      --body-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+      --label-size: 0.8125rem;
+
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 5.5rem;
+
+      --rounded: 9999px;
+      --rounded-md: 0.75rem;
+      --rounded-lg: 1.25rem;
+
+      --headline-tracking: -0.035em;
+      --figure-tracking: -0.03em;
+      --tile-shadow-hover: 0 8px 28px rgb(0 0 0 / 0.08);
+      --glass-bg: rgb(251 251 253 / 0.84);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #000000;
+      --surface-container-low: #1c1c1e;
+      --surface-container: #2c2c2e;
+      --surface-container-high: #3a3a3c;
+      --on-surface: #f5f5f7;
+      --on-surface-variant: #a1a1a6;
+      --outline: #48484a;
+      --outline-variant: #38383a;
+      --primary: #2997ff;
+      --on-primary: #000000;
+      --primary-container: #0a2947;
+      --on-primary-container: #7ec2ff;
+      --secondary: #ff8a3d;
+      --tertiary: #f5f5f7;
+      --error: #ff453a;
+      --on-error: #000000;
+      --positive: #32d74b;
+      --positive-container: #0c2e14;
+      --warning: #ff9f0a;
+      --warning-container: #362204;
+      --focus: #2997ff;
+      --data-1: #2997ff;
+      --data-2: #ff8a3d;
+      --data-3: #32d74b;
+      --data-4: #bf5af2;
+      --data-context: #636366;
+      --tile-shadow-hover: 0 0 0 1px var(--outline);
+      --glass-bg: rgb(28 28 30 / 0.84);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: clip;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--dur-short) var(--ease-in-out), color var(--dur-short) var(--ease-in-out);
+    }
+    header { position: static !important; }
+
+    button, input, select { font-family: inherit; }
+
+    :focus-visible {
+      outline: 2.5px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* App Shell Layout */
+    .app-shell {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    /* Left Sidebar Navigation */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface-container-low);
+      border-right: 1px solid var(--outline-variant);
+      padding: var(--space-lg) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      z-index: 30;
+    }
+
+    .sidebar-brand {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: 0 var(--space-xs);
+    }
+
+    .brand-eyebrow {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--secondary);
+      margin: 0 0 var(--space-xs);
+    }
+
+    .brand-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.125rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .progress-card {
+      background: var(--background);
+      border-radius: var(--rounded-md);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+
+    .progress-bar-track {
+      height: 6px;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      border-radius: var(--rounded);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+
+    .nav-search-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .nav-search-label {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      padding-left: var(--space-xs);
+    }
+
+    .nav-search {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+    }
+
+    .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .nav-chapter-title {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      padding: var(--space-sm) var(--space-xs) var(--space-xs);
+      margin-top: var(--space-xs);
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-md);
+      color: var(--on-surface);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      min-height: 40px;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .nav-link:hover {
+      background: var(--surface-container);
+    }
+
+    .nav-link.active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+    }
+
+    .nav-done-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--rounded);
+      background: var(--outline);
+      flex-shrink: 0;
+    }
+
+    .nav-done-dot.done {
+      background: var(--positive);
+    }
+
+    /* Top Control Strip (non-sticky header tag compliance + floating utility controls) */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-xl);
+      border-bottom: 1px solid var(--outline-variant);
+      background: var(--background);
+    }
+
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .top-bar-meta {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .theme-toggle:hover {
+      background: var(--surface-container);
+    }
+
+    /* Main Content Canvas */
+    .main-column {
+      min-width: 0;
+    }
+
+    .band {
+      padding: var(--space-2xl) var(--space-xl);
+    }
+
+    .band.alt {
+      background: var(--surface-container-low);
+    }
+
+    .band-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Showroom Headline Stack */
+    .headline-stack {
+      text-align: center;
+      padding-block: var(--space-xl) var(--space-lg);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .headline-stack h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.05;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .headline-stack h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.08;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .lede {
+      color: var(--on-surface-variant);
+      max-width: 54ch;
+      margin: var(--space-md) auto 0;
+      font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+      line-height: 1.5;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+      border: 0;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      transition: opacity var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary:hover { opacity: 0.9; }
+
+    .btn-secondary {
+      background: var(--surface-container);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      padding: 0.75rem 1.25rem;
+      border: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover { background: var(--surface-container-high); }
+
+    .link-more {
+      color: var(--primary);
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 var(--space-xs);
+    }
+    .link-more:hover { text-decoration: underline; }
+    .link-more::after { content: " \203A"; margin-left: 4px; }
+
+    /* Tiles (Borderless Rounded 20px) */
+    .tile {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl) var(--space-lg);
+      border: 0;
+      transition: background-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+
+    .band.alt .tile {
+      background: var(--background);
+    }
+
+    .tile.interactive {
+      cursor: pointer;
+    }
+
+    .tile.interactive:hover {
+      box-shadow: var(--tile-shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .tile.figure {
+      text-align: center;
+      padding: var(--space-lg);
+    }
+
+    .tile.figure .label {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+      margin-bottom: var(--space-xs);
+    }
+
+    .tile.figure .value {
+      font-family: var(--font-headline);
+      font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: var(--figure-tracking);
+      line-height: 1.1;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tile.figure .caption {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin-top: var(--space-xs);
+    }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .stack-gap {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin: 0 0 var(--space-sm);
+    }
+
+    h4 {
+      font-family: var(--font-headline);
+      font-size: 1.0625rem;
+      font-weight: 600;
+      margin: 0 0 var(--space-xs);
+    }
+
+    p {
+      margin: 0 0 var(--space-md);
+      max-width: 65ch;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul, ol {
+      margin: 0 0 var(--space-md);
+      padding-left: 1.25rem;
+      max-width: 65ch;
+    }
+
+    li { margin-bottom: var(--space-xs); }
+
+    .chip {
+      display: inline-block;
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-size: var(--label-size);
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--rounded);
+    }
+
+    .chip.orange {
+      background: var(--warning-container);
+      color: var(--secondary);
+    }
+
+    .chip.green {
+      background: var(--positive-container);
+      color: var(--positive);
+    }
+
+    .formula-box {
+      font-family: var(--font-mono);
+      font-size: 0.9375rem;
+      background: var(--surface-container);
+      color: var(--on-surface);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded-md);
+      overflow-x: auto;
+      margin-block: var(--space-md);
+    }
+
+    .band.alt .formula-box {
+      background: var(--surface-container-low);
+    }
+
+    .quote-callout {
+      border-left: 3px solid var(--primary);
+      padding: var(--space-sm) var(--space-lg);
+      margin-block: var(--space-lg);
+      font-style: italic;
+      color: var(--on-surface-variant);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9375rem;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid var(--outline);
+    }
+
+    td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Segmented Control */
+    .segmented {
+      display: inline-flex;
+      background: var(--surface-container);
+      padding: 4px;
+      border-radius: var(--rounded);
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .seg-btn {
+      border: 0;
+      background: transparent;
+      color: var(--on-surface-variant);
+      padding: 0.5rem 1rem;
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 36px;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .seg-btn.active {
+      background: var(--background);
+      color: var(--on-surface);
+      font-weight: 600;
+    }
+
+    /* Interactive Inputs & Controls */
+    .control-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      align-items: end;
+      margin-block: var(--space-md);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .field label {
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--on-surface-variant);
+    }
+
+    .field input[type="number"],
+    .field input[type="text"],
+    .field select {
+      padding: 0.625rem 0.875rem;
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline);
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      min-height: 44px;
+    }
+
+    .field input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+      min-height: 32px;
+      cursor: pointer;
+    }
+
+    /* BCG Matrix */
+    .bcg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .bcg-cell {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      cursor: pointer;
+      border: 2px solid transparent;
+      text-align: left;
+      transition: border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .band.alt .bcg-cell { background: var(--background); }
+
+    .bcg-cell:hover { transform: translateY(-2px); }
+    .bcg-cell.active { border-color: var(--primary); background: var(--primary-container); }
+
+    .bcg-cell-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.125rem;
+      margin-bottom: var(--space-xs);
+      color: var(--on-surface);
+    }
+
+    .bcg-cell-meta {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* S-O-R Flow */
+    .sor-flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-block: var(--space-md);
+    }
+
+    .sor-box {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      cursor: pointer;
+      border: 2px solid transparent;
+      text-align: left;
+    }
+    .band.alt .sor-box { background: var(--background); }
+    .sor-box.active { border-color: var(--primary); }
+
+    /* Maslow Pyramid */
+    .pyramid-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-block: var(--space-md);
+    }
+
+    .pyramid-tier {
+      border: 0;
+      border-radius: var(--rounded-md);
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      background: var(--surface-container);
+      color: var(--on-surface);
+      text-align: center;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .pyramid-tier.active {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
+    /* Semantic Differential */
+    .sem-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 110px;
+      align-items: center;
+      gap: var(--space-md);
+      padding-block: var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .sem-track {
+      position: relative;
+      height: 8px;
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+    }
+
+    .sem-dot {
+      position: absolute;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      border-radius: var(--rounded);
+      transform: translate(-50%, -50%);
+      transition: left var(--dur-short) var(--ease-out);
+    }
+
+    /* Sinus Milieus Grid */
+    .sinus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+      margin-block: var(--space-md);
+    }
+
+    .sinus-cell {
+      padding: var(--space-md);
+      border-radius: var(--rounded-md);
+      background: var(--surface-container-low);
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+    .band.alt .sinus-cell { background: var(--background); }
+    .sinus-cell.active { border-color: var(--primary); background: var(--primary-container); }
+
+    /* Customer Journey Stepper */
+    .journey-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
+      gap: var(--space-xs);
+      margin-block: var(--space-md);
+    }
+
+    .journey-step-btn {
+      padding: var(--space-sm);
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 44px;
+      text-align: center;
+    }
+
+    .journey-step-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    /* Chapter Completion Toggle */
+    .chapter-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-md);
+      margin-top: var(--space-xl);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--outline-variant);
+    }
+
+    .mark-done-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .mark-done-btn.done {
+      background: var(--positive-container);
+      color: var(--positive);
+      border-color: var(--positive);
+    }
+
+    /* Quiz */
+    .quiz-option {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: var(--space-md);
+      margin-bottom: var(--space-sm);
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline);
+      background: var(--background);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .quiz-option:hover { background: var(--surface-container-low); }
+    .quiz-option.correct { background: var(--positive-container); border-color: var(--positive); color: var(--positive); font-weight: 600; }
+    .quiz-option.wrong { background: var(--warning-container); border-color: var(--error); color: var(--error); }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity var(--dur-long) var(--ease-out), transform var(--dur-long) var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .svg-diagram {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .app-shell {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: min(310px, 86vw);
+        transform: translateX(-100%);
+        transition: transform var(--dur-short) var(--ease-out);
+        box-shadow: var(--tile-shadow-hover);
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      .sor-flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .band { padding: var(--space-xl) var(--space-md); }
+      .top-bar { padding: var(--space-sm) var(--space-md); }
+      .bcg-grid { grid-template-columns: 1fr; }
+      .sinus-grid { grid-template-columns: 1fr; }
+      .sem-row { grid-template-columns: 80px 1fr 80px; gap: var(--space-sm); font-size: 0.8125rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-shell">
+  <!-- Interactive Left Outline Sidebar -->
+  <aside class="sidebar" id="sidebar" aria-label="Kapitelnavigation">
+    <div class="sidebar-brand">
+      <div>
+        <p class="brand-eyebrow">DHBW Villingen-Schwenningen</p>
+        <p class="brand-title">Marketing Skript 2026</p>
+      </div>
+      <button type="button" class="btn-secondary" id="close-sidebar-btn" onclick="toggleSidebar(false)" aria-label="Navigation schließen" style="display:none; padding: 0.4rem 0.7rem; min-height: 36px;">
+        <i data-lucide="x" width="18" height="18" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="progress-card">
+      <div class="progress-header">
+        <span>Lernfortschritt</span>
+        <span id="progress-label">0 / 6 Kapitel</span>
+      </div>
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="nav-search-wrap">
+      <label class="nav-search-label" for="nav-filter">Thema schnell finden</label>
+      <input type="text" id="nav-filter" class="nav-search" placeholder="z. B. BCG, Kano, 4P…" oninput="filterNav(this.value)">
+    </div>
+
+    <ul class="nav-list" id="nav-list">
+      <li class="nav-chapter-title">1 · Grundlagen &amp; Strategie</li>
+      <li><a class="nav-link active" href="#kap1" data-chapter="kap1" onclick="handleNavClick('kap1')"><span>Grundidee &amp; Wertschöpfung</span><span class="nav-done-dot" id="dot-kap1"></span></a></li>
+      <li><a class="nav-link" href="#kap1-ziele" data-chapter="kap1" onclick="handleNavClick('kap1')"><span>Ziele, Formeln &amp; Wettbewerb</span></a></li>
+      <li><a class="nav-link" href="#kap1-bcg" data-chapter="kap1" onclick="handleNavClick('kap1')"><span>Marktanalyse &amp; BCG-Matrix</span></a></li>
+
+      <li class="nav-chapter-title">2 · Konsumentenverhalten 1</li>
+      <li><a class="nav-link" href="#kap2" data-chapter="kap2" onclick="handleNavClick('kap2')"><span>Kundenorientierung &amp; S-O-R</span><span class="nav-done-dot" id="dot-kap2"></span></a></li>
+      <li><a class="nav-link" href="#kap2-kultur" data-chapter="kap2" onclick="handleNavClick('kap2')"><span>Hofstede, Werte &amp; Gruppen</span></a></li>
+      <li><a class="nav-link" href="#kap2-psych" data-chapter="kap2" onclick="handleNavClick('kap2')"><span>Involvement &amp; Maslow</span></a></li>
+      <li><a class="nav-link" href="#kap2-image" data-chapter="kap2" onclick="handleNavClick('kap2')"><span>Einstellung, Likert &amp; Image</span></a></li>
+      <li><a class="nav-link" href="#kap2-stp" data-chapter="kap2" onclick="handleNavClick('kap2')"><span>Sinus-Milieus &amp; STP-Prozess</span></a></li>
+
+      <li class="nav-chapter-title">3 · Kundenverhalten 2 (Prozess)</li>
+      <li><a class="nav-link" href="#kap3" data-chapter="kap3" onclick="handleNavClick('kap3')"><span>Customer Journey &amp; Touchpoints</span><span class="nav-done-dot" id="dot-kap3"></span></a></li>
+      <li><a class="nav-link" href="#kap3-zufriedenheit" data-chapter="kap3" onclick="handleNavClick('kap3')"><span>Kano, C/D-Modell &amp; NPS</span></a></li>
+      <li><a class="nav-link" href="#kap3-crm" data-chapter="kap3" onclick="handleNavClick('kap3')"><span>Kundenbindung &amp; CRM</span></a></li>
+
+      <li class="nav-chapter-title">4 · Marktforschung</li>
+      <li><a class="nav-link" href="#kap4" data-chapter="kap4" onclick="handleNavClick('kap4')"><span>Fragebogen &amp; Gütekriterien</span><span class="nav-done-dot" id="dot-kap4"></span></a></li>
+      <li><a class="nav-link" href="#kap4-panel" data-chapter="kap4" onclick="handleNavClick('kap4')"><span>Stichprobe, Panels &amp; Beobachtung</span></a></li>
+
+      <li class="nav-chapter-title">5 · 4 Ps: Product &amp; Price</li>
+      <li><a class="nav-link" href="#kap5" data-chapter="kap5" onclick="handleNavClick('kap5')"><span>Produkt, Marke &amp; Innovation</span><span class="nav-done-dot" id="dot-kap5"></span></a></li>
+      <li><a class="nav-link" href="#kap5-price" data-chapter="kap5" onclick="handleNavClick('kap5')"><span>Preisbildung &amp; Kalkulation</span></a></li>
+
+      <li class="nav-chapter-title">6 · 4 Ps: Promotion &amp; Place</li>
+      <li><a class="nav-link" href="#kap6" data-chapter="kap6" onclick="handleNavClick('kap6')"><span>Kommunikation &amp; Online-M.</span><span class="nav-done-dot" id="dot-kap6"></span></a></li>
+      <li><a class="nav-link" href="#kap6-place" data-chapter="kap6" onclick="handleNavClick('kap6')"><span>Distributionspolitik</span></a></li>
+      <li><a class="nav-link" href="#quiz-section" data-chapter="kap6" onclick="handleNavClick('kap6')"><span>Klausur-Selbsttest</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="main-column">
+    <!-- Top Utility Strip -->
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="mobile-menu-btn" onclick="toggleSidebar(true)" aria-label="Gliederung öffnen">
+          <i data-lucide="menu" width="18" height="18" aria-hidden="true"></i>
+          <span>Gliederung</span>
+        </button>
+        <span class="top-bar-meta">Prof. Dr. Michael Bungert · Script zur Vorlesung Marketing (2026)</span>
+      </div>
+      <div class="top-bar-actions">
+        <button type="button" class="theme-toggle" id="theme-toggle-btn" onclick="toggleTheme()" aria-label="Farbschema wechseln">
+          <i data-lucide="moon" id="theme-icon" width="18" height="18" aria-hidden="true"></i>
+          <span id="theme-label">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="band">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Interaktives Vorlesungs-Kompendium</span>
+          <h1>Marketing als marktorientiertes Management-Konzept</h1>
+          <p class="lede">Alle Theorien, mathematischen Modelle, Messskalen und Praxisbeispiele aus dem Skript von Prof. Dr. Michael Bungert — strukturiert zum Verstehen, Ausprobieren und Nachschlagen.</p>
+          <div class="hero-actions">
+            <a href="#kap1" class="btn-primary">Mit Kapitel 1 starten</a>
+            <a href="#quiz-section" class="link-more">Direkt zum Klausur-Check</a>
+          </div>
+        </div>
+
+        <div class="bento-grid" style="margin-top: var(--space-lg);">
+          <div class="tile figure">
+            <div class="label">Vorlesungsumfang</div>
+            <div class="value">6 Kapitel</div>
+            <div class="caption">Von Grundidee bis 4 Ps</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Kernmodelle</div>
+            <div class="value">12+</div>
+            <div class="caption">BCG, S-O-R, Kano, STP, 4P</div>
+          </div>
+          <div class="tile figure">
+            <div class="label">Abwanderungshebel</div>
+            <div class="value">+25–85 %</div>
+            <div class="caption">Gewinn bei −5 % Churn</div>
+          </div>
+        </div>
+
+        <div class="quote-callout">
+          „Marketing bedeutet, im Kopf des Kunden zu denken und im Herzen des Kunden zu fühlen.“ — Prof. Hans Raffée, Universität Mannheim
+        </div>
+      </div>
+    </section>
+
+    <!-- KAPITEL 1: GRUNDIDEE, ZIELE & STRATEGIE -->
+    <section class="band alt" id="kap1">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Kapitel 1 · Grundlagen &amp; Strategie</span>
+          <h2>Grundidee, Ziele &amp; Strategisches Marketing</h2>
+          <p class="lede">Marketing schafft zielorientiert Werte für Kunden, passt das Unternehmen strategisch an Märkte an und gestaltet diese aktiv über die 4 Ps.</p>
+        </div>
+
+        <div class="stack-gap">
+          <div class="tile reveal">
+            <span class="chip">Definition &amp; Kerngedanke</span>
+            <h3 style="margin-top: var(--space-sm);">Was bedeutet Marketing als Management-Konzept?</h3>
+            <p>Marketing ist ein <strong>marktorientiertes Management-Konzept</strong>. Es umfasst vier zentrale Säulen:</p>
+            <ul>
+              <li><strong>Zielorientiertes Schaffen von „Werten“</strong> auf Basis von Verhaltensgrundlagen (insbesondere Wünschen und Lifestyles).</li>
+              <li><strong>Strategische Anpassung</strong> an die externe Situation: Märkte (<em>Wettbewerbsstrategie, BCG</em>), Kunden (<em>Segmentierung</em>) sowie Makro-Umwelt (Gesellschaft/Politik, Gesetzgebung, Technologien).</li>
+              <li><strong>Bewusste Kundenorientierung</strong> im gesamten Unternehmen und aktives <strong>Beziehungsmanagement</strong> (<em>Defensives Marketing</em>).</li>
+              <li><strong>Gestaltung von Märkten durch die 4 Ps</strong> (Product, Price, Promotion, Place) sowie Erzeugung von Wünschen, Images und Preisbereitschaft durch <em>Markenführung</em>.</li>
+            </ul>
+            <p><strong>Relevante Makro-Trends:</strong> Marktsättigung und Transparenz führen zum <em>Käufermarkt</em> („Kunde ist König“); Werbung, Vertrieb und Marktforschung verlagern sich stark ins Internet (<em>Online-Marketing</em>); Wertewandel betont <em>Ökologie, Nachhaltigkeit und Konsumkritik</em>.</p>
+          </div>
+
+          <!-- Wertschöpfungskette Unternehmen <-> Kunde -->
+          <div class="tile reveal">
+            <span class="chip orange">Wertschöpfungsmechanik</span>
+            <h3 style="margin-top: var(--space-sm);">Wie Marketing gezielt (Mehr-)Wert schafft</h3>
+            <p>Unternehmen transformieren Ressourcen und technologische Fähigkeiten durch Prozesse in <strong>Produkte</strong> mit technischen, ästhetischen und psychosozialen Eigenschaften. Auf Kundenseite treffen diese Eigenschaften auf konkrete Bedürfnisse — daraus entstehen Nutzen, Zufriedenheit, Loyalität und Preisbereitschaft.</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Unternehmen (Input &amp; Transformation)</th>
+                    <th>Schnittstelle: Produkt &amp; Marketing</th>
+                    <th>Kunde (Output &amp; Wirkung)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Zulieferer &amp; Technologien 1–4 → Transformation durch interne Prozesse</td>
+                    <td>Technische, ästhetische &amp; psychosoziale <strong>Eigenschaften 1–4</strong></td>
+                    <td>Befriedigung von <strong>Bedürfnissen 1–4</strong> → <strong>Nutzen / (Mehr-)Wert</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Koordination &amp; Optimierung durch Marketing</td>
+                    <td>Problem: Branchen variieren, Kunden sind nicht homogen (⇒ Segmentierung)</td>
+                    <td>Ergebnis: <strong>Zufriedenheit, Loyalität, höhere Preisbereitschaft</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quantitative & Qualitative Ziele + Gewinnrechner -->
+          <div class="tile reveal" id="kap1-ziele">
+            <span class="chip">Zielsystem &amp; Ökonomie</span>
+            <h3 style="margin-top: var(--space-sm);">Quantitative vs. Qualitative Marketingziele</h3>
+            <div class="two-col" style="margin-top: var(--space-md);">
+              <div>
+                <h4>Quantitative Ziele (ökonomisch)</h4>
+                <ul>
+                  <li><strong>Gewinn:</strong> Spitzenziel der klassischen Zielhierarchie.</li>
+                  <li><strong>Marktanteil</strong> &amp; <strong>Wachstum</strong> (Absatz-/Umsatzwachstum via Ansoff-Matrix, Distributionsquote).</li>
+                  <li><strong>Markenwert</strong> sowie Preisbereitschaft und Preisstabilität.</li>
+                </ul>
+                <div class="formula-box">G = Umsatz − Kosten = x · p − x · c
+wobei x = f(p) (Preis-Absatz-Funktion)
+und c = f(x) (Stückkostenfunktion)</div>
+              </div>
+              <div>
+                <h4>Qualitative Ziele (psychografisch)</h4>
+                <ul>
+                  <li><strong>Markenbekanntheit</strong> (Awareness)</li>
+                  <li><strong>Markenimage, Wertschätzung &amp; Präferenz</strong></li>
+                  <li><strong>Erwerb / Kauf</strong> (Conversion)</li>
+                  <li><strong>Kundenzufriedenheit</strong> &amp; <strong>Kundenloyalität /-bindung</strong> (regelmäßiger Wiederkauf)</li>
+                </ul>
+                <p><strong>Wichtiges Prinzip:</strong> Das Erreichen <em>qualitativer</em> Ziele ist zwingende Voraussetzung für das Erreichen <em>quantitativer</em> Ziele!</p>
+              </div>
+            </div>
+
+            <!-- Interaktiver Gewinn- & Marktanteil-Rechner -->
+            <div style="margin-top: var(--space-lg); padding-top: var(--space-lg); border-top: 1px solid var(--outline-variant);">
+              <h4>Interaktiver Simulator: Gewinnfunktion &amp; Preis-Absatz-Abhängigkeit</h4>
+              <p style="font-size: 0.9375rem; color: var(--on-surface-variant);">Simuliere, wie Preis $p$ und Stückkosten $c$ bei linear fallender Nachfrage $x = a - b \cdot p$ den Gewinn $G$ beeinflussen.</p>
+              <div class="control-row">
+                <div class="field">
+                  <label for="calc-price">Verkaufspreis p (€): <strong id="calc-price-val">40 €</strong></label>
+                  <input type="range" id="calc-price" min="10" max="90" value="40" oninput="updateProfitSim()">
+                </div>
+                <div class="field">
+                  <label for="calc-cost">Stückkosten c (€): <strong id="calc-cost-val">15 €</strong></label>
+                  <input type="range" id="calc-cost" min="5" max="45" value="15" oninput="updateProfitSim()">
+                </div>
+                <div class="field">
+                  <label for="calc-mktvol">Gesamtmarktvolumen (Stück)</label>
+                  <input type="number" id="calc-mktvol" value="2500" min="500" max="10000" oninput="updateProfitSim()">
+                </div>
+              </div>
+              <div class="bento-grid">
+                <div class="tile figure" style="background: var(--surface-container-low);">
+                  <div class="label">Absatzmenge x = 1000 − 10·p</div>
+                  <div class="value" id="sim-x">600</div>
+                  <div class="caption">Stück</div>
+                </div>
+                <div class="tile figure" style="background: var(--surface-container-low);">
+                  <div class="label">Gewinn G = x·p − x·c</div>
+                  <div class="value" id="sim-g">15.000 €</div>
+                  <div class="caption">Optimum bei (a/b + c)/2</div>
+                </div>
+                <div class="tile figure" style="background: var(--surface-container-low);">
+                  <div class="label">Marktanteil (%)</div>
+                  <div class="value" id="sim-ma">24,0 %</div>
+                  <div class="caption">(x · 100) / Marktvolumen</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wettbewerbsstrategien -->
+          <div class="tile reveal">
+            <span class="chip">Fundamentale Strategien</span>
+            <h3 style="margin-top: var(--space-sm);">Qualitätsführerschaft vs. Kostenführerschaft</h3>
+            <p>Die gewählte Wettbewerbsstrategie definiert verbindliche Vorgaben an das Marketing (Produktgestaltung, Kommunikation, Preis und Distribution).</p>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Dimension</th>
+                    <th>Qualitätsführerschaft (Präferenzstrategie)</th>
+                    <th>Kostenführerschaft (Preis-Mengen-Strategie)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Kernfokus</strong></td>
+                    <td>Führend bei relevanten Produkteigenschaften, ständige Verbesserung</td>
+                    <td>Niedrige Kosten, große Absatzmengen und hoher Marktanteil</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Markenführung &amp; Werbung</strong></td>
+                    <td>Intensive Werbung, klare Positionierung, große Bekanntheit, ausgeprägtes Markenimage</td>
+                    <td>Generische Marke / Store-Brand / No-Names; Werbung betont preisgünstigstes Angebot</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Preis &amp; Bindung</strong></td>
+                    <td>Mittlere bis hohe Preise; Kundenbindung über Lifestyle-Relevanz &amp; Image</td>
+                    <td>Attraktiv durch dauerhaft niedrige Preise</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Praxisbeispiele (Skript)</strong></td>
+                    <td>Premium Automarken, Polo Ralph Lauren, Tommy Hilfiger, Marc O’Polo (MOP), Mon Chéri, Mars, Lindt</td>
+                    <td>Aldi-Marken (Alio, Kokett), Dacia, H&amp;M, Ikea</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quantitative Marktanalyse & Interaktive BCG-Matrix -->
+          <div class="tile reveal" id="kap1-bcg">
+            <span class="chip orange">Strategische Planung</span>
+            <h3 style="margin-top: var(--space-sm);">Quantitative Marktanalyse &amp; BCG-Portfolio</h3>
+            <p>Basis jeder Portfolio-Entscheidung (u. a. für Investitionen, Material-/Produktionsplanung in SAP, Kapazitäts- und Personalplanung) sind drei Kennzahlen:</p>
+            <ul>
+              <li><strong>Marktvolumen:</strong> Wie groß ist der Markt aktuell? (Absatz einer Produktart/Branche in einer Periode und einem Absatzgebiet).</li>
+              <li><strong>Marktwachstum:</strong> Entwicklung des Marktvolumens (vergangenheitsbezogen vs. zukünftig ⇒ <em>Prognose-Problematik</em>).</li>
+              <li><strong>Marktanteil:</strong> Relative Position gegenüber Wettbewerbern, gemessen über interne Verkaufsdaten, Branchenverbände oder Haushalts-/Handelspanels.</li>
+            </ul>
+            <div class="formula-box">Marktanteil in % = (Absatzvolumen des Unternehmens · 100) / Marktvolumen</div>
+
+            <h4>Interaktive BCG-Matrix: Klicke auf einen Quadranten</h4>
+            <p style="font-size: 0.9375rem; color: var(--on-surface-variant);">Achsen: Vertikal = Marktwachstum (Hoch oben / Niedrig unten), Horizontal = Relativer Marktanteil (Niedrig links / Hoch rechts).</p>
+            <div class="bcg-grid">
+              <button type="button" class="bcg-cell active" id="bcg-qm" onclick="selectBCG('qm')">
+                <div class="bcg-cell-title">Question Mark</div>
+                <div class="bcg-cell-meta">Wachstum: Hoch · Marktanteil: Niedrig · Bsp: Flugtaxi</div>
+              </button>
+              <button type="button" class="bcg-cell" id="bcg-star" onclick="selectBCG('star')">
+                <div class="bcg-cell-title">Star</div>
+                <div class="bcg-cell-meta">Wachstum: Hoch · Marktanteil: Hoch · Bsp: Apple Watch</div>
+              </button>
+              <button type="button" class="bcg-cell" id="bcg-dog" onclick="selectBCG('dog')">
+                <div class="bcg-cell-title">Poor Dog</div>
+                <div class="bcg-cell-meta">Wachstum: Niedrig · Marktanteil: Niedrig · Bsp: VW Phaeton</div>
+              </button>
+              <button type="button" class="bcg-cell" id="bcg-cow" onclick="selectBCG('cow')">
+                <div class="bcg-cell-title">Cash Cow</div>
+                <div class="bcg-cell-meta">Wachstum: Niedrig · Marktanteil: Hoch · Bsp: Mon Chéri</div>
+              </button>
+            </div>
+            <div class="formula-box" id="bcg-detail" style="margin-top: var(--space-md);">
+              <strong>Strategie Question Mark (Selektion / Offensiv oder Desinvestition):</strong> Neuprodukte nach Machbarkeit &amp; Erfolgsaussichten selektieren. Bei Investition: Marktanteilssteigerung zur Verbesserung der Kostenposition und Kapazitätsaufbau (Beispiel: Flugtaxi).
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-footer">
+          <span class="top-bar-meta">Kapitel 1 abgeschlossen?</span>
+          <button type="button" class="mark-done-btn" id="btn-done-kap1" onclick="toggleChapterDone('kap1')">
+            <i data-lucide="check-circle" width="18" height="18" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KAPITEL 2: KONSUMENTENVERHALTEN 1 -->
+    <section class="band" id="kap2">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Kapitel 2 · Konsumentenverhalten 1</span>
+          <h2>Ursachen &amp; Einflussgrößen des Käuferverhaltens</h2>
+          <p class="lede">Vom S-O-R-Modell über Hofstedes Kulturdimensionen und Maslows Bedürfnisse bis zu Sinus-Milieus 2026 und dem STP-Prozess.</p>
+        </div>
+
+        <div class="stack-gap">
+          <div class="tile reveal">
+            <span class="chip">Management-Konzept</span>
+            <h3 style="margin-top: var(--space-sm);">Kundenorientierung, CRM &amp; Big Data</h3>
+            <p>Kundenorientierung stellt den Kunden in den Mittelpunkt unternehmerischer Entscheidungen: Das Geschäftsmodell wird anhand von <strong>Kundenbedürfnissen</strong> definiert (nicht anhand aktueller Technologie). Alle Bereiche — F&amp;E, Beschaffung, Produktion, Vertrieb, Service — richten sich auf Kundennutzen und Zufriedenheit aus.</p>
+            <p>Operative Konsequenzen: Verhaltensgrundlagen erfassen (Basis für Segmentierung &amp; Marketing-Mix), Kundenbeziehungen über <strong>CRM</strong> am POS sowie in sozialen Medien intensivieren und individuelles Such-/Kaufverhalten im Netz (<strong>Big Data</strong>) zur Angebotsoptimierung nutzen.</p>
+          </div>
+
+          <!-- Interaktives S-O-R Modell -->
+          <div class="tile reveal">
+            <span class="chip orange">Grundmodell</span>
+            <h3 style="margin-top: var(--space-sm);">Das S-O-R-Modell des Käuferverhaltens</h3>
+            <p>Exogene Reize (<strong>Stimulus</strong>) treffen auf die „Black Box“ im Kopf des Käufers (<strong>Organism</strong>) und lösen beobachtbare Kaufentscheidungen (<strong>Response</strong>) aus. Klicke auf eine Stufe für alle Details aus dem Skript:</p>
+            <div class="sor-flow">
+              <button type="button" class="sor-box active" id="sor-s" onclick="selectSOR('s')">
+                <h4>S · Stimulus</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant); margin:0;">Exogene Marketing- &amp; Umfeldreize</p>
+              </button>
+              <button type="button" class="sor-box" id="sor-o" onclick="selectSOR('o')">
+                <h4>O · Organism</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant); margin:0;">„Black Box“ im Kopf des Käufers</p>
+              </button>
+              <button type="button" class="sor-box" id="sor-r" onclick="selectSOR('r')">
+                <h4>R · Response</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant); margin:0;">Beobachtbare Kaufentscheidung</p>
+              </button>
+            </div>
+            <div class="formula-box" id="sor-detail">
+              <strong>Stimulus (Exogene Reize):</strong><br>
+              • <em>Marketing-Reize (4 Ps):</em> Produkt, Preis, Werbung, Distribution.<br>
+              • <em>Umfeldreize:</em> Technologische, kulturelle, politische und ökonomische Faktoren.
+            </div>
+          </div>
+
+          <!-- Kultur, Hofstede, Werte & Bezugsgruppen -->
+          <div class="tile reveal" id="kap2-kultur">
+            <span class="chip">Kulturelle &amp; Soziale Faktoren</span>
+            <h3 style="margin-top: var(--space-sm);">Kultur (Hofstede), Werte &amp; Bezugsgruppen</h3>
+            <p><strong>Kultur</strong> ist die <em>mentale Programmierung durch das Kollektiv</em> als Ergebnis der Sozialisation (materielle, soziale &amp; mentale Kultur). Die vier Kultur-Dimensionen nach Hofstede steuern Konsummuster unmittelbar:</p>
+
+            <div class="control-row">
+              <div class="field">
+                <label for="hof-preset">Kultur-Profil testen</label>
+                <select id="hof-preset" onchange="applyHofstedePreset(this.value)">
+                  <option value="de">Typisch Deutschland / Individualistisch</option>
+                  <option value="jp">Hohe Unsicherheitsvermeidung &amp; Maskulinität</option>
+                  <option value="coll">Kollektivistisch &amp; Hohe Machtdistanz</option>
+                </select>
+              </div>
+            </div>
+            <div class="bento-grid" id="hofstede-cards">
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>Individualismus: <span id="hof-ind">67</span>/100</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Wie stark wird das Konsumverhalten von Bezugsgruppen (Großfamilie) beeinflusst?</p>
+              </div>
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>Machtdistanz: <span id="hof-pdi">35</span>/100</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Hierarchische Gliederung &amp; Durchlässigkeit; erklärt u. a. Streben nach Statussymbolen.</p>
+              </div>
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>Maskulinität: <span id="hof-mas">66</span>/100</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Trennung emotionaler Rollenmuster zwischen Geschlechtern (relevant für Produktgestaltung).</p>
+              </div>
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>Unsicherheitsvermeidung: <span id="hof-uai">65</span>/100</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Bestreben, Risiken zu kontrollieren (Religion, Fatalismus) → erklärt hohe Markentreue.</p>
+              </div>
+            </div>
+
+            <div class="two-col" style="margin-top: var(--space-lg);">
+              <div>
+                <h4>Werte &amp; Normen</h4>
+                <ul>
+                  <li><strong>Terminale Werte (Endzustände):</strong> Gerechtigkeit, Menschlichkeit, Freiheit, Toleranz.</li>
+                  <li><strong>Instrumentale Werte (Verhaltensweisen):</strong> Mut, Treue, Ehrgeiz, Autonomie, Nachhaltigkeit.</li>
+                  <li><strong>Normen:</strong> Konkret akzeptables Niveau von Werten im Kollektiv.</li>
+                  <li><strong>Wertewandel:</strong> Postmaterialismus, ökologisch-soziale Reflexion, Abkehr von Statussymbolen. Werbung errichtet, verstärkt oder erneuert Konsumnormen.</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Soziale Faktoren: Bezugsgruppen</h4>
+                <ul>
+                  <li><strong>Mitgliedschaftsgruppen:</strong> <em>Primärgruppen</em> (Familie, Clique, Nachbarn, Kollegen) &amp; <em>Sekundärgruppen</em> (Religionsgemeinschaften, Berufsverbände).</li>
+                  <li><strong>Leitbildgruppen (Aspiration Groups):</strong> Gruppen, zu denen man gehören möchte (Sportler, Models, höhere Schicht).</li>
+                  <li><strong>Effekte:</strong> Konformitätsdruck, Maßstäbe zur Produktbewertung, Wunsch „dazuzugehören“.</li>
+                  <li><strong>Marketing:</strong> Meinungsbildner ansprechen, Influencer-/Testimonial-Marketing.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aktivierung, Involvement & Maslow Pyramide -->
+          <div class="tile reveal" id="kap2-psych">
+            <span class="chip">Psychologische Faktoren</span>
+            <h3 style="margin-top: var(--space-sm);">Aktivierung, Involvement &amp; Bedürfnispyramide nach Maslow</h3>
+            <div class="two-col">
+              <div>
+                <p><strong>Aktiviertheit</strong> ist ein innerer Erregungszustand des ZNS, der Leistungsbereitschaft für Erkennen, Lernen und Empfinden schafft. <strong>Involvement</strong> bezeichnet den Grad der Ich-Beteiligung im Konsumkontext (hoch bei teuren, risikoreichen oder lifestyle-relevanten Produkten).</p>
+                <ul>
+                  <li><strong>Reizarten in der Werbung:</strong> Emotionale Reize (z. B. nackte Menschen; <em>emotionale Konditionierung</em>), kognitive Reize (Risiken, Überraschungen), physische Reize (Farben, Formen, Geruch, Musik).</li>
+                  <li><strong>Geringes Involvement:</strong> Stimmungsvermittlung, häufige Schaltung, UAP.</li>
+                  <li><strong>Hohes Involvement:</strong> Fokus auf rationale Argumente (multiple vs. USP).</li>
+                </ul>
+                <h4>Bedürfnis, Motiv &amp; Wunsch</h4>
+                <p><strong>Bedürfnis:</strong> Aktivierung + Zielausrichtung. <strong>Motiv:</strong> Hinreichend starkes Bedürfnis, das zur Handlung führt (Konflikte: <em>Appetenz-Appetenz</em> oder <em>Appetenz-Aversion</em>). <strong>Motiv-Auslöser:</strong> Gefühl des Entzugs (Deprivation), Denken/Antizipation oder externe Stimuli (Werbung verdeutlicht Mangel). <strong>Wunsch:</strong> Konkrete Art der Befriedigung (geformt durch Kultur, Bezugsgruppe, Persönlichkeit).</p>
+              </div>
+              <div>
+                <h4>Interaktive Maslow-Pyramide</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Primäre Bedürfnisse sind physiologisch angelegt; sekundäre Bedürfnisse werden erlernt. Klicke auf eine Stufe:</p>
+                <div class="pyramid-stack">
+                  <button type="button" class="pyramid-tier" style="width:46%;" onclick="selectMaslow(5, this)">5. Selbstverwirklichung</button>
+                  <button type="button" class="pyramid-tier" style="width:60%;" onclick="selectMaslow(4, this)">4. Wertschätzung / Status</button>
+                  <button type="button" class="pyramid-tier" style="width:74%;" onclick="selectMaslow(3, this)">3. Soziale Zugehörigkeit</button>
+                  <button type="button" class="pyramid-tier" style="width:88%;" onclick="selectMaslow(2, this)">2. Sicherheitsbedürfnisse</button>
+                  <button type="button" class="pyramid-tier active" style="width:100%;" onclick="selectMaslow(1, this)">1. Physiologische Grundbedürfnisse</button>
+                </div>
+                <div class="formula-box" id="maslow-detail">
+                  <strong>Stufe 1 (Primär / Physiologisch):</strong> Hunger, Durst, Schlaf, Wärme. Angeboren im Organismus; Ausgangspunkt für Basiskonsumgüter (Lebensmittel, Getränke).
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Einstellung (3-Komponenten), Image, Likert & Semantisches Differential -->
+          <div class="tile reveal" id="kap2-image">
+            <span class="chip orange">Messung &amp; Markenbild</span>
+            <h3 style="margin-top: var(--space-sm);">Einstellung (3-Komponenten-Theorie), Image, Likert-Skala &amp; Semantisches Differential</h3>
+            <p><strong>Einstellung</strong> = Aktivierung + objektbezogene Bewertung (konstante Prädisposition, auf ein Objekt positiv oder negativ zu reagieren). Sie äußert sich als <em>Meinung</em> (verbalisiert), <em>Überzeugung</em> (subjektives Wissen) oder <em>Vorurteil/Stereotyp</em>.</p>
+            <div class="bento-grid" style="margin-bottom: var(--space-lg);">
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>1. Wertende (affektive) Komponente</h4>
+                <p style="font-size:0.875rem;">Gefühlsmäßige Einschätzung (Ansatzpunkt: <em>Persuasion</em>).</p>
+              </div>
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>2. Kognitive Komponente</h4>
+                <p style="font-size:0.875rem;">Subjektives Wissen zum Einstellungsobjekt (Ansatzpunkt: <em>Exposition</em>).</p>
+              </div>
+              <div class="tile" style="background: var(--background); padding: var(--space-md);">
+                <h4>3. Konative Komponente</h4>
+                <p style="font-size:0.875rem;">Handlungstendenz (Ansatzpunkt: <em>Modifikation der Handlungskonsequenz</em>).</p>
+              </div>
+            </div>
+
+            <p><strong>Marken-Image (Esch/Roth 2005):</strong> Fest verankertes, ganzheitliches und wertendes Vorstellungsbild einer Marke als Summe der Einstellungen zu einzelnen Eigenschaften: <code>I = Σ Einstellungen</code>. Es entsteht aus Dekodierung aller Markensignale plus Bewertung gespeicherter Assoziationen. Ziel im Marketing ist die aktive <strong>Marken-Positionierung</strong> im Wahrnehmungsraum.</p>
+
+            <div class="two-col" style="margin-top: var(--space-lg);">
+              <!-- Interaktive Likert-Skala -->
+              <div style="background: var(--background); padding: var(--space-lg); border-radius: var(--rounded-md);">
+                <h4>Interaktive Likert-Skala (Rensis Likert, 1934)</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Misst die bewertende Komponente über eine Itembatterie (1–5). Beispiel-Item: „Zigarettenwerbung sollte verboten werden“.</p>
+                <div class="field" style="margin-bottom: var(--space-md);">
+                  <label for="likert-1">Item 1: „Zigarettenwerbung sollte verboten werden“</label>
+                  <select id="likert-1" onchange="updateLikert()">
+                    <option value="5">5 – Stimme voll zu</option>
+                    <option value="4" selected>4 – Stimme weitgehend zu</option>
+                    <option value="3">3 – Unentschieden</option>
+                    <option value="2">2 – Lehne eher ab</option>
+                    <option value="1">1 – Lehne stark ab</option>
+                  </select>
+                </div>
+                <div class="field" style="margin-bottom: var(--space-md);">
+                  <label for="likert-2">Item 2: „Warnhinweise auf Packungen sind wirksam“</label>
+                  <select id="likert-2" onchange="updateLikert()">
+                    <option value="5">5 – Stimme voll zu</option>
+                    <option value="4">4 – Stimme weitgehend zu</option>
+                    <option value="3" selected>3 – Unentschieden</option>
+                    <option value="2">2 – Lehne eher ab</option>
+                    <option value="1">1 – Lehne stark ab</option>
+                  </select>
+                </div>
+                <div class="formula-box" id="likert-result" style="margin:0;">Einstellungswert (∅): 3,50 / 5,00 (Eher zustimmend)</div>
+              </div>
+
+              <!-- Interaktives Semantisches Differential -->
+              <div style="background: var(--background); padding: var(--space-lg); border-radius: var(--rounded-md);">
+                <h4>Semantisches Differential (Skript-Beispiel: Dior vs. Essence)</h4>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);">Bipolare Ratings im semantischen Raum. Vergleiche die Markenlage:</p>
+                <div class="segmented" style="margin-bottom: var(--space-md);">
+                  <button type="button" class="seg-btn active" id="sem-btn-both" onclick="setSemBrand('both')">Beide Marken</button>
+                  <button type="button" class="seg-btn" id="sem-btn-dior" onclick="setSemBrand('dior')">Nur DIOR</button>
+                  <button type="button" class="seg-btn" id="sem-btn-essence" onclick="setSemBrand('essence')">Nur Essence</button>
+                </div>
+                <div class="sem-row">
+                  <span>sinnlich</span>
+                  <div class="sem-track">
+                    <div class="sem-dot" id="dot-dior-1" style="left: 18%; background: var(--data-1);" title="DIOR"></div>
+                    <div class="sem-dot" id="dot-ess-1" style="left: 68%; background: var(--data-2);" title="Essence"></div>
+                  </div>
+                  <span style="text-align:right;">nüchtern</span>
+                </div>
+                <div class="sem-row">
+                  <span>edel</span>
+                  <div class="sem-track">
+                    <div class="sem-dot" id="dot-dior-2" style="left: 14%; background: var(--data-1);" title="DIOR"></div>
+                    <div class="sem-dot" id="dot-ess-2" style="left: 78%; background: var(--data-2);" title="Essence"></div>
+                  </div>
+                  <span style="text-align:right;">billig</span>
+                </div>
+                <div class="sem-row" style="border-bottom:0;">
+                  <span>exklusiv</span>
+                  <div class="sem-track">
+                    <div class="sem-dot" id="dot-dior-3" style="left: 12%; background: var(--data-1);" title="DIOR"></div>
+                    <div class="sem-dot" id="dot-ess-3" style="left: 84%; background: var(--data-2);" title="Essence"></div>
+                  </div>
+                  <span style="text-align:right;">gewöhnlich</span>
+                </div>
+                <p style="font-size:0.8125rem; color:var(--on-surface-variant); margin-top:var(--space-sm);">Blau = DIOR (sinnlich, edel, exklusiv) · Orange = Essence (nüchterner, preiswert, massenmarkttauglich).</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Persönlichkeit, Sinus-Milieus 2026 & STP-Prozess -->
+          <div class="tile reveal" id="kap2-stp">
+            <span class="chip">Segmentierung &amp; Differenzierung</span>
+            <h3 style="margin-top: var(--space-sm);">Persönlichkeit (Big 5), Sinus-Milieus 2026 &amp; STP-Prozess</h3>
+            <p><strong>Persönlichkeit</strong> (z. B. NEO-Modell / <strong>Big 5</strong>: Neurotizismus, Extraversion, Offenheit, Verträglichkeit, Gewissenhaftigkeit) bildet zusammen mit Werten und sozioökonomischem Status den <strong>Lifestyle</strong> (Typologien: <em>VALS 2</em> in den USA, <em>Sinus-Milieus</em> in Deutschland, branchenspezifische <em>Personas</em>).</p>
+
+            <h4>Interaktive Sinus-Milieus in Deutschland (2026) — Wertewandel &amp; Segmentierung</h4>
+            <p style="font-size:0.875rem; color:var(--on-surface-variant);">Y-Achse: Soziale Lage (Unten → Oben) · X-Achse: Grundorientierung (Tradition → Modernisierung → Neuorientierung / Postmaterialistische Selbstentfaltung). Klicke ein Milieu an:</p>
+            <div class="sinus-grid">
+              <button type="button" class="sinus-cell active" onclick="selectSinus('kons', this)"><strong>Konservativ-Gehobene</strong><br><span style="color:var(--on-surface-variant);">Oberschicht · Tradition</span></button>
+              <button type="button" class="sinus-cell" onclick="selectSinus('perf', this)"><strong>Performer</strong><br><span style="color:var(--on-surface-variant);">Oberschicht · Modern</span></button>
+              <button type="button" class="sinus-cell" onclick="selectSinus('exp', this)"><strong>Expeditive</strong><br><span style="color:var(--on-surface-variant);">Oberschicht · Neuorientierung</span></button>
+              <button type="button" class="sinus-cell" onclick="selectSinus('mitt', this)"><strong>Bürgerliche Mitte</strong><br><span style="color:var(--on-surface-variant);">Mittelschicht · Harmonie</span></button>
+              <button type="button" class="sinus-cell" onclick="selectSinus('adap', this)"><strong>Adaptiv-Pragmatische</strong><br><span style="color:var(--on-surface-variant);">Mittelschicht · Flexibel</span></button>
+              <button type="button" class="sinus-cell" onclick="selectSinus('post', this)"><strong>Postmaterielle</strong><br><span style="color:var(--on-surface-variant);">Mitte/Oben · Nachhaltig</span></button>
+            </div>
+            <div class="formula-box" id="sinus-detail">
+              <strong>Konservativ-Gehobenes Milieu:</strong> Hoher sozioökonomischer Status, traditionelle Werte, Qualitäts- und Verantwortungsethik. Hohe Affinität zu klassischen Qualitätsführern.
+            </div>
+
+            <h4 style="margin-top: var(--space-lg);">Der STP-Prozess &amp; Differenzierung des Marketing-Mix</h4>
+            <ol>
+              <li><strong>SEGMENTING:</strong> Aufspaltung des heterogenen Gesamtmarktes in homogene Kundengruppen mittels messbarer Segmentierungsvariablen — <em>geografisch</em> (Land, Region, Gemeindegröße), <em>demografisch</em> (Alter, Lebensabschnitt, Geschlecht, Sozioökonomie) und <em>psychografisch</em> (Persönlichkeit, Lifestyle).</li>
+              <li><strong>TARGETING:</strong> Auswahl attraktiver Zielsegmente (Marktabdeckung).</li>
+              <li><strong>POSITIONING:</strong> Segmentspezifischer Marketing-Mix durch <strong>Produktdifferenzierung</strong> (parallele Varianten, Augmentation), <strong>Werbegestaltung</strong> (Copy-Strategie, Tonality, Mediaplan) und <strong>Preisdifferenzierung</strong> (Trade-up, Kampfmarke, <em>Target-the-Poor</em> vs. <em>Target-the-Rich / Ultimate Luxury</em>).</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="chapter-footer">
+          <span class="top-bar-meta">Kapitel 2 abgeschlossen?</span>
+          <button type="button" class="mark-done-btn" id="btn-done-kap2" onclick="toggleChapterDone('kap2')">
+            <i data-lucide="check-circle" width="18" height="18" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KAPITEL 3: KUNDENVERHALTEN 2 – PROZESSUALE PERSPEKTIVE -->
+    <section class="band alt" id="kap3">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Kapitel 3 · Prozessuale Perspektive</span>
+          <h2>Customer Journey, Zufriedenheit &amp; CRM</h2>
+          <p class="lede">Vom ersten Touchpoint (ZMOT) über das Kano-Modell und den Net Promoter Score bis hin zu Wechselbarrieren und defensivem Marketing.</p>
+        </div>
+
+        <div class="stack-gap">
+          <!-- Interaktive Customer Journey -->
+          <div class="tile reveal">
+            <span class="chip">Touchpoint-Management</span>
+            <h3 style="margin-top: var(--space-sm);">Die 7 Phasen der Customer Journey</h3>
+            <p>Klicke eine Phase an, um Offline- und Online-Touchpoints sowie zentrale Konzepte (ZMOT, FMOT, SMOT, TMOT, ROPO, Click &amp; Collect) zu erkunden:</p>
+            <div class="journey-steps">
+              <button type="button" class="journey-step-btn active" onclick="selectJourney(0, this)">1. Awareness</button>
+              <button type="button" class="journey-step-btn" onclick="selectJourney(1, this)">2. Favorability</button>
+              <button type="button" class="journey-step-btn" onclick="selectJourney(2, this)">3. Consideration</button>
+              <button type="button" class="journey-step-btn" onclick="selectJourney(3, this)">4. Intent</button>
+              <button type="button" class="journey-step-btn" onclick="selectJourney(4, this)">5. Conversion</button>
+              <button type="button" class="journey-step-btn" onclick="selectJourney(5, this)">6. Erfahrung</button>
+              <button type="button" class="journey-step-btn" onclick="selectJourney(6, this)">7. Wiederkauf</button>
+            </div>
+            <div class="formula-box" id="journey-detail">
+              <strong>1. Awareness (Bewusstsein für Bedürfnis/Produkt):</strong><br>
+              • Offline-Touchpoints: TV/Print redaktionell, Werbung, PR, Word-of-Mouth (WOM), Special Interest.<br>
+              • Online-Touchpoints: Suchmaschine, Corporate Website, YouTube.
+            </div>
+            <p style="font-size:0.9375rem; color:var(--on-surface-variant);"><strong>Zentrale Handels- &amp; Online-Phänomene:</strong> <em>Integrierte Brand Experience</em> (360°-Konsistenz), Cookie-Tracking im Purchase-Funnel, <em>ROPO-Effekt</em> (Research Online, Purchase Offline) und <em>Click &amp; Collect</em> als Abwehr gegen reine Online-Anbieter.</p>
+          </div>
+
+          <!-- Confirmation/Disconfirmation, Kano-Modell & NPS -->
+          <div class="tile reveal" id="kap3-zufriedenheit">
+            <span class="chip orange">Nachkaufphase</span>
+            <h3 style="margin-top: var(--space-sm);">Kundenzufriedenheit: C/D-Paradigma, Kano-Modell &amp; Messung</h3>
+            <p>Zufriedenheit entsteht durch den Vergleich des wahrgenommenen Nettonutzens (<strong>Ist</strong>) mit den subjektiven Erwartungen vor dem Kauf (<strong>Soll</strong> — geprägt durch frühere Erfahrungen, Freunde, Anbieterversprechen und Warentests wie StiWa).</p>
+
+            <div class="two-col">
+              <div>
+                <h4>Confirmation / Disconfirmation Paradigm</h4>
+                <ul>
+                  <li><strong>Negative Disconfirmation (Ist &lt; Erwartung):</strong> Unzufriedenheit → Beschwerde (Chance!), negatives WOM (3–4× häufiger als positives WOM!), Abwanderung („Exit“, v. a. bei <em>unvoiced complaints</em>).</li>
+                  <li><strong>Confirmation (Ist = Erwartung):</strong> Moderate Zufriedenheit.</li>
+                  <li><strong>Positive Disconfirmation (Ist &gt; Erwartung):</strong> Hohe Zufriedenheit. Speziell bei unerwartetem Nutzen (<em>Kano-Begeisterungsfaktor</em>) → <strong>Begeisterung</strong> &amp; positive Emotion!</li>
+                </ul>
+                <p><strong>Folgen hoher Zufriedenheit:</strong> Imagefestigung, Markentreue, geringere Preissensibilität, Cross-Selling-Potenzial, positives WOM.</p>
+              </div>
+              <div>
+                <h4>Messmethoden der Kundenzufriedenheit</h4>
+                <ul>
+                  <li><strong>Qualitativ (Ereignis-/Problemorientiert):</strong> Critical-Incident-Methode (offenes Interview), Sequenzielle Ereignismethode (gestützte Touchpoint-Abfrage), Beschwerde- &amp; Vorschlagssysteme (nicht repräsentativ).</li>
+                  <li><strong>Quantitativ:</strong> Ratingskalen (0–10), Diskrepanzmodelle (before/after vs. after-only), Multiattributive Messung (gewichtete Teilzufriedenheiten) und <strong>Net Promoter Score (NPS)</strong>.</li>
+                </ul>
+                <!-- Interaktiver NPS-Rechner -->
+                <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded-md); margin-top: var(--space-sm);">
+                  <h4>Interaktiver NPS-Rechner</h4>
+                  <div class="control-row" style="margin-block: var(--space-sm);">
+                    <div class="field">
+                      <label for="nps-prom">Promotoren (9–10) in %</label>
+                      <input type="number" id="nps-prom" value="55" min="0" max="100" oninput="calcNPS()">
+                    </div>
+                    <div class="field">
+                      <label for="nps-det">Kritiker (0–6) in %</label>
+                      <input type="number" id="nps-det" value="15" min="0" max="100" oninput="calcNPS()">
+                    </div>
+                  </div>
+                  <div class="formula-box" id="nps-out" style="margin:0;">NPS = 55 % − 15 % = +40 (Stark positiv)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Defensives Marketing, Kundenbindung & CRM -->
+          <div class="tile reveal" id="kap3-crm">
+            <span class="chip green">Defensives Marketing</span>
+            <h3 style="margin-top: var(--space-sm);">Kundenbindung, Wechselbarrieren &amp; CRM</h3>
+            <div class="bento-grid" style="margin-bottom: var(--space-md);">
+              <div class="tile figure" style="background: var(--background);">
+                <div class="label">Durchschn. Abwanderung</div>
+                <div class="value">~10 %</div>
+                <div class="caption">25 % bei Mobilfunk/Kabel</div>
+              </div>
+              <div class="tile figure" style="background: var(--background);">
+                <div class="label">Gewinn-Hebel (−5 % Churn)</div>
+                <div class="value">+25–85 %</div>
+                <div class="caption">Neukunden mehrfach teurer</div>
+              </div>
+              <div class="tile figure" style="background: var(--background);">
+                <div class="label">Abwanderungsgründe</div>
+                <div class="value">7 Faktoren</div>
+                <div class="caption">u. a. Shrink-/Skimpflation, Variety Seeking</div>
+              </div>
+            </div>
+            <div class="two-col">
+              <div>
+                <h4>Psychologische vs. Faktische Bindung</h4>
+                <ul>
+                  <li><strong>Psychologische Bindungen (Kundenloyalität):</strong> Zufriedenheit, Vertrauen, Marken-Identifikation (<em>Fellow</em>), Lifestyle-Relevanz, sozialer Kontext, inneres Commitment ⇒ <em>immaterielle Wechselbarrieren</em>.</li>
+                  <li><strong>Faktische Bindungen (Belohnung/Sanktion):</strong> Ökonomische Bindung, mangelnde Alternativen, Wechselkosten, vertragliche Bindungen, technologische Ökosysteme (z. B. Apple/Zubehör/Software) ⇒ <em>materielle Wechselkosten</em>.</li>
+                </ul>
+                <p><strong>Maßnahmen:</strong> Vielflieger-Programme, Kundenclubs (<em>Brand-Communities</em> wie GTI-/Swatch-/Harley-Club), Events, Gratulationskarten, kulante Problemlösung.</p>
+              </div>
+              <div>
+                <h4>CRM (Customer Relationship Management)</h4>
+                <ul>
+                  <li><strong>Analytisches CRM (Database-Marketing):</strong> Analyse historischer Käufe, Geschmack/Lifestyle, <strong>Customer Lifetime Value (CLV)</strong> und Früherkennung von Abwanderungsgefahr.</li>
+                  <li><strong>Operatives CRM:</strong> Personalisierte Ansprache (Newsletter, E-Mail, Callcenter), <em>Mikromarketing</em>, Ausschöpfung des Cross-Selling-Potenzials und Aufbau emotionalen Vertrauens.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-footer">
+          <span class="top-bar-meta">Kapitel 3 abgeschlossen?</span>
+          <button type="button" class="mark-done-btn" id="btn-done-kap3" onclick="toggleChapterDone('kap3')">
+            <i data-lucide="check-circle" width="18" height="18" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KAPITEL 4: MARKTFORSCHUNG & CONSUMER INSIGHTS -->
+    <section class="band" id="kap4">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Kapitel 4 · Marktforschung</span>
+          <h2>Marktforschung &amp; Consumer Insights</h2>
+          <p class="lede">Wie Unternehmen Märkte, Einstellungen und unbewusste Reaktionen objektiv, reliabel und valide messen.</p>
+        </div>
+
+        <div class="stack-gap">
+          <div class="tile reveal">
+            <span class="chip">Empirische Primärforschung</span>
+            <h3 style="margin-top: var(--space-sm);">Standardisierter Fragebogen, Gütekriterien &amp; Frageformulierung</h3>
+            <p>Ein standardisierter Fragebogen stellt allen Auskunftspersonen (APN) exakt dieselben Fragen und Antwortvorgaben — dadurch wird er <strong>vergleichbar, wiederholbar, überprüfbar (Pretest)</strong> und <strong>aggregierbar</strong>.</p>
+            <div class="two-col" style="margin-top: var(--space-md);">
+              <div>
+                <h4>Die 3 Gütekriterien der Messung</h4>
+                <ul>
+                  <li><strong>Reliabilität:</strong> Keine Zufallsschwankungen bei wiederholter Messung (Zuverlässigkeit).</li>
+                  <li><strong>Validität:</strong> Keine systematischen Störgrößen verzerren die Messung (Gültigkeit — misst man wirklich, was man messen will?).</li>
+                  <li><strong>Objektivität:</strong> Kein Einfluss des Forschers auf Messung und Ergebnisse.</li>
+                </ul>
+                <p style="font-size:0.875rem; color:var(--on-surface-variant);"><em>Validitätsproblem bei Verhaltensfragen:</em> Angegebenes Verhalten weicht wegen Drang zur Selbstdarstellung und sozialer Erwünschtheit oft vom tatsächlichen Verhalten ab.</p>
+              </div>
+              <div>
+                <h4>Regeln der Frageformulierung &amp; Skalen</h4>
+                <ul>
+                  <li>Max. <strong>20 Wörter</strong>, einfache Sprache (keine Fach-/Fremdwörter, kein Slang).</li>
+                  <li>Keine <strong>Suggestivfragen</strong>, kein doppelter Stimulus, keine geladenen Begriffe („Kapitalist“, „Spekulant“).</li>
+                  <li>Konkrete Begriffe (nicht „üblicherweise“, „Frieden“); hohe <strong>Trennschärfe</strong> ($\sigma$ groß) &amp; formale Balance bei Itembatterien.</li>
+                  <li><strong>Kalibrierung:</strong> 5 bis max. 7 Stufen, <em>Äquidistanz</em> durch verbale Verankerung (Intervallskalierung; Mittelwert nicht entfernen!).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal" id="kap4-panel">
+            <span class="chip orange">Datengewinnung</span>
+            <h3 style="margin-top: var(--space-sm);">Stichproben, Access-Panels, Qualitative Mafo &amp; Beobachtung</h3>
+            <div class="two-col">
+              <div>
+                <h4>Grundgesamtheit &amp; Stichprobe</h4>
+                <ul>
+                  <li><strong>Vollerhebung:</strong> Alle Elemente (nur bei Industriegütern / Volkszählung sinnvoll).</li>
+                  <li><strong>Zufallsauswahl:</strong> Objektiver Zufallsprozess aus Adressdatei (Problem: Verweigerung).</li>
+                  <li><strong>Quota-Verfahren:</strong> Vorgabe der Merkmalsverteilung per Quotenplan.</li>
+                </ul>
+                <h4>Access-Panel (Bsp. NORSTAT) &amp; Tracking-Panel (GfK)</h4>
+                <ul>
+                  <li><strong>NORSTAT Online-Access-Panel:</strong> ISO 26362, 18 europ. Länder, 671.000 aktive Panelisten (D: 90.000), 500 Stammdaten-Variablen, Double-Opt-In, max. 7 Teilnahmen / 6 Monate, Ausschluss von <em>Straight-Linern</em> &amp; <em>Speedern</em>, 25–60 % Rücklauf in 3–5 Tagen.</li>
+                  <li><strong>Längsschnitt-Panel (z. B. GfK ConsumerScan):</strong> Inhome-Scanning / Online-Diary liefert Marktanteile, Käuferstrukturen &amp; Abwanderungsraten (Nachteil: <em>Paneleffekte</em> wie bewusstes Einkaufen oder Overreports).</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Qualitative Marktforschung (explorativ)</h4>
+                <p>Nicht Repräsentativität, sondern Verstehen psychologischer/sozialer Zusammenhänge und unbewusster Motive über geringe Standardisierung: <strong>Exploratives Interview</strong>, <strong>Tiefeninterview</strong>, <strong>Gruppendiskussion</strong>.</p>
+                <h4>Beobachtung &amp; Retail-Tools (TNS Shopper Insight)</h4>
+                <ul>
+                  <li><strong>Informations-/Einkaufsverhalten:</strong> Telemeter, <em>Eye-Tracking</em>, Kamera/Statcam, <em>RFID</em>, <em>Pathtracker</em>, <em>Ethnografie</em> (ganzheitliches Beobachten von Ritualen).</li>
+                  <li><strong>Wirkungs- &amp; Produkttests:</strong> <em>Tachistoskop</em>, <em>Schnellgreifbühne</em>.</li>
+                  <li><strong>Psychophysiologie:</strong> <em>EDR</em> (elektrodermale Reaktion) &amp; Pupillometrie (Aktivierung), <em>FAST</em> &amp; <em>fMRT</em> (Emotionen).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-footer">
+          <span class="top-bar-meta">Kapitel 4 abgeschlossen?</span>
+          <button type="button" class="mark-done-btn" id="btn-done-kap4" onclick="toggleChapterDone('kap4')">
+            <i data-lucide="check-circle" width="18" height="18" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KAPITEL 5: INSTRUMENTALBEREICH – PRODUCT & PRICE -->
+    <section class="band alt" id="kap5">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Kapitel 5 · Marketing-Mix (4 Ps: Teil 1)</span>
+          <h2>Produkt-, Marken- &amp; Preispolitik</h2>
+          <p class="lede">Vom Markenkern und der Markenarchitektur über Produkttests bis zur Handelskalkulation und dynamischen Preisstrategien.</p>
+        </div>
+
+        <div class="stack-gap">
+          <!-- Product & Marke -->
+          <div class="tile reveal">
+            <span class="chip">1. P · Product &amp; Brand</span>
+            <h3 style="margin-top: var(--space-sm);">Produktpolitik, Markenartikel &amp; Identitätsbasierte Markenführung</h3>
+            <p>Produkte umfassen materielle Güter und immaterielle Dienstleistungen. Sie gliedern sich in <strong>technische Eigenschaften</strong> (<em>Grundnutzen</em>), <strong>psychosoziale Eigenschaften</strong> (Bedeutung/Image = <em>Zusatznutzen</em>), <strong>reales Produkt</strong> (Design, Logo, Verpackung, Geruch) und <strong>Augmentation</strong> (Finanzierung, Lieferung, Service, Schulung, Garantie).</p>
+            <p><strong>Markenartikel</strong> ermöglichen überregionale <em>Pull-Strategie</em> (hohe Nachfrage zwingt Einzelhandel zur Listung), hohe Distributionsintensität (<em>Ubiquität</em>) und ein konstantes Qualitätsversprechen.</p>
+            <div class="two-col" style="margin-top: var(--space-md);">
+              <div>
+                <h4>Identitätsbasierte Markenführung</h4>
+                <p><strong>Marken-Identität</strong> (Selbstbild des Unternehmens) vs. <strong>Marken-Image</strong> (Fremdbild in der Öffentlichkeit). Sie wird aufgebaut über:</p>
+                <ul>
+                  <li><strong>Markenerlebnis:</strong> Erlebbarer Nutzen &amp; emotionale Konditionierung.</li>
+                  <li><strong>Markenpersönlichkeit:</strong> Charakter über Influencer &amp; Markenbotschafter.</li>
+                  <li><strong>Markenwerte / Markenkern:</strong> Wofür die Marke steht.</li>
+                </ul>
+                <p><em>Ziele:</em> Einzigartigkeit, Authentizität, Kundenidentifikation und Markenvertrauen.</p>
+              </div>
+              <div>
+                <h4>6 Markenstrategien (Markenarchitektur)</h4>
+                <ul>
+                  <li><strong>Einzelmarkenstrategie:</strong> Eigene Marke je Produkt/Segment (<em>P&amp;G</em>).</li>
+                  <li><strong>Mehrmarkenstrategie (Multibrands):</strong> Mehrere parallele Marken im selben Bereich, inkl. Billig-/Kampfmarke (<em>Ferrero</em>).</li>
+                  <li><strong>Markenfamilienstrategie (Line Extension):</strong> Verwandte Produkte unter einer Marke (<em>NIVEA</em>).</li>
+                  <li><strong>Dach-/Unternehmensmarke:</strong> Alle Produkte unter Unternehmensnamen (<em>VW, Microsoft</em>).</li>
+                  <li><strong>Markentransfer (Brand Extension):</strong> Übertragung auf neue Warengruppe (<em>CAMEL</em>).</li>
+                  <li><strong>Co-Branding / Ingredient Branding:</strong> Strategische Partnerschaften.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="margin-top: var(--space-md); padding-top: var(--space-md); border-top: 1px solid var(--outline-variant);">
+              <h4>Innovationen &amp; Produkttests (Experimentelles Design)</h4>
+              <p>Treiber sind <em>Demand-Pull</em> (Kundenprobleme neu lösen, z. B. Streaming statt CD, Aidsmedikament) und <em>Technology-Push</em> (z. B. Bionik, Crowdsourcing). Strategische Wahl zwischen <strong>Pionier-</strong> und <strong>Folgerstrategie</strong> unter hohem <em>Time-to-Market</em>-Druck. Flops werden durch kontrollierte Tests vermieden: <strong>Konzept-/Prototypen-Tests</strong>, <strong>Labor- vs. Feldtests</strong>, <strong>Partial- vs. Volltest</strong>, <strong>Diskriminanztest</strong> (identifiziert vs. blind), <strong>Monadischer Test</strong> (ohne direkten Vergleich, realitätsnäher), <strong>Evaluations- &amp; Akzeptanztest</strong>.</p>
+            </div>
+          </div>
+
+          <!-- Price + Interaktive Handelskalkulation -->
+          <div class="tile reveal" id="kap5-price">
+            <span class="chip orange">2. P · Price</span>
+            <h3 style="margin-top: var(--space-sm);">Eckpunkte der Preisbildung, Handelskalkulation &amp; Preisstrategien</h3>
+            <p>Der Preisspielraum wird nach unten durch die <strong>Kosten (Preisuntergrenze: kein Profit möglich)</strong> und nach oben durch den <strong>wahrgenommenen Wert / Zahlungsbereitschaft (Preisobergrenze: keine Nachfrage)</strong> begrenzt. Dazwischen liegen die <strong>Preise der Wettbewerber</strong> und die Positionierungsstrategie.</p>
+
+            <div class="two-col" style="margin-top: var(--space-md);">
+              <!-- Interaktive Vorwärtskalkulation -->
+              <div style="background: var(--surface-container-low); padding: var(--space-lg); border-radius: var(--rounded-md);">
+                <h4>Interaktive Handelskalkulation (Vorwärts)</h4>
+                <div class="control-row" style="margin-block: var(--space-sm);">
+                  <div class="field">
+                    <label for="hk-lep">Listeneinkaufspreis (€)</label>
+                    <input type="number" id="hk-lep" value="100" min="1" oninput="calcHandel()">
+                  </div>
+                  <div class="field">
+                    <label for="hk-lrab">Lieferantenrabatt (%)</label>
+                    <input type="number" id="hk-lrab" value="10" min="0" max="80" oninput="calcHandel()">
+                  </div>
+                  <div class="field">
+                    <label for="hk-gew">Gewinnaufschlag (%)</label>
+                    <input type="number" id="hk-gew" value="25" min="0" max="200" oninput="calcHandel()">
+                  </div>
+                </div>
+                <div class="table-wrap">
+                  <table style="font-size: 0.875rem;">
+                    <tbody>
+                      <tr><td>Listeneinkaufspreis (LEP)</td><td style="text-align:right;" id="out-lep">100,00 €</td></tr>
+                      <tr><td>− Lieferantenrabatt / Skonto (2 %) + Bezugskosten (5 €)</td><td style="text-align:right;" id="out-bez">93,20 €</td></tr>
+                      <tr><td>+ Handlungskosten (20 %) = <strong>Selbstkostenpreis</strong></td><td style="text-align:right;" id="out-skp"><strong>111,84 €</strong></td></tr>
+                      <tr><td>+ Gewinnaufschlag (Δ = Gewinn) = <strong>Barverkaufspreis</strong></td><td style="text-align:right;" id="out-bvp">139,80 €</td></tr>
+                      <tr><td>+ Kundenskonto (2 %) + Kundenrabatt (5 %) = <strong>Listenverkaufspreis</strong></td><td style="text-align:right;" id="out-lvp"><strong>150,32 €</strong></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div>
+                <h4>Statische vs. Dynamische Preisstrategien</h4>
+                <ul>
+                  <li><strong>Statische Strategien:</strong> Prämienpreis-, Value-for-Money-, Promotionspreis-Strategie; <strong>Every Day Low Price (EDLP)</strong>; Preisdifferenzierung (mit/ohne Produktdifferenzierung); Preisbündelung; Preispolitischer Ausgleich; Free / Freemium.</li>
+                  <li><strong>Dynamische Strategien (Markteintritt):</strong> <strong>Penetrationspreis-Strategie</strong> (niedriger Einstieg für schnelle Verbreitung) vs. <strong>Skimming-Strategie</strong> (hoher Einstieg zur Abschöpfung der Zahlungsbereitschaft).</li>
+                  <li><strong>Kurzfristige Variation:</strong> Aktionspreise/Sonderangebote (Gefahr: Aktionspreis wird zum mentalen <em>Anker</em>!) und Preiserhöhungen (Mengeneffekt hängt davon ab, ob <em>Sacrifice-Effekt</em> oder <em>Signal-Effekt</em> für Qualität dominiert).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-footer">
+          <span class="top-bar-meta">Kapitel 5 abgeschlossen?</span>
+          <button type="button" class="mark-done-btn" id="btn-done-kap5" onclick="toggleChapterDone('kap5')">
+            <i data-lucide="check-circle" width="18" height="18" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KAPITEL 6: PROMOTION, PLACE & KLAUSUR-CHECK -->
+    <section class="band" id="kap6">
+      <div class="band-inner">
+        <div class="headline-stack">
+          <span class="eyebrow">Kapitel 6 · Marketing-Mix (4 Ps: Teil 2)</span>
+          <h2>Kommunikation, Online-Marketing &amp; Distribution</h2>
+          <p class="lede">Von den 5 Ms der Kommunikation und der Copy-Strategie über Online-Monopole bis zur Absatzkanalkontrolle.</p>
+        </div>
+
+        <div class="stack-gap">
+          <div class="tile reveal">
+            <span class="chip">3. P · Promotion</span>
+            <h3 style="margin-top: var(--space-sm);">Planungsschema (5 Ms), Copy-Strategie &amp; Instrumente</h3>
+            <p>Das Kommunikationsplanungsschema folgt den fünf Stufen: <strong>Mission</strong> (Kommunikationsziele &amp; Zielgruppen) → <strong>Message</strong> (Kommunikations- &amp; Botschaftsgestaltung) → <strong>Money</strong> (Budgetierung) → <strong>Media</strong> (Kommunikationsinstrumente &amp; Mediaselektion) → <strong>Measurement</strong> (Erfolgskontrolle).</p>
+            <div class="two-col" style="margin-top: var(--space-md);">
+              <div>
+                <h4>Copy-Strategie (Umsetzung der Positionierung)</h4>
+                <ul>
+                  <li><strong>Nutzenbotschaft:</strong> <em>USP</em> (Unique Selling Proposition) oder — falls Produkt austauschbar — <em>UAP</em> (Unique Advertising Proposition / künstlich-semantischer USP).</li>
+                  <li><strong>Nutzenbegründung („Reason Why“):</strong> Prüfsiegel, Testergebnisse, Testimonial-Aussagen.</li>
+                  <li><strong>Tonality:</strong> Grundstimmung der Werbung (aggressiv vs. romantisch-sinnlich, ggf. ohne Claim).</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Kommunikationsinstrumente</h4>
+                <ul>
+                  <li><strong>Werbung:</strong> Massenkommunikation über Werbemittel in Werbeträgern (Techniken: <em>Slice-of-Life, Testimonial, Imagery</em>).</li>
+                  <li><strong>Verkaufsförderung (VKF):</strong> Handelsorientiert (Displays, Zweitplatzierung) &amp; kundenorientiert (Proben, Verkostung, Preisausschreiben).</li>
+                  <li><strong>PR / Unternehmenskommunikation:</strong> Vertrauen &amp; Verständnis (Pressearbeit, Tag der offenen Tür, Mitarbeiterzeitung).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="tile reveal" id="kap6-place">
+            <span class="chip orange">Online-Marketing &amp; 4. P (Place)</span>
+            <h3 style="margin-top: var(--space-sm);">Online-Marketing-Kanäle, Monopole &amp; Distributionspolitik</h3>
+            <div class="two-col">
+              <div>
+                <h4>Online-Marketing (Vorteile &amp; Monopole)</h4>
+                <p><strong>Vorteile gegenüber klassischer Werbung:</strong> Günstiger, präzise Erfolgskontrolle und direkte Analytics/Mafo-Daten.</p>
+                <ul>
+                  <li><strong>Formate:</strong> Display/Instream-Ads, Content-Marketing, SEM &amp; SEO, Social-Media- &amp; Influencer-Marketing, E-Mail-Marketing, Affiliate-Marketing, Remarketing.</li>
+                  <li><strong>Bereichsmonopole (60 % des Online-Werbemarkts bei suchgebundener Werbung):</strong> <em>Google</em> (Suche &amp; Android App Store), <em>Apple</em> (iOS App Store) und <em>Amazon</em> (Retail Media für Produkte).</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Distributionspolitik (Place): 4 Auswahlkriterien</h4>
+                <ul>
+                  <li><strong>Geringe Vertriebskosten / Handelsspanne:</strong> Minimierung über Direkt- und Onlinevertrieb.</li>
+                  <li><strong>Hoher Distributionsgrad &amp; Lieferfähigkeit:</strong> Anteil der Absatzmittler mit der Marke im Regal (<em>Ubiquität</em>) sowie schnelle Aufbaudauer.</li>
+                  <li><strong>Image des Absatzkanals:</strong> Passung zur Markenpositionierung (z. B. exklusiver Selektivvertrieb).</li>
+                  <li><strong>Kontrolle des Absatzkanals:</strong> Kooperation, Konfliktvermeidung, Wettbewerberausschluss und Regalplatzbesetzung.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interaktiver Klausur-Selbsttest -->
+          <div class="tile reveal" id="quiz-section">
+            <span class="chip green">Wissens-Check</span>
+            <h3 style="margin-top: var(--space-sm);">Interaktiver Klausur-Selbsttest (Skript Bungert 2026)</h3>
+            <p style="color:var(--on-surface-variant);">Prüfe dein Verständnis der zentralen Modelle und Formeln mit direktem Feedback:</p>
+            <div id="quiz-container"></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top: var(--space-md); flex-wrap:wrap; gap:var(--space-sm);">
+              <strong id="quiz-score-label">Punktestand: 0 / 5 beantwortet</strong>
+              <button type="button" class="btn-secondary" id="quiz-reset-btn" onclick="resetQuiz(this)">Quiz zurücksetzen</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-footer">
+          <span class="top-bar-meta">Kapitel 6 abgeschlossen?</span>
+          <button type="button" class="mark-done-btn" id="btn-done-kap6" onclick="toggleChapterDone('kap6')">
+            <i data-lucide="check-circle" width="18" height="18" aria-hidden="true"></i>
+            <span>Als gelernt markieren</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="band alt" style="padding-block: var(--space-xl);">
+      <div class="band-inner" style="text-align:center; color:var(--on-surface-variant); font-size:0.875rem;">
+        <p style="margin:0 auto;">Quelle: Prof. Dr. Michael Bungert — Script zur Vorlesung Marketing, DHBW Villingen-Schwenningen (2026).</p>
+      </div>
+    </footer>
+  </main>
+</div>
+
+<api-shim></api-shim>
+<script>
+  const appState = {
+    theme: `light`,
+    completedChapters: [],
+    quizAnswers: {}
+  };
+
+  const bcgData = {
+    qm: `<strong>Strategie Question Mark (Selektion / Offensiv oder Desinvestition):</strong> Neuprodukte nach Machbarkeit & Erfolgsaussichten selektieren. Bei Investition: Marktanteilssteigerung zur Verbesserung der Kostenposition und Kapazitätsaufbau (Beispiel: Flugtaxi).`,
+    star: `<strong>Strategie Star (Wachstumsstrategie):</strong> Wettbewerbsposition und Marktanteil konsequent ausbauen, Gewinne wieder in Wachstumsstrategien investieren und Marktzutrittsbarrieren errichten (Beispiel: Apple Watch).`,
+    dog: `<strong>Strategie Poor Dog (Desinvestitionsstrategie):</strong> Desinvestition bzw. Liquidation/Stilllegung bei Verlust. Alternativ: kurzfristige Produktverbesserung, Kostensenkung oder Suche nach rentablen Marktnischen (Beispiel: VW Phaeton).`,
+    cow: `<strong>Strategie Cash Cow (Abschöpfungs-/Haltestrategie):</strong> Marktposition halten, Investitionen in Innovationen und Kapazitäten reduzieren, Kosten senken und Überschüsse für Stars/Question Marks generieren (Beispiel: Mon Chéri).`
+  };
+
+  const sorData = {
+    s: `<strong>Stimulus (Exogene Reize):</strong><br>• <em>Marketing-Reize (4 Ps):</em> Produkt, Preis, Werbung, Distribution.<br>• <em>Umfeldreize:</em> Technologische, kulturelle, politische und ökonomische Faktoren.`,
+    o: `<strong>Organism („Black Box“ – Kopf des Käufers):</strong><br>• <em>Hintergrundfaktoren:</em> Kultur, Bezugsgruppen, Psychologische Konstrukte (Aktivierung, Bedürfnisse, Einstellung, Lifestyle).<br>• <em>Kaufprozess / Customer Journey:</em> Problemerkennung → Information → Entscheidung → Zufriedenheit → Loyalität.`,
+    r: `<strong>Response (Beobachtbare Kaufentscheidung):</strong><br>• Wahl des Kaufzeitpunkts, Wahl der Kaufstätte, Wahl von Produkt und Marke sowie Kaufmenge und Kaufhäufigkeit.`
+  };
+
+  const maslowData = {
+    1: `<strong>Stufe 1 (Primär / Physiologisch):</strong> Hunger, Durst, Schlaf, Wärme. Angeboren im Organismus; Ausgangspunkt für Basiskonsumgüter (Lebensmittel, Getränke).`,
+    2: `<strong>Stufe 2 (Sicherheit):</strong> Schutz, Stabilität, Vorsorge, Risikoabsicherung. Relevant für Versicherungen, Altersvorsorge, Sicherheitsfeatures bei Autos.`,
+    3: `<strong>Stufe 3 (Soziale Zugehörigkeit):</strong> Liebe, Freundschaft, Gemeinschaft, Gruppenzugehörigkeit. Ansatzpunkt für Social Media, Vereine, Marken-Communities.`,
+    4: `<strong>Stufe 4 (Wertschätzung / Status):</strong> Anerkennung, Prestige, Selbstachtung. Stark demonstrativer Konsum (Statussymbole, Luxusmarken, Titel).`,
+    5: `<strong>Stufe 5 (Selbstverwirklichung):</strong> Persönliches Wachstum, Kreativität, Autonomie, Sinnstiftung (Postmaterialismus, Weiterbildung, Kunst).`
+  };
+
+  const sinusData = {
+    kons: `<strong>Konservativ-Gehobenes Milieu:</strong> Hoher sozioökonomischer Status, traditionelle Werte, Qualitäts- und Verantwortungsethik. Hohe Affinität zu klassischen Qualitätsführern.`,
+    perf: `<strong>Performer:</strong> Multi-optionale, effizienzorientierte Leistungselite mit hohem Status, globalem Denken und starker IT-/Technologie-Affinität.`,
+    exp: `<strong>Expeditive:</strong> Unkonventionelle, kreative Trendsetter der jungen Oberschicht auf Suche nach neuen Grenzen, Individualität und Inspiration.`,
+    mitt: `<strong>Bürgerliche Mitte:</strong> Leistungsorientierter gesellschaftlicher Mainstream mit Wunsch nach Sicherheit, Harmonie und verlässlichem Preis-Leistungs-Verhältnis.`,
+    adap: `<strong>Adaptiv-Pragmatische:</strong> Moderne, zielstrebige Mitte mit hohem Bedarf an Flexibilität, Sicherheit und pragmatischem Konsumnutzen.`,
+    post: `<strong>Postmaterielle:</strong> Gebildete, konsumkritische Zielgruppe mit Fokus auf Selbstentfaltung, Freiheit, Emanzipation, Lebensqualität und Umweltschutz.`
+  };
+
+  const journeyData = [
+    `<strong>1. Awareness (Bewusstsein für Bedürfnis/Produkt):</strong><br>• Offline: TV/Print redaktionell, Werbung, PR, Word-of-Mouth (WOM), Special Interest.<br>• Online: Suchmaschine, Corporate Website, YouTube.`,
+    `<strong>2. Favorability (Bevorzugung vor anderen Marken):</strong><br>• Offline: Mailing, Hotline, persönliche Empfehlungen.<br>• Online: Soziale Medien, Fachforen.`,
+    `<strong>3. Consideration (Kunde erwägt Kauf — Zero Moment of Truth / ZMOT):</strong><br>• Offline: Prospekt, Preisliste, Sonderangebot.<br>• Online: Online-Testmagazine, Preisvergleichsseiten, Foren.`,
+    `<strong>4. Intent to Purchase (Konkrete Kaufabsicht / Anstoß):</strong><br>• Offline: POS / Warenpräsentation, Verkäuferin im Geschäft.<br>• Online: E-Mail-Kontaktformular, Warenkorb / Konfigurator.`,
+    `<strong>5. Conversion (Umsetzung der Kaufabsicht — First Moment of Truth / FMOT):</strong><br>• Offline: Kasse / Kauf vor Ort (inkl. ROPO & Click & Collect).<br>• Online: Online-Shop Checkout.`,
+    `<strong>6. Erfahrung (Produktnutzung / Nettonutzen — Second Moment of Truth / SMOT):</strong><br>• Offline: Produkt selbst, Gebrauchsanleitung, Rechnung, Service-Hotline, Zufriedenheitsumfrage.<br>• Online: Newsletter, Service-Portal.`,
+    `<strong>7. Wiederkauf / Weiterempfehlung (Third Moment of Truth / TMOT):</strong><br>• Offline: Eigenes Word-of-Mouth (WOM).<br>• Online: Online-Ratings, Foren (eWOM), Blogs.`
+  ];
+
+  const quizQuestions = [
+    {
+      q: `1. Welcher Zusammenhang besteht laut Skript zwischen qualitativen und quantitativen Marketingzielen?`,
+      opts: [
+        `Qualitative Ziele sind völlig unabhängig vom ökonomischen Gewinn.`,
+        `Das Erreichen qualitativer Ziele (z. B. Image, Zufriedenheit) ist Voraussetzung für quantitative Ziele.`,
+        `Quantitative Ziele müssen zuerst erreicht werden, bevor Bekanntheit entsteht.`
+      ],
+      correct: 1,
+      exp: `Richtig! Markenbekanntheit, Image, Zufriedenheit und Bindung bilden das Fundament für Absatz, Marktanteil und Gewinn.`
+    },
+    {
+      q: `2. Wie lautet die korrekte Normstrategie für ein „Cash Cow“-Produkt in der BCG-Matrix?`,
+      opts: [
+        `Sofortige Liquidation wegen niedrigem Marktwachstum.`,
+        `Hohe Investitionen in neue Produktionskapazitäten zur Marktexpansion.`,
+        `Marktposition halten, Investitionen in Innovationen reduzieren und Kosten senken.`
+      ],
+      correct: 2,
+      exp: `Genau! Cash Cows (hoher Marktanteil, niedriges Wachstum, Bsp. Mon Chéri) liefern liquide Mittel für Question Marks und Stars.`
+    },
+    {
+      q: `3. Welche drei Komponenten umfasst die 3-Komponenten-Theorie der Einstellung?`,
+      opts: [
+        `Stimulus, Organism, Response`,
+        `Wertende (affektive), kognitive und konative Komponente`,
+        `Segmenting, Targeting und Positioning`
+      ],
+      correct: 1,
+      exp: `Korrekt! Gefühlsmäßige Bewertung (Persuasion), subjektives Wissen (Exposition) und Handlungstendenz.`
+    },
+    {
+      q: `4. Ein Produkt besitzt kein echtes technisches Alleinstellungsmerkmal (USP). Worauf setzt die Copy-Strategie stattdessen?`,
+      opts: [
+        `Auf ein UAP (Unique Advertising Proposition / künstlich-semantischer USP).`,
+        `Auf die Skimming-Preisstrategie ohne Werbung.`,
+        `Auf eine reine Vollerhebung per Quota-Plan.`
+      ],
+      correct: 0,
+      exp: `Richtig! Wenn kein objektiver USP vorliegt, schafft die Werbung über Positionierung und Tonalität ein UAP.`
+    },
+    {
+      q: `5. Um wie viel Prozent steigt laut Skript der Gewinn typischerweise, wenn die Kundenabwanderung um 5 % reduziert wird?`,
+      opts: [
+        `Um exakt 5 %`,
+        `Um 25 % bis 85 %`,
+        `Gar nicht, da Neukundengewinnung günstiger ist`
+      ],
+      correct: 1,
+      exp: `Stimmt! Defensives Marketing ist hochrentabel: 5 % weniger Churn steigert den Gewinn um 25–85 %, da Neukunden deutlich teurer sind.`
+    }
+  ];
+
+  async function saveState() {
+    try {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        await window.notebookAppApi.setAppState(appState);
+      }
+    } catch (e) { /* safe fallback */ }
+  }
+
+  function applyTheme(theme) {
+    const html = document.documentElement;
+    html.setAttribute(`data-theme`, theme);
+    const label = document.getElementById(`theme-label`);
+    const icon = document.getElementById(`theme-icon`);
+    if (label) label.textContent = theme === `dark` ? `Light Mode` : `Dark Mode`;
+    if (icon) icon.setAttribute(`data-lucide`, theme === `dark` ? `sun` : `moon`);
+    if (window.lucide) window.lucide.createIcons();
+  }
+
+  function toggleTheme() {
+    appState.theme = appState.theme === `dark` ? `light` : `dark`;
+    applyTheme(appState.theme);
+    saveState();
+  }
+
+  function toggleSidebar(open) {
+    const sb = document.getElementById(`sidebar`);
+    const closeBtn = document.getElementById(`close-sidebar-btn`);
+    if (!sb) return;
+    if (open) {
+      sb.classList.add(`open`);
+      if (closeBtn) closeBtn.style.display = `inline-flex`;
+    } else {
+      sb.classList.remove(`open`);
+      if (closeBtn) closeBtn.style.display = `none`;
+    }
+  }
+
+  function handleNavClick(chapterId) {
+    document.querySelectorAll(`.nav-link`).forEach(el => el.classList.remove(`active`));
+    const matching = document.querySelector(`.nav-link[data-chapter="` + chapterId + `"]`);
+    if (matching) matching.classList.add(`active`);
+    if (window.innerWidth <= 960) toggleSidebar(false);
+  }
+
+  function filterNav(query) {
+    const q = query.trim().toLowerCase();
+    document.querySelectorAll(`#nav-list li`).forEach(li => {
+      if (li.classList.contains(`nav-chapter-title`)) return;
+      const text = li.textContent.toLowerCase();
+      li.style.display = text.includes(q) ? `block` : `none`;
+    });
+  }
+
+  function updateProgressUI() {
+    const count = appState.completedChapters.length;
+    const lbl = document.getElementById(`progress-label`);
+    const fill = document.getElementById(`progress-fill`);
+    if (lbl) lbl.textContent = count + ` / 6 Kapitel`;
+    if (fill) fill.style.width = ((count / 6) * 100) + `%`;
+
+    [`kap1`, `kap2`, `kap3`, `kap4`, `kap5`, `kap6`].forEach(id => {
+      const done = appState.completedChapters.includes(id);
+      const dot = document.getElementById(`dot-` + id);
+      const btn = document.getElementById(`btn-done-` + id);
+      if (dot) dot.classList.toggle(`done`, done);
+      if (btn) {
+        btn.classList.toggle(`done`, done);
+        const span = btn.querySelector(`span`);
+        if (span) span.textContent = done ? `Gelernt (Klick zum Zurücksetzen)` : `Als gelernt markieren`;
+      }
+    });
+  }
+
+  function toggleChapterDone(id) {
+    const idx = appState.completedChapters.indexOf(id);
+    if (idx === -1) appState.completedChapters.push(id);
+    else appState.completedChapters.splice(idx, 1);
+    updateProgressUI();
+    saveState();
+  }
+
+  function updateProfitSim() {
+    const pEl = document.getElementById(`calc-price`);
+    const cEl = document.getElementById(`calc-cost`);
+    const mEl = document.getElementById(`calc-mktvol`);
+    if (!pEl || !cEl || !mEl) return;
+    const p = Number(pEl.value);
+    const c = Number(cEl.value);
+    const mv = Math.max(1, Number(mEl.value) || 2500);
+    const x = Math.max(0, 1000 - 10 * p);
+    const g = x * p - x * c;
+    const ma = (x * 100) / mv;
+
+    const pv = document.getElementById(`calc-price-val`);
+    const cv = document.getElementById(`calc-cost-val`);
+    const sx = document.getElementById(`sim-x`);
+    const sg = document.getElementById(`sim-g`);
+    const sma = document.getElementById(`sim-ma`);
+    if (pv) pv.textContent = p + ` €`;
+    if (cv) cv.textContent = c + ` €`;
+    if (sx) sx.textContent = x.toLocaleString(`de-DE`);
+    if (sg) sg.textContent = g.toLocaleString(`de-DE`) + ` €`;
+    if (sma) sma.textContent = ma.toFixed(1).replace(`.`, `,`) + ` %`;
+  }
+
+  function selectBCG(key) {
+    document.querySelectorAll(`.bcg-cell`).forEach(el => el.classList.remove(`active`));
+    const cell = document.getElementById(`bcg-` + key);
+    if (cell) cell.classList.add(`active`);
+    const detail = document.getElementById(`bcg-detail`);
+    if (detail && bcgData[key]) detail.innerHTML = bcgData[key];
+  }
+
+  function selectSOR(key) {
+    document.querySelectorAll(`.sor-box`).forEach(el => el.classList.remove(`active`));
+    const box = document.getElementById(`sor-` + key);
+    if (box) box.classList.add(`active`);
+    const detail = document.getElementById(`sor-detail`);
+    if (detail && sorData[key]) detail.innerHTML = sorData[key];
+  }
+
+  function applyHofstedePreset(preset) {
+    const map = {
+      de: { ind: 67, pdi: 35, mas: 66, uai: 65 },
+      jp: { ind: 46, pdi: 54, mas: 95, uai: 92 },
+      coll: { ind: 20, pdi: 80, mas: 45, uai: 50 }
+    };
+    const vals = map[preset] || map.de;
+    [`ind`, `pdi`, `mas`, `uai`].forEach(k => {
+      const el = document.getElementById(`hof-` + k);
+      if (el) el.textContent = vals[k];
+    });
+  }
+
+  function selectMaslow(tier, btn) {
+    document.querySelectorAll(`.pyramid-tier`).forEach(el => el.classList.remove(`active`));
+    if (btn) btn.classList.add(`active`);
+    const detail = document.getElementById(`maslow-detail`);
+    if (detail && maslowData[tier]) detail.innerHTML = maslowData[tier];
+  }
+
+  function updateLikert() {
+    const l1 = document.getElementById(`likert-1`);
+    const l2 = document.getElementById(`likert-2`);
+    const out = document.getElementById(`likert-result`);
+    if (!l1 || !l2 || !out) return;
+    const avg = (Number(l1.value) + Number(l2.value)) / 2;
+    let label = `Unentschieden`;
+    if (avg >= 4.2) label = `Stark zustimmend`;
+    else if (avg >= 3.4) label = `Eher zustimmend`;
+    else if (avg <= 1.8) label = `Stark ablehnend`;
+    else if (avg <= 2.6) label = `Eher ablehnend`;
+    out.textContent = `Einstellungswert (∅): ` + avg.toFixed(2).replace(`.`, `,`) + ` / 5,00 (` + label + `)`;
+  }
+
+  function setSemBrand(mode) {
+    [`both`, `dior`, `essence`].forEach(m => {
+      const b = document.getElementById(`sem-btn-` + m);
+      if (b) b.classList.toggle(`active`, m === mode);
+    });
+    const showDior = mode === `both` || mode === `dior`;
+    const showEss = mode === `both` || mode === `essence`;
+    [1, 2, 3].forEach(i => {
+      const d = document.getElementById(`dot-dior-` + i);
+      const e = document.getElementById(`dot-ess-` + i);
+      if (d) d.style.opacity = showDior ? `1` : `0.15`;
+      if (e) e.style.opacity = showEss ? `1` : `0.15`;
+    });
+  }
+
+  function selectSinus(key, btn) {
+    document.querySelectorAll(`.sinus-cell`).forEach(el => el.classList.remove(`active`));
+    if (btn) btn.classList.add(`active`);
+    const detail = document.getElementById(`sinus-detail`);
+    if (detail && sinusData[key]) detail.innerHTML = sinusData[key];
+  }
+
+  function selectJourney(idx, btn) {
+    document.querySelectorAll(`.journey-step-btn`).forEach(el => el.classList.remove(`active`));
+    if (btn) btn.classList.add(`active`);
+    const detail = document.getElementById(`journey-detail`);
+    if (detail && journeyData[idx]) detail.innerHTML = journeyData[idx];
+  }
+
+  function calcNPS() {
+    const pEl = document.getElementById(`nps-prom`);
+    const dEl = document.getElementById(`nps-det`);
+    const out = document.getElementById(`nps-out`);
+    if (!pEl || !dEl || !out) return;
+    const p = Number(pEl.value);
+    const d = Number(dEl.value);
+    const nps = p - d;
+    const sign = nps > 0 ? `+` : ``;
+    const rating = nps >= 50 ? `Exzellent` : nps > 0 ? `Positiv` : `Kritisch`;
+    out.textContent = `NPS = ` + p + ` % − ` + d + ` % = ` + sign + nps + ` (` + rating + `)`;
+  }
+
+  function calcHandel() {
+    const lep = Number(document.getElementById(`hk-lep`)?.value || 100);
+    const lrab = Number(document.getElementById(`hk-lrab`)?.value || 10);
+    const gew = Number(document.getElementById(`hk-gew`)?.value || 25);
+    const zek = lep * (1 - lrab / 100);
+    const bek = zek * 0.98;
+    const bez = bek + 5;
+    const skp = bez * 1.20;
+    const bvp = skp * (1 + gew / 100);
+    const zvp = bvp / 0.98;
+    const lvp = zvp / 0.95;
+
+    const fmt = v => v.toFixed(2).replace(`.`, `,`) + ` €`;
+    const eLep = document.getElementById(`out-lep`);
+    const eBez = document.getElementById(`out-bez`);
+    const eSkp = document.getElementById(`out-skp`);
+    const eBvp = document.getElementById(`out-bvp`);
+    const eLvp = document.getElementById(`out-lvp`);
+    if (eLep) eLep.textContent = fmt(lep);
+    if (eBez) eBez.textContent = fmt(bez);
+    if (eSkp) eSkp.innerHTML = `<strong>` + fmt(skp) + `</strong>`;
+    if (eBvp) eBvp.textContent = fmt(bvp);
+    if (eLvp) eLvp.innerHTML = `<strong>` + fmt(lvp) + `</strong>`;
+  }
+
+  function renderQuiz() {
+    const container = document.getElementById(`quiz-container`);
+    if (!container) return;
+    container.innerHTML = ``;
+    let answeredCount = 0;
+    let correctCount = 0;
+
+    quizQuestions.forEach((item, qIdx) => {
+      const chosen = appState.quizAnswers[qIdx];
+      if (chosen !== undefined) {
+        answeredCount++;
+        if (chosen === item.correct) correctCount++;
+      }
+
+      const block = document.createElement(`div`);
+      block.style.marginBottom = `var(--space-lg)`;
+
+      const title = document.createElement(`p`);
+      title.innerHTML = `<strong>` + item.q + `</strong>`;
+      block.appendChild(title);
+
+      item.opts.forEach((optText, oIdx) => {
+        const btn = document.createElement(`button`);
+        btn.type = `button`;
+        btn.className = `quiz-option`;
+        if (chosen !== undefined) {
+          if (oIdx === item.correct) btn.classList.add(`correct`);
+          else if (oIdx === chosen) btn.classList.add(`wrong`);
+        }
+        btn.textContent = optText;
+        btn.onclick = () => answerQuiz(qIdx, oIdx);
+        block.appendChild(btn);
+      });
+
+      if (chosen !== undefined) {
+        const fb = document.createElement(`p`);
+        fb.style.fontSize = `0.875rem`;
+        fb.style.color = chosen === item.correct ? `var(--positive)` : `var(--error)`;
+        fb.textContent = chosen === item.correct ? item.exp : `Nicht ganz — schau dir die markierte richtige Option an: ` + item.exp;
+        block.appendChild(fb);
+      }
+
+      container.appendChild(block);
+    });
+
+    const scoreLbl = document.getElementById(`quiz-score-label`);
+    if (scoreLbl) {
+      scoreLbl.textContent = `Punktestand: ` + correctCount + ` / ` + quizQuestions.length + ` richtig (` + answeredCount + ` beantwortet)`;
+    }
+  }
+
+  function answerQuiz(qIdx, oIdx) {
+    appState.quizAnswers[qIdx] = oIdx;
+    renderQuiz();
+    saveState();
+  }
+
+  function resetQuiz(btn) {
+    if (btn && btn.dataset.armed !== `true`) {
+      btn.dataset.armed = `true`;
+      btn.textContent = `Erneut klicken zum Zurücksetzen`;
+      return;
+    }
+    if (btn) {
+      btn.dataset.armed = `false`;
+      btn.textContent = `Quiz zurücksetzen`;
+    }
+    appState.quizAnswers = {};
+    renderQuiz();
+    saveState();
+  }
+
+  function initScrollReveal() {
+    const items = document.querySelectorAll(`.reveal`);
+    if (!(`IntersectionObserver` in window)) {
+      items.forEach(el => el.classList.add(`visible`));
+      return;
+    }
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(`visible`);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    items.forEach(el => obs.observe(el));
+  }
+
+  document.addEventListener(`DOMContentLoaded`, async () => {
+    try {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        const saved = await window.notebookAppApi.getAppState();
+        if (saved && typeof saved === `object`) {
+          if (saved.theme === `dark` || saved.theme === `light`) appState.theme = saved.theme;
+          if (Array.isArray(saved.completedChapters)) appState.completedChapters = saved.completedChapters;
+          if (saved.quizAnswers && typeof saved.quizAnswers === `object`) appState.quizAnswers = saved.quizAnswers;
+        }
+      }
+    } catch (e) { /* initial empty state */ }
+
+    applyTheme(appState.theme);
+    updateProgressUI();
+    updateProfitSim();
+    calcNPS();
+    calcHandel();
+    renderQuiz();
+    initScrollReveal();
+
+    if (window.lucide) window.lucide.createIcons();
+    if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+      window.notebookAppApi.notifyAppReady();
+    }
+  });
+</script>
+</body>
+</html>
